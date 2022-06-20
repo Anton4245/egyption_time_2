@@ -122,7 +122,8 @@ class MeetingDetailed extends StatelessWidget {
 
         l.add(ChangeNotifierProvider<ConstantFieldProvider>(
           create: (_) => model.createConstantFieldProvider(value),
-          child: const CommonFieldWidget(),
+          // ignore: prefer_const_constructors
+          child: CommonFieldWidget(),
         ));
       }
     });

@@ -29,7 +29,8 @@ class MeetingDetailedProvider with ChangeNotifier {
   }
 
   void mainMenuOnSelected(MainMenu menuItem) {
-    if (menuItem == MainMenu.ChangeFinallyNegotiated)
+    if (menuItem == MainMenu.ChangeFinallyNegotiated) {
       meeting.setFinallyNegotiated(!meeting.finallyNegotiated);
+    }
   }
 }

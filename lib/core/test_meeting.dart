@@ -9,7 +9,7 @@ class TestMeeting {
     Meeting newMeeting = Meeting(negotiatingFields: newSet);
     newMeeting.setName('Bath in New Komarovka');
     newMeeting.shedule.setProvisionalValue(
-        '3 hours of bath, meeting 1 hour befor at the trolleybus stop near the entrance to the park. Please don\'t be late. If anyone will be late, go farward to bath direction',
+        '3 hours of bath, meeting 1 hour befor at the trolleybus stop near the entrance to the park. Please don\'t be late. If anyone will be late, go forward to bath direction',
         false);
     newMeeting.shedule
         .addProvisionalVariant('If somebody is too busy, don\'t come', false);

@@ -33,7 +33,8 @@ class CommonFieldWidget extends StatelessWidget {
 class ConstantFieldWidget extends StatelessWidget {
   final NegotiatingField field;
 
-  const ConstantFieldWidget(
+  // ignore: prefer_const_constructors_in_immutables
+  ConstantFieldWidget(
     this.field, {
     Key? key,
   }) : super(key: key);
@@ -96,7 +97,7 @@ class ConstantFieldWidget extends StatelessWidget {
                                     : Icons.circle_outlined,
                             color: field.isNegotiated
                                 ? theme.colorScheme.primary
-                                : theme.colorScheme.onPrimary.withAlpha(0x99),
+                                : theme.colorScheme.onSurface.withAlpha(0x99),
                             size: 14,
                           ),
                         ],
@@ -124,9 +125,10 @@ class ConstantFieldWidget extends StatelessWidget {
                     ),
                   ],
                 ),
-                (field.isSelected
-                        ? field.variants.isNotEmpty
-                        : field.provisionalVariants.isNotEmpty)
+                (!field.isNegotiated &&
+                        (field.isSelected
+                            ? field.variants.isNotEmpty
+                            : field.provisionalVariants.isNotEmpty))
                     ? DetailedVariantsWidget(field: field)
                     : const SizedBox.shrink()
               ],

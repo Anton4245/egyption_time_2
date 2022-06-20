@@ -92,7 +92,7 @@ class ConstantFieldProvider with ChangeNotifier {
       if (field.value != null) m.add(Menu.clearValueItem);
     } else {
       m.add(Menu.provisionalItem);
-      if (field.value != null) m.add(Menu.clearProvisionalItem);
+      if (field.provisionalValue.isNotEmpty) m.add(Menu.clearProvisionalItem);
 
       m.add(Menu.valueItem);
     }
