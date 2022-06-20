@@ -70,6 +70,8 @@ class ConstantFieldProvider with ChangeNotifier {
       notifyListeners();
     } else if (menuItem == Menu.clearProvisionalItem) {
       field.clearProvisionalValue();
+      field.modified = true;
+      field.updateProvisionalVariants(<String>[]);
     } else if (menuItem == Menu.clearValueItem) {
       field.clearValue();
     } else if (menuItem == Menu.setNegotiatedItem) {

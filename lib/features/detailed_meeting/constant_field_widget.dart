@@ -155,11 +155,15 @@ class ConstantFieldWidget extends StatelessWidget {
                               const SizedBox(
                                 width: 4,
                               ),
-                              Text(
-                                  menuProperties[e]?[MenuProp.text] ??
-                                      'New action',
-                                  style: theme.textTheme.subtitle2?.copyWith(
-                                      color: theme.colorScheme.primary)),
+                              Expanded(
+                                child: Text(
+                                    menuProperties[e]?[MenuProp.text] ??
+                                        'New action',
+                                    maxLines: 3,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: theme.textTheme.subtitle2?.copyWith(
+                                        color: theme.colorScheme.primary)),
+                              ),
                             ],
                           ),
                         ))
@@ -180,7 +184,7 @@ const Map<Menu, Map<MenuProp, dynamic>> menuProperties = {
   },
   Menu.clearProvisionalItem: {
     MenuProp.icon: Icons.clear,
-    MenuProp.text: 'Clear provisional value'
+    MenuProp.text: 'Clear provisional value and variants'
   },
   Menu.valueItem: {MenuProp.icon: Icons.edit_note, MenuProp.text: 'Set value'},
   Menu.clearValueItem: {

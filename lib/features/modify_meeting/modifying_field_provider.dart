@@ -53,7 +53,7 @@ class ModifyingFieldProvider<E> with ChangeNotifier {
   }
 
   String? modifyingValueValidator(String? val) {
-    if (val?.isEmpty ?? true) {
+    if ((field.partOfField == PartsOfField.value) && (val?.isEmpty ?? true)) {
       return 'Please provide a value';
     } else if (field.partOfField == PartsOfField.value &&
         field.typeOfvalue == int) {
