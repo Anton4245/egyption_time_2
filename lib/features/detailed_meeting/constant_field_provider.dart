@@ -14,8 +14,6 @@ enum Menu {
   clearNegotiatedItem
 }
 
-enum MenuProp { icon, text }
-
 class ConstantFieldProvider with ChangeNotifier {
   final NegotiatingField field;
   ConstantFieldProvider({

@@ -1,7 +1,9 @@
-import 'package:ejyption_time_2/core/templates.dart';
+import 'package:ejyption_time_2/core/common_widgets/main_popup_menu.dart';
+import 'package:ejyption_time_2/core/common_widgets/templates.dart';
 import 'package:ejyption_time_2/features/detailed_meeting/constant_field_provider.dart';
 import 'package:ejyption_time_2/features/detailed_meeting/constant_field_widget.dart';
 import 'package:ejyption_time_2/features/detailed_meeting/meeting_detailed_provider.dart';
+import 'package:ejyption_time_2/screens/participants_selection_cover.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ejyption_time_2/models/meeting.dart';
@@ -52,40 +54,10 @@ class MeetingDetailed extends StatelessWidget {
                           : theme.textTheme.subtitle1,
                     ),
                   ),
-                  PopupMenuButton<MainMenu>(
-                    icon: Icon(
-                      Icons.more_vert,
-                      color: theme.colorScheme.primary,
-                    ),
-                    itemBuilder: (context) => [
-                      PopupMenuItem(
-                        value: MainMenu.ChangeFinallyNegotiated,
-                        child: Row(
-                          children: [
-                            Icon(
-                              !meeting.finallyNegotiated
-                                  ? Icons.check_circle
-                                  : Icons.circle_outlined,
-                              color: theme.colorScheme.primary,
-                              size: 20,
-                            ),
-                            const SizedBox(
-                              width: 4,
-                            ),
-                            Text(
-                                !meeting.finallyNegotiated
-                                    ? 'Set <Finally negotiated>'
-                                    : 'Clear <Finally negotiated>',
-                                style: theme.textTheme.subtitle2?.copyWith(
-                                    color: theme.colorScheme.primary)),
-                          ],
-                        ),
-                      )
-                    ],
-                    onSelected: (menuItem) {
-                      model.mainMenuOnSelected(menuItem);
-                    },
-                  )
+                  mainPopupMenu<MainMenu>(
+                      theme, null, mainMenuProperties(meeting), (menuItem) {
+                    model.mainMenuOnSelected(menuItem);
+                  })
                 ],
               ),
             ),
@@ -93,6 +65,32 @@ class MeetingDetailed extends StatelessWidget {
                 hasBorder: false,
                 child: Text(meeting.name,
                     style: theme.textTheme.headline6!.copyWith(fontSize: 24))),
+            MyMainPadding(
+              child: Row(
+                children: [
+                  Expanded(
+                      child: Container(
+                    color: meeting.participants.modified
+                        ? theme.colorScheme.tertiaryContainer
+                        : null,
+                    child: Text(
+                      meeting.participants.value.length.toString() +
+                          ' participants',
+                      style: theme.textTheme.subtitle1,
+                    ),
+                  )),
+                  mainPopupMenu<ParticipantsMenu>(
+                      theme, null, participantsMenuProperties, (menuItem) {
+                    model.participantsMenuOnSelected(menuItem);
+                    if (menuItem == ParticipantsMenu.modifyParticipants) {
+                      Navigator.of(context).pushNamed(
+                          ParticipantsWidgetCover.routeName,
+                          arguments: meeting.participants);
+                    }
+                  })
+                ],
+              ),
+            ),
             Flex(
                 direction: Axis.vertical,
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -129,6 +127,27 @@ class MeetingDetailed extends StatelessWidget {
     });
     return l;
   }
+}
+
+const Map<ParticipantsMenu, Map<MenuProp, dynamic>> participantsMenuProperties =
+    {
+  ParticipantsMenu.modifyParticipants: {
+    MenuProp.icon: Icons.people,
+    MenuProp.text: 'Modify participants list'
+  },
+};
+
+Map<MainMenu, Map<MenuProp, dynamic>> mainMenuProperties(meeting) {
+  return {
+    MainMenu.changeFinallyNegotiated: {
+      MenuProp.icon: !meeting.finallyNegotiated
+          ? Icons.check_circle
+          : Icons.circle_outlined,
+      MenuProp.text: !meeting.finallyNegotiated
+          ? 'Set <Finally negotiated>'
+          : 'Clear <Finally negotiated>'
+    },
+  };
 }
 
 class DetailedVariantsWidget extends StatelessWidget {

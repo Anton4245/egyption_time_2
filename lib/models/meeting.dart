@@ -1,6 +1,8 @@
 import 'dart:convert';
 
+import 'package:ejyption_time_2/features/contacts/participants_selection_provider.dart';
 import 'package:ejyption_time_2/models/modified_objects.dart';
+import 'package:ejyption_time_2/models/perticipants.dart';
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 
@@ -83,6 +85,9 @@ class Meeting with ChangeNotifier implements ModifiedObjectInterface<Object> {
     provideModifying(notify);
   }
 
+  late final Participants _participants;
+  Participants get participants => _participants;
+
   late final NegotiatingString _description;
   NegotiatingString get description => _description;
 
@@ -116,6 +121,7 @@ class Meeting with ChangeNotifier implements ModifiedObjectInterface<Object> {
   }
 
   void init(negotiatingFields) {
+    _participants = Participants(_id, this);
     _description = NegotiatingString('_description', _id, this);
     _lenthInDays = NegotiatingInt('_lenthInDays', _id, this);
     _lenthInMinutesAndHours =
@@ -124,6 +130,10 @@ class Meeting with ChangeNotifier implements ModifiedObjectInterface<Object> {
     _dayOfMeeting = NegotiatingDay('_dayOfMeeting', _id, this);
     _timeOfMeeting = NegotiatingHoursAndMinutes('_timeOfMeeting', _id, this);
 
+    _participants.addListener(() {
+      _fieldsVersion++;
+      notifyListeners();
+    });
     _negotiatingFieldsMap =
         Map.unmodifiable(_initNegotiatingFieldsMap(negotiatingFields));
     _negotiatingFieldsMap.forEach((key, value) {

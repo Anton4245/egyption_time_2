@@ -1,4 +1,5 @@
-import 'package:ejyption_time_2/core/templates.dart';
+import 'package:ejyption_time_2/core/common_widgets/main_popup_menu.dart';
+import 'package:ejyption_time_2/core/common_widgets/templates.dart';
 import 'package:ejyption_time_2/features/detailed_meeting/constant_field_provider.dart';
 import 'package:ejyption_time_2/features/detailed_meeting/meeting_detailed_widget.dart';
 import 'package:ejyption_time_2/features/modify_meeting/field_edit_form.dart';
@@ -136,41 +137,12 @@ class ConstantFieldWidget extends StatelessWidget {
           ),
           (field.parent as Meeting).finallyNegotiated
               ? const SizedBox.shrink()
-              : PopupMenuButton<Menu>(
-                  icon: Icon(
-                    Icons.more_vert,
-                    color: theme.colorScheme.primary,
-                  ),
-                  itemBuilder: (context) => [
-                    ...model.createMenuList(field).map((e) => PopupMenuItem(
-                          value: e,
-                          child: Row(
-                            children: [
-                              Icon(
-                                menuProperties[e]?[MenuProp.icon] ??
-                                    Icons.edit_note,
-                                color: theme.colorScheme.primary,
-                                size: 20,
-                              ),
-                              const SizedBox(
-                                width: 4,
-                              ),
-                              Expanded(
-                                child: Text(
-                                    menuProperties[e]?[MenuProp.text] ??
-                                        'New action',
-                                    maxLines: 3,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: theme.textTheme.subtitle2?.copyWith(
-                                        color: theme.colorScheme.primary)),
-                              ),
-                            ],
-                          ),
-                        ))
-                  ],
-                  onSelected: (menuItem) =>
-                      model.setProvisionalValueOnSelected(field, menuItem),
-                ),
+              : mainPopupMenu<Menu>(
+                  theme,
+                  model.createMenuList(field),
+                  menuProperties,
+                  (menuItem) =>
+                      model.setProvisionalValueOnSelected(field, menuItem)),
         ],
       ),
     );
