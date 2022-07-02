@@ -118,7 +118,7 @@ class ParticipantsWidjet extends StatelessWidget {
           child: ListView.builder(
               itemCount: model.localParticipants.length,
               itemBuilder: (context, i) {
-                final participant = model.localParticipants![i];
+                final participant = model.localParticipants[i];
                 return ListTile(
                   leading: Avatar2(participant, 18.0, theme),
                   title: Text(participant.displayName),

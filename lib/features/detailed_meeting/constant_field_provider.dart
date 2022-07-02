@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:ejyption_time_2/core/common_widgets/new_comment.dart';
 import 'package:ejyption_time_2/core/global_model.dart';
 import 'package:ejyption_time_2/features/modify_meeting/modifying_field_provider.dart';
@@ -7,6 +5,7 @@ import 'package:ejyption_time_2/models/meeting.dart';
 import 'package:ejyption_time_2/models/modified_objects.dart';
 import 'package:ejyption_time_2/models/participant.dart';
 import 'package:ejyption_time_2/models/point_assestment.dart';
+import 'package:ejyption_time_2/models/withddd.dart';
 import 'package:flutter/widgets.dart';
 
 import 'package:ejyption_time_2/models/negotiating_field.dart';
@@ -150,13 +149,9 @@ class ConstantFieldProvider with ChangeNotifier {
   }
 
   List<PointAssessment> takeComments(String keyString) {
-    List<PointAssessment> comments = <PointAssessment>[];
-    comments.addAll((field.pointAssesstments[keyString] ?? <PointAssessment>[])
-        .getRange(
-            0, min(field.pointAssesstments[keyString]?.length ?? 1 - 1, 100)));
-    comments.removeWhere((element) => comments.any((element2) =>
-        (element2.participant == element2.participant) &&
-        (element.creation.compareTo(element2.creation) < 0)));
+    List<PointAssessment> comments =
+        field.getListOfAssessmentByKeyString(keyString, length: 100);
+    deleteListMembersWithTheSameParticipantAndLowerDate(comments);
     return comments;
   }
 

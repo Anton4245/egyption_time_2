@@ -1,3 +1,5 @@
+import 'package:ejyption_time_2/core/main_functions.dart';
+import 'package:ejyption_time_2/models/withddd.dart';
 import 'package:flutter/material.dart';
 
 import 'package:ejyption_time_2/models/meeting.dart';
@@ -17,10 +19,13 @@ const Map<PointMarks, IconData> pointMarksIcon = {
   PointMarks.fit: Icons.add_box
 };
 
-class PointAssessment {
+class PointAssessment implements WithIdAndCreationAndParticipant {
+  @override
   final String id = GlobalKey().toString();
   final DateTime _creation = DateTime.now();
+  @override
   DateTime get creation => _creation;
+  @override
   Participant participant;
   String meetingId;
   String field;

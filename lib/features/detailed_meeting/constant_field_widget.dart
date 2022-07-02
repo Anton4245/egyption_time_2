@@ -184,15 +184,6 @@ Widget comment(PointAssessment pointAssessment, ThemeData theme, double size) {
           Text('      ${pointAssessment.commentText}',
               style: theme.textTheme.bodyText1?.copyWith(
                   fontSize: size, color: theme.colorScheme.tertiary)),
-          // CircleAvatar(
-          //   radius: size / 2,
-          //   backgroundColor: theme.colorScheme.tertiary,
-          //   child: Text(
-          //     pointMarksAvavtarString[pointAssessment.mark] ?? '?',
-          //     style: theme.textTheme.bodyText1?.copyWith(
-          //         fontSize: size, color: theme.colorScheme.onTertiary),
-          //   ),
-          //)
           Icon(
             pointMarksIcon[pointAssessment.mark],
             color: theme.colorScheme.tertiary,

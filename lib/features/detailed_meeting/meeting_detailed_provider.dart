@@ -1,10 +1,17 @@
+import 'package:ejyption_time_2/core/common_widgets/new_assessment.dart';
+import 'package:ejyption_time_2/core/common_widgets/new_comment.dart';
+import 'package:ejyption_time_2/core/global_model.dart';
 import 'package:ejyption_time_2/features/contacts/participants_selection_provider.dart';
 import 'package:ejyption_time_2/features/detailed_meeting/constant_field_provider.dart';
+import 'package:ejyption_time_2/models/participant.dart';
+import 'package:ejyption_time_2/models/probability_assesstment.dart';
 import '../../models/meeting.dart';
 import 'package:flutter/widgets.dart';
 
 enum MainMenu {
   changeFinallyNegotiated,
+  setProbabilityAssessment,
+  deleteProbabilityAssessment
 }
 
 enum ParticipantsMenu {
@@ -33,6 +40,21 @@ class MeetingDetailedProvider with ChangeNotifier {
     return ConstantFieldProvider(field: field);
   }
 
+  List<MainMenu> createMainMenuList(
+      ProbabilityAssessment? probabilityAssessment) {
+    List<MainMenu> m = <MainMenu>[];
+
+    if (GlobalModel.instance.currentParticipant?.isInitiator ?? false) {
+      m.add(MainMenu.changeFinallyNegotiated);
+    }
+    m.add(MainMenu.setProbabilityAssessment);
+    if (probabilityAssessment != null) {
+      m.add(MainMenu.deleteProbabilityAssessment);
+    }
+
+    return m;
+  }
+
   void mainMenuOnSelected(MainMenu menuItem) {
     if (menuItem == MainMenu.changeFinallyNegotiated) {
       meeting.setFinallyNegotiated(!meeting.finallyNegotiated);
@@ -47,5 +69,24 @@ class MeetingDetailedProvider with ChangeNotifier {
             ParticipantsSelectionProvider(meeting.participants);
       }
     }
+  }
+
+  processResultOfNewAssesment(
+      bool result, Map<ProbabilityValues, Object?> values) {
+    if (result) {
+      ProbabilityAssessment newAssesstment = ProbabilityAssessment(
+          participant: GlobalModel.instance.currentParticipant ??
+              Participant(name: 'Incognito', displayName: 'Incognito'),
+          meetingId: meeting.id,
+          mark: values[ProbabilityValues.mark] as ProbabilityMarks,
+          assessmentText: values[ProbabilityValues.text] as String,
+          probability: values[ProbabilityValues.probability] as int);
+
+      meeting.addPointAssesstment(newAssesstment);
+    }
+  }
+
+  deleteAssessment() {
+    meeting.removePointAssesstment();
   }
 }

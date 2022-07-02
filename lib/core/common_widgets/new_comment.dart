@@ -21,13 +21,6 @@ Future newCommentForm(BuildContext context, String stringToComment,
           builder: (BuildContext context, StateSetter setState) => Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              // Text(
-              //   'Choose assestment for "${field.toString()}" record:',
-              //   style: Theme.of(context)
-              //       .textTheme
-              //       .subtitle2
-              //       ?.copyWith(color: Theme.of(context).colorScheme.primary),
-              // ),
               Flex(
                 direction: Axis.vertical,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -77,44 +70,3 @@ Future newCommentForm(BuildContext context, String stringToComment,
 
   callBack(_result, {CommentValues.mark: _mark, CommentValues.text: _text});
 }
-
-
-// return Column(
-//       children: <Widget>[
-//         RadioListTile<SingingCharacter>(
-//           title: const Text('Lafayette'),
-//           value: SingingCharacter.lafayette,
-//           groupValue: _character,
-//           onChanged: (SingingCharacter? value) {
-//             setState(() {
-//               _character = value;
-//             });
-//           },
-//         ),
-//         RadioListTile<SingingCharacter>(
-//           title: const Text('Thomas Jefferson'),
-//           value: SingingCharacter.jefferson,
-//           groupValue: _character,
-//           onChanged: (SingingCharacter? value) {
-//             setState(() {
-//               _character = value;
-//             });
-//           },
-//         ),
-//       ],
-//     );
-
-// class CommentDialog extends StatelessWidget {
-//   const CommentDialog({Key? key}) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Dialog(
-//         child: Column(
-//       children: [
-//         RadioListTile(
-//             value: value, groupValue: groupValue, onChanged: onChanged)
-//       ],
-//     ));
-//   }
-// }

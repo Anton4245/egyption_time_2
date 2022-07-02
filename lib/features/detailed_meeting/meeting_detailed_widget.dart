@@ -1,8 +1,10 @@
 import 'package:ejyption_time_2/core/common_widgets/main_popup_menu.dart';
+import 'package:ejyption_time_2/core/common_widgets/new_assessment.dart';
 import 'package:ejyption_time_2/core/common_widgets/templates.dart';
 import 'package:ejyption_time_2/features/detailed_meeting/constant_field_provider.dart';
 import 'package:ejyption_time_2/features/detailed_meeting/constant_field_widget.dart';
 import 'package:ejyption_time_2/features/detailed_meeting/meeting_detailed_provider.dart';
+import 'package:ejyption_time_2/models/probability_assesstment.dart';
 import 'package:ejyption_time_2/screens/participants_selection_cover.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -17,6 +19,8 @@ class MeetingDetailed extends StatelessWidget {
     var model = Provider.of<MeetingDetailedProvider>(context);
     Meeting meeting = model.meeting;
     ThemeData theme = Theme.of(context);
+    ProbabilityAssessment? lastProbabilityAssessment =
+        meeting.lastProbabilityAssessment();
 
     return SingleChildScrollView(
       child: Container(
@@ -44,6 +48,7 @@ class MeetingDetailed extends StatelessWidget {
                   ),
                   const SizedBox(width: 8),
                   Expanded(
+                    flex: 6,
                     child: Text(
                       meeting.finallyNegotiated
                           ? 'Is finally negotiated'
@@ -54,9 +59,36 @@ class MeetingDetailed extends StatelessWidget {
                           : theme.textTheme.subtitle1,
                     ),
                   ),
+                  const Expanded(flex: 1, child: SizedBox.shrink()),
+                  ElevatedButton(
+                    style: ButtonStyle(
+                        textStyle: MaterialStateProperty.all<TextStyle>(
+                            TextStyle(
+                                fontSize: theme.textTheme.subtitle1?.fontSize)),
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(18.0),
+                        ))),
+                    onPressed: () {},
+                    child: Text(lastProbabilityAssessment == null
+                        ? '   %'
+                        : '${lastProbabilityAssessment.probability.toString()} %'),
+                  ),
+                  const Expanded(flex: 1, child: SizedBox.shrink()),
                   mainPopupMenu<MainMenu>(
-                      theme, null, mainMenuProperties(meeting), (menuItem) {
-                    model.mainMenuOnSelected(menuItem);
+                      theme,
+                      model.createMainMenuList(lastProbabilityAssessment),
+                      mainMenuProperties(meeting), (menuItem) {
+                    (menuItem == MainMenu.setProbabilityAssessment)
+                        ? newAssessmentForm(
+                            context,
+                            meeting.name,
+                            ((result, values) => model
+                                .processResultOfNewAssesment(result, values)))
+                        : (menuItem == MainMenu.deleteProbabilityAssessment)
+                            ? model.deleteAssessment()
+                            : model.mainMenuOnSelected(menuItem);
                   })
                 ],
               ),
@@ -148,6 +180,14 @@ Map<MainMenu, Map<MenuProp, dynamic>> mainMenuProperties(meeting) {
       MenuProp.text: !meeting.finallyNegotiated
           ? 'Set <Finally negotiated>'
           : 'Clear <Finally negotiated>'
+    },
+    MainMenu.setProbabilityAssessment: {
+      MenuProp.icon: Icons.percent,
+      MenuProp.text: 'Set probability assessment'
+    },
+    MainMenu.deleteProbabilityAssessment: {
+      MenuProp.icon: Icons.delete_sweep,
+      MenuProp.text: 'Delete probability assessment'
     },
   };
 }

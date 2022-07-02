@@ -1,4 +1,5 @@
 import 'dart:collection';
+import 'dart:math';
 
 import 'package:ejyption_time_2/core/global_model.dart';
 import 'package:ejyption_time_2/core/main_functions.dart';
@@ -6,6 +7,7 @@ import 'package:ejyption_time_2/features/modify_meeting/modifying_field_provider
 import 'package:ejyption_time_2/models/meeting.dart';
 import 'package:ejyption_time_2/models/modified_objects.dart';
 import 'package:ejyption_time_2/models/point_assestment.dart';
+import 'package:ejyption_time_2/models/withddd.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 
@@ -142,7 +144,7 @@ abstract class NegotiatingField<T extends Object>
   //list of Comments
   final Map<String, List<PointAssessment>> _pointAssesstments = {'': []};
   Map<String, List<PointAssessment>> get pointAssesstments =>
-      _pointAssesstments;
+      Map.fromEntries(_pointAssesstments.entries);
   void addPointAssesstment(PointAssessment newPointAssessment,
       [bool notify = true]) {
     List<PointAssessment> list = _pointAssesstments.putIfAbsent(
@@ -152,6 +154,13 @@ abstract class NegotiatingField<T extends Object>
     provideModifying(notify);
   }
 
+  List<PointAssessment> getListOfAssessmentByKeyString(keyStringValue,
+      {int length = 1000000}) {
+    List<PointAssessment> list =
+        _pointAssesstments[keyStringValue] ?? <PointAssessment>[];
+    return [...list.getRange(0, min(list.length, length))];
+  }
+
   void removePointAssesstment(String keyStringValue, [bool notify = true]) {
     //1. find needed comment
     if ((GlobalModel.instance.currentParticipant == null) ||
@@ -159,21 +168,7 @@ abstract class NegotiatingField<T extends Object>
       return;
     }
 
-    List<PointAssessment> comments = <PointAssessment>[];
-    comments.addAll(_pointAssesstments[keyStringValue]!);
-    comments.removeWhere((element) =>
-        element.participant.id != GlobalModel.instance.currentParticipant!.id);
-    comments.removeWhere((element) => comments.any((element2) =>
-        (element2.participant == element2.participant) &&
-        (element.creation.compareTo(element2.creation) < 0)));
-
-    if (comments.length == 1) {
-      (_pointAssesstments[keyStringValue] ?? <PointAssessment>[]).removeWhere(
-          (element) =>
-              (element.id == comments[0].id) &&
-              (element.participant == GlobalModel.instance.currentParticipant));
-    }
-
+    deleteLastListMember(_pointAssesstments[keyStringValue]!);
     provideModifying(notify);
   }
 

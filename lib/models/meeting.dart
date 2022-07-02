@@ -1,9 +1,13 @@
 import 'dart:convert';
 
+import 'package:ejyption_time_2/core/global_model.dart';
+import 'package:ejyption_time_2/core/main_functions.dart';
 import 'package:ejyption_time_2/features/contacts/participants_selection_provider.dart';
 import 'package:ejyption_time_2/models/modified_objects.dart';
 import 'package:ejyption_time_2/models/perticipants.dart';
 import 'package:ejyption_time_2/models/point_assestment.dart';
+import 'package:ejyption_time_2/models/probability_assesstment.dart';
+import 'package:ejyption_time_2/models/withddd.dart';
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 
@@ -108,6 +112,30 @@ class Meeting with ChangeNotifier implements ModifiedObjectInterface<Object> {
   late final NegotiatingHoursAndMinutes _timeOfMeeting;
   NegotiatingHoursAndMinutes get timeOfMeeting => _timeOfMeeting;
 
+  //list of Assessments
+  late final List<ProbabilityAssessment> _probabilitytAssesstments;
+  List<ProbabilityAssessment> get probabilitytAssesstments =>
+      [..._probabilitytAssesstments];
+  void addPointAssesstment(ProbabilityAssessment newProbabilityAssessment,
+      [bool notify = true]) {
+    _probabilitytAssesstments.add(newProbabilityAssessment);
+    _probabilitytAssesstments.sort((a, b) => -a.creation.compareTo(b.creation));
+    provideModifying(notify);
+  }
+
+  void removePointAssesstment([bool notify = true]) {
+    if ((GlobalModel.instance.currentParticipant == null) ||
+        _probabilitytAssesstments.isEmpty) {
+      return;
+    }
+    deleteLastListMember(_probabilitytAssesstments);
+    provideModifying(notify);
+  }
+
+  ProbabilityAssessment? lastProbabilityAssessment() {
+    return lastAssessment(_probabilitytAssesstments) as ProbabilityAssessment?;
+  }
+
   bool _finallyNegotiated = false;
   bool get finallyNegotiated => _finallyNegotiated;
   setFinallyNegotiated(bool finallyNegotiated, [bool notify = true]) {
@@ -123,6 +151,7 @@ class Meeting with ChangeNotifier implements ModifiedObjectInterface<Object> {
 
   void init(negotiatingFields) {
     _participants = Participants(_id, this);
+    _probabilitytAssesstments = <ProbabilityAssessment>[];
     _description = NegotiatingString('_description', _id, this);
     _lenthInDays = NegotiatingInt('_lenthInDays', _id, this);
     _lenthInMinutesAndHours =
