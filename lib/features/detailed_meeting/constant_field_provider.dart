@@ -1,11 +1,19 @@
+import 'dart:math';
+
+import 'package:ejyption_time_2/core/common_widgets/new_comment.dart';
+import 'package:ejyption_time_2/core/global_model.dart';
 import 'package:ejyption_time_2/features/modify_meeting/modifying_field_provider.dart';
 import 'package:ejyption_time_2/models/meeting.dart';
 import 'package:ejyption_time_2/models/modified_objects.dart';
+import 'package:ejyption_time_2/models/participant.dart';
+import 'package:ejyption_time_2/models/point_assestment.dart';
 import 'package:flutter/widgets.dart';
 
 import 'package:ejyption_time_2/models/negotiating_field.dart';
 
 enum Menu {
+  setComment,
+  deleteComment,
   provisionalItem,
   clearProvisionalItem,
   valueItem,
@@ -13,6 +21,8 @@ enum Menu {
   setNegotiatedItem,
   clearNegotiatedItem
 }
+
+enum VariantMenu { setComment, deleteComment }
 
 class ConstantFieldProvider with ChangeNotifier {
   final NegotiatingField field;
@@ -71,7 +81,8 @@ class ConstantFieldProvider with ChangeNotifier {
       field.modified = true;
       field.updateProvisionalVariants(<String>[]);
     } else if (menuItem == Menu.clearValueItem) {
-      field.clearValue();
+      field.clearValue(); //TODO handle with field.modified = true;
+      field.modified = true;
     } else if (menuItem == Menu.setNegotiatedItem) {
       field.setIsNegotiated(true);
     } else if (menuItem == Menu.clearNegotiatedItem) {
@@ -79,25 +90,78 @@ class ConstantFieldProvider with ChangeNotifier {
     }
   }
 
-  List<Menu> createMenuList(NegotiatingField<Object> field) {
+  List<Menu> createMenuList(int commentLength) {
     if ((field.parent as Meeting).finallyNegotiated) return <Menu>[];
 
-    if (field.isNegotiated) {
-      return [Menu.clearNegotiatedItem];
-    }
-
     List<Menu> m = <Menu>[];
-    if (field.isSelected) {
-      m.add(Menu.valueItem);
-      if (field.value != null) m.add(Menu.clearValueItem);
-    } else {
-      m.add(Menu.provisionalItem);
-      if (field.provisionalValue.isNotEmpty) m.add(Menu.clearProvisionalItem);
-
-      m.add(Menu.valueItem);
+    m.add(Menu.setComment);
+    if (commentLength > 0) {
+      m.add(Menu.deleteComment);
     }
-    m.add(Menu.setNegotiatedItem);
+
+    if (GlobalModel.instance.currentParticipant?.isInitiator ?? false) {
+      if (field.isNegotiated) {
+        m.add(Menu.clearNegotiatedItem);
+      } else {
+        if (field.isSelected) {
+          m.add(Menu.valueItem);
+          if (field.value != null) m.add(Menu.clearValueItem);
+        } else {
+          m.add(Menu.provisionalItem);
+          if (field.provisionalValue.isNotEmpty)
+            m.add(Menu.clearProvisionalItem);
+
+          m.add(Menu.valueItem);
+        }
+        m.add(Menu.setNegotiatedItem);
+      }
+    }
 
     return m;
+  }
+
+  List<VariantMenu> createVariantMenuList(int commentLength) {
+    if ((field.parent as Meeting).finallyNegotiated) return <VariantMenu>[];
+
+    List<VariantMenu> m = <VariantMenu>[];
+    m.add(VariantMenu.setComment);
+    if (commentLength > 0) {
+      m.add(VariantMenu.deleteComment);
+    }
+
+    return m;
+  }
+
+  processResultOfNewComment(
+      bool result, Map<CommentValues, Object?> values, keyStringValue) {
+    if (result) {
+      PointAssessment newAssesstment = PointAssessment(
+          participant: GlobalModel.instance.currentParticipant ??
+              Participant(name: 'Incognito', displayName: 'Incognito'),
+          meetingId: (field.parent as Meeting).id,
+          field: field.name,
+          keyStringValue: keyStringValue,
+          mark: values[CommentValues.mark] as PointMarks,
+          commentText: values[CommentValues.text] as String);
+
+      field.addPointAssesstment(newAssesstment, false);
+      notifyListeners();
+    }
+  }
+
+  List<PointAssessment> takeComments(String keyString) {
+    List<PointAssessment> comments = <PointAssessment>[];
+    comments.addAll((field.pointAssesstments[keyString] ?? <PointAssessment>[])
+        .getRange(
+            0, min(field.pointAssesstments[keyString]?.length ?? 1 - 1, 100)));
+    comments.removeWhere((element) => comments.any((element2) =>
+        (element2.participant == element2.participant) &&
+        (element.creation.compareTo(element2.creation) < 0)));
+    return comments;
+  }
+
+  void deleteComment(keyStringValue) {
+    field.removePointAssesstment(keyStringValue, false);
+    notifyListeners();
   }
 }

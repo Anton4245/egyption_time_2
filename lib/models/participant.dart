@@ -12,6 +12,13 @@ class Participant {
   String displayName;
   String initials;
   Uint8List? photoOrThumbnail;
+  bool _isInitiator = false;
+  bool get isInitiator => _isInitiator;
+  Participant setIsInitiator(bool isInitiator) {
+    _isInitiator = isInitiator;
+    return this;
+  }
+
   Participant({
     required this.name,
     required this.displayName,

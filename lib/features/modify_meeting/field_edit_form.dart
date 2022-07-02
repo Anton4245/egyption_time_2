@@ -215,7 +215,7 @@ class VariantsWidget extends StatelessWidget {
                 ),
                 Expanded(
                   child: Text(
-                    val.toString(),
+                    model.field.mainFormat(val),
                     style: theme.textTheme.bodyText1,
                   ),
                 ),

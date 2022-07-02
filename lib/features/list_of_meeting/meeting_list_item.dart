@@ -134,7 +134,7 @@ class NegotiatingFieldWidget extends StatelessWidget {
           ),
           Expanded(
             child: Text(
-              '$name: $field',
+              '$name: ${field.toString()}',
               maxLines: 3,
               overflow: TextOverflow.ellipsis,
               style: field.isSelected

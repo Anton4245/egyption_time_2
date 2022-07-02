@@ -11,10 +11,12 @@ enum ProbablityMarks {
 }
 
 class ProbabilityAssessment {
-  String id = GlobalKey().toString();
+  final String id = GlobalKey().toString();
+  final DateTime _creation = DateTime.now();
+  Participant participant;
   Meeting meeting;
   ProbablityMarks mark;
-  Participant participant;
+
   ProbabilityAssessment({
     required this.meeting,
     this.mark = ProbablityMarks.isUnaware,

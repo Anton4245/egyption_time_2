@@ -79,15 +79,17 @@ class MeetingDetailed extends StatelessWidget {
                       style: theme.textTheme.subtitle1,
                     ),
                   )),
-                  mainPopupMenu<ParticipantsMenu>(
-                      theme, null, participantsMenuProperties, (menuItem) {
-                    model.participantsMenuOnSelected(menuItem);
-                    if (menuItem == ParticipantsMenu.modifyParticipants) {
-                      Navigator.of(context).pushNamed(
-                          ParticipantsWidgetCover.routeName,
-                          arguments: meeting.participants);
-                    }
-                  })
+                  meeting.finallyNegotiated
+                      ? const SizedBox.shrink()
+                      : mainPopupMenu<ParticipantsMenu>(
+                          theme, null, participantsMenuProperties, (menuItem) {
+                          model.participantsMenuOnSelected(menuItem);
+                          if (menuItem == ParticipantsMenu.modifyParticipants) {
+                            Navigator.of(context).pushNamed(
+                                ParticipantsWidgetCover.routeName,
+                                arguments: meeting.participants);
+                          }
+                        })
                 ],
               ),
             ),
@@ -148,38 +150,4 @@ Map<MainMenu, Map<MenuProp, dynamic>> mainMenuProperties(meeting) {
           : 'Clear <Finally negotiated>'
     },
   };
-}
-
-class DetailedVariantsWidget extends StatelessWidget {
-  final NegotiatingField field;
-  const DetailedVariantsWidget({Key? key, required this.field})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    ThemeData theme = Theme.of(context);
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Divider(
-          height: 4,
-        ),
-        ...((field.isSelected) ? field.variants : field.provisionalVariants)
-            .map((val) => Container(
-                  color: field.modified
-                      ? theme.colorScheme.tertiaryContainer
-                      : null,
-                  child: Text(
-                    '  - ${val.toString()}',
-                    maxLines: 3,
-                    overflow: TextOverflow.ellipsis,
-                    style: (field.isSelected
-                        ? theme.textTheme.bodyText1
-                        : theme.textTheme.bodyText2),
-                  ),
-                ))
-      ],
-    );
-  }
 }
