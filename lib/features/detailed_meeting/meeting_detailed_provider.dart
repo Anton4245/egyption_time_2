@@ -1,5 +1,4 @@
 import 'package:ejyption_time_2/core/common_widgets/new_assessment.dart';
-import 'package:ejyption_time_2/core/common_widgets/new_comment.dart';
 import 'package:ejyption_time_2/core/global_model.dart';
 import 'package:ejyption_time_2/features/contacts/participants_selection_provider.dart';
 import 'package:ejyption_time_2/features/detailed_meeting/constant_field_provider.dart';
