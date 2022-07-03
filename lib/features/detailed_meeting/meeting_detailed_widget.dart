@@ -1,6 +1,7 @@
 import 'package:ejyption_time_2/core/common_widgets/main_popup_menu.dart';
 import 'package:ejyption_time_2/core/common_widgets/new_assessment.dart';
 import 'package:ejyption_time_2/core/common_widgets/templates.dart';
+import 'package:ejyption_time_2/core/global_model.dart';
 import 'package:ejyption_time_2/features/detailed_meeting/constant_field_provider.dart';
 import 'package:ejyption_time_2/features/detailed_meeting/constant_field_widget.dart';
 import 'package:ejyption_time_2/features/detailed_meeting/meeting_detailed_provider.dart';
@@ -93,25 +94,41 @@ class MeetingDetailed extends StatelessWidget {
                 ],
               ),
             ),
-            MyMainPadding(
-                hasBorder: false,
+            Padding(
+                padding: const EdgeInsets.only(bottom: 8),
                 child: Text(meeting.name,
                     style: theme.textTheme.headline6!.copyWith(fontSize: 24))),
-            MyMainPadding(
+            Padding(
+              padding: const EdgeInsets.only(bottom: 16),
               child: Row(
                 children: [
                   Expanded(
+                    child: TextButton(
+                      onPressed: () {
+                        model.participantsMenuOnSelected(
+                            ParticipantsMenu.viewParticipants);
+                        Navigator.of(context).pushNamed(
+                            ParticipantsWidgetCover.routeName,
+                            arguments: meeting.participants);
+                      },
+                      style: TextButton.styleFrom(
+                          side: BorderSide(
+                              color: theme.colorScheme.primary, width: 1)),
                       child: Container(
-                    color: meeting.participants.modified
-                        ? theme.colorScheme.tertiaryContainer
-                        : null,
-                    child: Text(
-                      meeting.participants.value.length.toString() +
-                          ' participants',
-                      style: theme.textTheme.subtitle1,
+                        color: meeting.participants.modified
+                            ? theme.colorScheme.tertiaryContainer
+                            : null,
+                        child: Text(
+                          '${meeting.participants.value.length.toString()} participants, ${meeting.calculateProbability().toStringAsFixed(1)} real',
+                          style: theme.textTheme.subtitle1,
+                        ),
+                      ),
                     ),
-                  )),
-                  meeting.finallyNegotiated
+                  ),
+                  (meeting.finallyNegotiated &&
+                          (GlobalModel
+                                  .instance.currentParticipant?.isInitiator ??
+                              false))
                       ? const SizedBox.shrink()
                       : mainPopupMenu<ParticipantsMenu>(
                           theme, null, participantsMenuProperties, (menuItem) {

@@ -4,6 +4,7 @@ import 'package:ejyption_time_2/core/global_model.dart';
 import 'package:ejyption_time_2/core/main_functions.dart';
 import 'package:ejyption_time_2/features/contacts/participants_selection_provider.dart';
 import 'package:ejyption_time_2/models/modified_objects.dart';
+import 'package:ejyption_time_2/models/participant.dart';
 import 'package:ejyption_time_2/models/perticipants.dart';
 import 'package:ejyption_time_2/models/point_assestment.dart';
 import 'package:ejyption_time_2/models/probability_assesstment.dart';
@@ -130,6 +131,19 @@ class Meeting with ChangeNotifier implements ModifiedObjectInterface<Object> {
     }
     deleteLastListMember(_probabilitytAssesstments);
     provideModifying(notify);
+  }
+
+  double calculateProbability() {
+    Set<Participant?> wereIncluded = <Participant?>{};
+    double sumProbability = 0;
+    _probabilitytAssesstments.forEach((element) {
+      if (!wereIncluded.contains(element.participant)) {
+        sumProbability +=
+            (element.probability > 0) ? element.probability / 100 : 0;
+        wereIncluded.add(element.participant);
+      }
+    });
+    return sumProbability;
   }
 
   ProbabilityAssessment? lastProbabilityAssessment() {

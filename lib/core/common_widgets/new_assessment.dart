@@ -90,10 +90,9 @@ Future newAssessmentForm(BuildContext context, String stringToComment,
                 actions: [
                   ElevatedButton.icon(
                       onPressed: () {
-                        if ((_mark ?? ProbabilityMarks.isUnaware) ==
-                            ProbabilityMarks.isUnaware) {
+                        if (_mark == ProbabilityMarks.isUnaware) {
                           setState(() {
-                            _errorText = "Choose any variant";
+                            _errorText = "Choose any variant from list above";
                           });
 
                           return;

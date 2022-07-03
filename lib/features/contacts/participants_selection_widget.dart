@@ -24,8 +24,12 @@ class ParticipantsSelectionWidget extends StatelessWidget {
                 as ParticipantsSelectionProvider,
             child: Consumer<ParticipantsSelectionProvider>(
                 builder: (ctx, model, _) => DefaultTabController(
-                      length: 2,
-                      initialIndex: model.localParticipants.isEmpty ? 1 : 0,
+                      length: model.modifyParticipants ? 3 : 1,
+                      initialIndex: !model.modifyParticipants
+                          ? 0
+                          : model.editParticipants.isEmpty
+                              ? 2
+                              : 1,
                       child: Column(
                         children: [
                           MyBigPadding(
@@ -38,13 +42,15 @@ class ParticipantsSelectionWidget extends StatelessWidget {
                                   style: theme.textTheme.headline5,
                                 ),
                               ),
-                              mainPopupMenu<ParticipantsSelectionMenu>(
-                                  theme, null, participantsMenuProperties,
-                                  (menuItem) {
-                                model.participantsSelectionMenuOnSelected(
-                                    menuItem);
-                                Navigator.pop(context);
-                              })
+                              !model.modifyParticipants
+                                  ? const SizedBox.shrink()
+                                  : mainPopupMenu<ParticipantsSelectionMenu>(
+                                      theme, null, participantsMenuProperties,
+                                      (menuItem) {
+                                      model.participantsSelectionMenuOnSelected(
+                                          menuItem);
+                                      Navigator.pop(context);
+                                    })
                             ],
                           )),
                           TabBar(
@@ -52,25 +58,44 @@ class ParticipantsSelectionWidget extends StatelessWidget {
                               labelColor: theme.colorScheme.primary,
                               tabs: [
                                 Tab(
-                                  text: 'Participants',
-                                  icon: Icon(Icons.people,
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .primary),
-                                ),
-                                Tab(
-                                    text: 'Select phone contacts',
+                                    text: model.modifyParticipants
+                                        ? 'View Participants'
+                                        : null,
                                     icon: Icon(
-                                      Icons.contact_page,
+                                      Icons.people_alt,
                                       color:
                                           Theme.of(context).colorScheme.primary,
                                     )),
+                                ...(model.modifyParticipants)
+                                    ? [
+                                        Tab(
+                                          text: 'Modify participants',
+                                          icon: Icon(Icons.people,
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .primary),
+                                        ),
+                                        Tab(
+                                            text: 'Select phone contacts',
+                                            icon: Icon(
+                                              Icons.contact_page,
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .primary,
+                                            )),
+                                      ]
+                                    : []
                               ]),
-                          const Expanded(
+                          Expanded(
                             child: TabBarView(
                               children: [
-                                ParticipantsWidjet(),
-                                ContactsWidget()
+                                const ParticipantsViewWidjet(),
+                                ...(model.modifyParticipants)
+                                    ? [
+                                        const ParticipantsEditWidjet(),
+                                        const ContactsWidget()
+                                      ]
+                                    : []
                               ],
                             ),
                           ),
@@ -94,8 +119,48 @@ const Map<ParticipantsSelectionMenu, Map<MenuProp, dynamic>>
   },
 };
 
-class ParticipantsWidjet extends StatelessWidget {
-  const ParticipantsWidjet({
+class ParticipantsViewWidjet extends StatelessWidget {
+  const ParticipantsViewWidjet({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    var theme = Theme.of(context);
+    ParticipantsSelectionProvider model =
+        Provider.of<ParticipantsSelectionProvider>(context);
+
+    return Column(
+      children: [
+        // MyBigPadding(
+        //   child: Center(
+        //       child: Text(
+        //     'Tap Participant to view',
+        //     style: theme.textTheme.bodyText1,
+        //   )),
+        // ), //
+        Expanded(
+          child: ListView.builder(
+              itemCount: model.meetingParticipants.value.length,
+              itemBuilder: (context, i) {
+                final participant = model.meetingParticipants.value[i];
+                return ListTile(
+                  leading: Avatar2(participant, 18.0, theme),
+                  title: Text(participant.displayName),
+                  subtitle: Text(participant.name),
+                  onTap: () {
+                    model.returnContactFromParticipants(participant);
+                  },
+                );
+              }),
+        ),
+      ],
+    );
+  }
+}
+
+class ParticipantsEditWidjet extends StatelessWidget {
+  const ParticipantsEditWidjet({
     Key? key,
   }) : super(key: key);
 
@@ -116,9 +181,9 @@ class ParticipantsWidjet extends StatelessWidget {
         ), //
         Expanded(
           child: ListView.builder(
-              itemCount: model.localParticipants.length,
+              itemCount: model.editParticipants.length,
               itemBuilder: (context, i) {
-                final participant = model.localParticipants[i];
+                final participant = model.editParticipants[i];
                 return ListTile(
                   leading: Avatar2(participant, 18.0, theme),
                   title: Text(participant.displayName),

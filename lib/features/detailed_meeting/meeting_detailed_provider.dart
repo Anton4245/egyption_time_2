@@ -13,9 +13,7 @@ enum MainMenu {
   deleteProbabilityAssessment
 }
 
-enum ParticipantsMenu {
-  modifyParticipants,
-}
+enum ParticipantsMenu { modifyParticipants, viewParticipants }
 
 class MeetingDetailedProvider with ChangeNotifier {
   final Meeting meeting;
@@ -61,11 +59,21 @@ class MeetingDetailedProvider with ChangeNotifier {
   }
 
   void participantsMenuOnSelected(ParticipantsMenu menuItem) {
-    if (menuItem == ParticipantsMenu.modifyParticipants) {
+    if ((menuItem == ParticipantsMenu.modifyParticipants) ||
+        (menuItem == ParticipantsMenu.viewParticipants)) {
       if (!meeting.participants.isModifying) {
         meeting.participants.isModifying = true;
         meeting.participants.modifyingFormProvider =
-            ParticipantsSelectionProvider(meeting.participants);
+            ParticipantsSelectionProvider(meeting.participants,
+                (menuItem == ParticipantsMenu.modifyParticipants));
+      } else if ((menuItem == ParticipantsMenu.modifyParticipants) &&
+          (meeting.participants.modifyingFormProvider
+                      as ParticipantsSelectionProvider)
+                  .modifyParticipants ==
+              false) {
+        meeting.participants.modifyingFormProvider =
+            ParticipantsSelectionProvider(meeting.participants,
+                (menuItem == ParticipantsMenu.modifyParticipants));
       }
     }
   }

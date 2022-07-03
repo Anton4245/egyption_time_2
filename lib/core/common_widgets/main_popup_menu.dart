@@ -33,8 +33,13 @@ mainPopupMenu<E>(
                     color: theme.colorScheme.primary,
                     size: (size == 'big') ? 20 : 16,
                   ),
-                  const SizedBox(
-                    width: 4,
+                  SizedBox.fromSize(
+                    size: Size(
+                        (size == 'big') ? 20 : 16, (size == 'big') ? 20 : 16),
+                    child: const VerticalDivider(
+                      width: 2,
+                      thickness: 1,
+                    ),
                   ),
                   Expanded(
                     child: Text(
