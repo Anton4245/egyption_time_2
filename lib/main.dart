@@ -3,10 +3,11 @@ import 'package:ejyption_time_2/core/global_model.dart';
 import 'package:ejyption_time_2/screens/Meeting_cover_over_detailed.dart';
 import 'package:ejyption_time_2/screens/home_page.dart';
 import 'package:ejyption_time_2/features/list_of_meeting/meeting_list_provider.dart';
+import 'package:ejyption_time_2/screens/participants_selection_cover.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+//import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -42,9 +43,11 @@ class MyApp extends StatelessWidget {
         routes: {
           MeetingCoverOverDetailed.routeName: (ctx) =>
               const MeetingCoverOverDetailed(),
+          ParticipantsWidgetCover.routeName: (ctx) =>
+              const ParticipantsWidgetCover(),
         },
         localizationsDelegates: const [
-          AppLocalizations.delegate,
+          //AppLocalizations.delegate,
           GlobalMaterialLocalizations.delegate,
           GlobalWidgetsLocalizations.delegate,
           GlobalCupertinoLocalizations.delegate,

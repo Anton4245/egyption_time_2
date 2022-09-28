@@ -1,6 +1,13 @@
+import 'dart:collection';
+import 'dart:math';
+
+import 'package:ejyption_time_2/core/global_model.dart';
+import 'package:ejyption_time_2/core/main_functions.dart';
 import 'package:ejyption_time_2/features/modify_meeting/modifying_field_provider.dart';
 import 'package:ejyption_time_2/models/meeting.dart';
 import 'package:ejyption_time_2/models/modified_objects.dart';
+import 'package:ejyption_time_2/models/point_assestment.dart';
+import 'package:ejyption_time_2/models/withddd.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 
@@ -134,6 +141,37 @@ abstract class NegotiatingField<T extends Object>
     provideModifying(notify);
   }
 
+  //list of Comments
+  final Map<String, List<PointAssessment>> _pointAssesstments = {'': []};
+  Map<String, List<PointAssessment>> get pointAssesstments =>
+      Map.fromEntries(_pointAssesstments.entries);
+  void addPointAssesstment(PointAssessment newPointAssessment,
+      [bool notify = true]) {
+    List<PointAssessment> list = _pointAssesstments.putIfAbsent(
+        newPointAssessment.keyStringValue, () => []);
+    list.add(newPointAssessment);
+    list.sort((a, b) => -a.creation.compareTo(b.creation));
+    provideModifying(notify);
+  }
+
+  List<PointAssessment> getListOfAssessmentByKeyString(keyStringValue,
+      {int length = 1000000}) {
+    List<PointAssessment> list =
+        _pointAssesstments[keyStringValue] ?? <PointAssessment>[];
+    return [...list.getRange(0, min(list.length, length))];
+  }
+
+  void removePointAssesstment(String keyStringValue, [bool notify = true]) {
+    //1. find needed comment
+    if ((GlobalModel.instance.currentParticipant == null) ||
+        _pointAssesstments[keyStringValue] == null) {
+      return;
+    }
+
+    deleteLastListMember(_pointAssesstments[keyStringValue]!);
+    provideModifying(notify);
+  }
+
   //mark if the field has been negotiated
   bool _isNegotiated = false;
   bool get isNegotiated => _isNegotiated;
@@ -156,10 +194,19 @@ abstract class NegotiatingField<T extends Object>
     if (isSelected) {
       resultString = valueToString();
     } else if (_hasStringProvisionalValue) {
-      return _provisionalValue;
+      resultString = _provisionalValue;
     }
+    return resultString;
+  }
 
-    resultString != '' ? resultString + (_isNegotiated ? ' V' : '') : '';
+  String toKeyString() {
+    String resultString = '';
+
+    if (isSelected) {
+      resultString = keyString(value);
+    } else if (_hasStringProvisionalValue) {
+      resultString = keyString(_provisionalValue);
+    }
 
     return resultString;
   }
@@ -190,7 +237,7 @@ class NegotiatingHoursAndMinutes extends NegotiatingField<DateTime> {
   @override
   String mainFormat(Object? val) {
     if (val == null) return '';
-    if (val is! DateTime) return '';
+    if (val is! DateTime) return val.toString();
     return DateFormat("Hm").format(val);
   }
 
@@ -210,7 +257,7 @@ class NegotiatingDay extends NegotiatingField<DateTime> {
   @override
   String mainFormat(Object? val) {
     if (val == null) return '';
-    if (val is! DateTime) return '';
+    if (val is! DateTime) return val.toString();
     return DateFormat("yMMMMd").format(val);
   }
 

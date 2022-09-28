@@ -14,3 +14,18 @@ class MyMainPadding extends StatelessWidget {
     );
   }
 }
+
+class MyBigPadding extends StatelessWidget {
+  final Widget? child;
+  final bool hasBorder;
+  const MyBigPadding({Key? key, this.child, this.hasBorder = true})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(16),
+      child: child,
+    );
+  }
+}

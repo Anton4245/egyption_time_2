@@ -3,7 +3,7 @@ import 'package:ejyption_time_2/models/negotiating_field.dart';
 import 'package:ejyption_time_2/screens/Meeting_cover_over_detailed.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+//import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MeetingListItem extends StatelessWidget {
   final Map<String, dynamic> colorProperty;
@@ -134,7 +134,7 @@ class NegotiatingFieldWidget extends StatelessWidget {
           ),
           Expanded(
             child: Text(
-              '$name: $field',
+              '$name: ${field.toString()}',
               maxLines: 3,
               overflow: TextOverflow.ellipsis,
               style: field.isSelected

@@ -37,6 +37,8 @@ dependencies:
   equatable: ^2.0.3
   intl: ^0.17.0
   flutter_bloc: ^8.0.1
+  flutter_contacts: ^1.1.5
+  after_layout: ^1.1.1+1
   flutter_localizations: # Add this line
     sdk: flutter 
 
