@@ -3,6 +3,7 @@ import 'package:ejyption_time_2/core/global_model.dart';
 import 'package:ejyption_time_2/features/modify_meeting/modifying_field_provider.dart';
 import 'package:ejyption_time_2/models/meeting.dart';
 import 'package:ejyption_time_2/models/modified_objects.dart';
+import 'package:ejyption_time_2/models/my_contact.dart';
 import 'package:ejyption_time_2/models/participant.dart';
 import 'package:ejyption_time_2/models/point_assestment.dart';
 import 'package:ejyption_time_2/models/withddd.dart';
@@ -136,7 +137,12 @@ class ConstantFieldProvider with ChangeNotifier {
     if (result) {
       PointAssessment newAssesstment = PointAssessment(
           participant: GlobalModel.instance.currentParticipant ??
-              Participant(name: 'Incognito', displayName: 'Incognito'),
+              Participant(
+                myContact: MyContact(
+                    id: 'Incognito',
+                    name: 'Incognito',
+                    displayName: 'Incognito'),
+              ),
           meetingId: (field.parent as Meeting).id,
           field: field.name,
           keyStringValue: keyStringValue,

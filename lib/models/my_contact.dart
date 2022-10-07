@@ -26,12 +26,19 @@ class MyContact {
   List<String> phones;
 
   MyContact({
-    this.id = '',
+    required this.id,
     this.displayName = '',
     String? name,
     List<String>? phones,
   })  : name = name ?? '',
         phones = phones ?? <String>[];
+
+  phonesToString() {
+    return phones.fold<String>(
+        '',
+        (previousValue, element) =>
+            previousValue + (previousValue.isNotEmpty ? ', ' : '') + element);
+  }
 
 //   factory MyContact.fromJson(Map<String, dynamic> json) => Contact(
 //         id: (json['id'] as String?) ?? '',

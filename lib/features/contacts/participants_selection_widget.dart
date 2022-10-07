@@ -144,13 +144,15 @@ class ParticipantsViewWidjet extends StatelessWidget {
               itemCount: model.meetingParticipants.value.length,
               itemBuilder: (context, i) {
                 final participant = model.meetingParticipants.value[i];
+
+                MyContact? myContact = participant.myContact;
+                myContact ??= model.findMyContact(participant.phonesEncripted);
                 return ListTile(
-                  leading: Avatar2(participant, 18.0, theme),
-                  title: Text(participant.displayName),
-                  subtitle: Text(participant.name),
-                  onTap: () {
-                    model.returnContactFromParticipants(participant);
-                  },
+                  leading: Avatar2(
+                      participant, 18.0, theme, Icons.person, myContact),
+                  title: Text(myContact?.displayName ?? ''),
+                  subtitle: Text(myContact?.phonesToString() ?? ''),
+                  onTap: () {},
                 );
               }),
         ),
@@ -186,8 +188,8 @@ class ParticipantsEditWidjet extends StatelessWidget {
                 final participant = model.editParticipants[i];
                 return ListTile(
                   leading: Avatar2(participant, 18.0, theme),
-                  title: Text(participant.displayName),
-                  subtitle: Text(participant.name),
+                  title: Text(participant.myContact?.displayName ?? ''),
+                  subtitle: Text(participant.myContact?.phonesToString() ?? ''),
                   onTap: () {
                     model.returnContactFromParticipants(participant);
                   },

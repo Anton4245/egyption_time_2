@@ -38,7 +38,7 @@ dependencies:
   intl: ^0.17.0
   flutter_bloc: ^8.0.1
   flutter_contacts: ^1.1.5
-  after_layout: ^1.1.1+1
+  crypto: ^3.0.2
   flutter_localizations: # Add this line
     sdk: flutter 
 

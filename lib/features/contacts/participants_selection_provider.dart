@@ -1,6 +1,9 @@
+import 'dart:collection';
+
 import 'package:ejyption_time_2/core/Contacts/contacts_impl_flutter_contacts.dart';
 import 'package:ejyption_time_2/core/Contacts/contacts_provider_interface.dart';
 import 'package:ejyption_time_2/core/global_model.dart';
+import 'package:ejyption_time_2/features/list_of_meeting/meeting_list_provider.dart';
 import 'package:ejyption_time_2/models/meeting.dart';
 import 'package:ejyption_time_2/models/perticipants.dart';
 import 'package:flutter/widgets.dart';
@@ -21,6 +24,7 @@ class ParticipantsSelectionProvider with ChangeNotifier {
   bool permissionDenied = false;
   int _version = 0;
   List<String> areExcluded = [];
+  Map<String, MyContact> mapOfEncriptedphones = HashMap();
 
   ParticipantsSelectionProvider(this.meetingParticipants,
       [this.modifyParticipants = false]) {
@@ -54,6 +58,7 @@ class ParticipantsSelectionProvider with ChangeNotifier {
       provideModifying();
     } else {
       contacts = await contactsProviderImpl.getContacts();
+      refreshMapOfEncriptedPhones();
       provideModifying();
 
       FlutterContacts.addListener(_loadContacts);
@@ -69,8 +74,23 @@ class ParticipantsSelectionProvider with ChangeNotifier {
       contacts!.clear();
     }
     contacts = await contactsProviderImpl.getContacts();
+    refreshMapOfEncriptedPhones();
 
     provideModifying();
+  }
+
+  void refreshMapOfEncriptedPhones() {
+    mapOfEncriptedphones.clear();
+    contacts?.forEach((myContact) {
+      myContact.phones.forEach((number) {
+        mapOfEncriptedphones.putIfAbsent(
+            GlobalModel.instance.cryptoImpl.convertStringWithPassword(
+                fullNumber(number),
+                (meetingParticipants.parent as Meeting)
+                    .myPersonalContactsUniqueKey),
+            () => myContact);
+      });
+    });
   }
 
   void addContactToParticipants(String id) {
@@ -78,7 +98,8 @@ class ParticipantsSelectionProvider with ChangeNotifier {
       //StateError may be throwing, if no any element found
       MyContact myContact = contacts!.firstWhere((element) => element.id == id);
       areExcluded.add(myContact.id);
-      editParticipants.add(Participant.fromMyContact(myContact));
+      editParticipants.add(Participant.fromMyContact(
+          (meetingParticipants.parent as Meeting), myContact));
       provideModifying();
     } catch (e) {
       return;
@@ -86,8 +107,8 @@ class ParticipantsSelectionProvider with ChangeNotifier {
   }
 
   void returnContactFromParticipants(Participant participant) {
-    if (participant.contactId.isNotEmpty) {
-      areExcluded.removeWhere((id) => id == participant.contactId);
+    if (participant.myContact != null) {
+      areExcluded.removeWhere((id) => id == participant.myContact!.id);
     }
     editParticipants.removeWhere((element) => element.id == participant.id);
     provideModifying();
@@ -107,5 +128,13 @@ class ParticipantsSelectionProvider with ChangeNotifier {
         meetingParticipants.modifyingFormProvider = null;
         break;
     }
+  }
+
+  MyContact? findMyContact(List<String> phonesEncripted) {
+    MyContact? curContact;
+    for (var encriptedNumber in phonesEncripted) {
+      curContact ??= mapOfEncriptedphones[encriptedNumber];
+    }
+    return curContact;
   }
 }
