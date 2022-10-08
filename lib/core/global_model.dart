@@ -5,6 +5,7 @@ import 'package:ejyption_time_2/models/modified_objects.dart';
 import 'package:ejyption_time_2/core/test_meeting.dart';
 import 'package:ejyption_time_2/models/my_contact.dart';
 import 'package:ejyption_time_2/models/participant.dart';
+import 'package:flutter/material.dart';
 
 class GlobalModel {
   //Singleton constractor
@@ -25,6 +26,7 @@ class GlobalModel {
   final localPhoneLength = 7;
   final countryCode = '+7';
   final mobilPhoneSignificantLength = 10;
+  BuildContext? commonContext;
 
   CryptoInterface cryptoImpl = CryptoDartDevImpl();
   String myContactsPassword = 'akjhfnqucakjs623fkalb92jlaoash';

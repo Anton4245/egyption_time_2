@@ -5,6 +5,7 @@ import 'package:ejyption_time_2/models/negotiating_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 //for Git
 class FieldEditForm extends StatelessWidget {
@@ -194,7 +195,7 @@ class VariantsWidget extends StatelessWidget {
                 color: theme.colorScheme.primary,
                 size: 36,
               ),
-              const Text('Add to variants\' list'),
+              Text(AppLocalizations.of(context)!.addToVariantsList),
             ],
           ),
           onPressed: () {

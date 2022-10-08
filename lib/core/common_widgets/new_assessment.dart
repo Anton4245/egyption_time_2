@@ -1,6 +1,7 @@
 import 'package:ejyption_time_2/models/probability_assesstment.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 enum ProbabilityValues { mark, probability, text }
 
@@ -21,8 +22,8 @@ Future newAssessmentForm(BuildContext context, String stringToComment,
               builder: (BuildContext context, StateSetter setState) =>
                   AlertDialog(
                 scrollable: true,
-                title:
-                    Text('Choose assesstment for "$stringToComment" meeting:'),
+                title: Text(
+                    '${AppLocalizations.of(context)!.chooseAssesstmentFor} "$stringToComment" ${AppLocalizations.of(context)!.meeting}:'),
                 content: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
@@ -38,9 +39,9 @@ Future newAssessmentForm(BuildContext context, String stringToComment,
                         ProbabilityMarks.definitelyYes
                       ]
                           .map((e) => RadioListTile<ProbabilityMarks>(
-                                visualDensity: VisualDensity(
+                                visualDensity: const VisualDensity(
                                     horizontal: -4.0, vertical: -4.0),
-                                contentPadding: EdgeInsets.all(0),
+                                contentPadding: const EdgeInsets.all(0),
                                 activeColor:
                                     Theme.of(context).colorScheme.primary,
                                 title: Text(ProbabilityNames[e] ?? ''),
@@ -75,13 +76,15 @@ Future newAssessmentForm(BuildContext context, String stringToComment,
                         _probability = int.tryParse(value) ?? 0;
                       },
                       decoration: InputDecoration(
-                          label: Text('% of probability'),
+                          label: Text(
+                              '% ${AppLocalizations.of(context)!.ofProbability}'),
                           errorText: _errorText),
                     ),
                     TextField(
                       onChanged: (value) => _text = value,
-                      decoration: const InputDecoration(
-                          label: Text('Leave comment to assessment')),
+                      decoration: InputDecoration(
+                          label: Text(AppLocalizations.of(context)!
+                              .leaveCommentToAssessment)),
                       minLines: 1,
                       maxLines: 5,
                     ),
@@ -92,7 +95,8 @@ Future newAssessmentForm(BuildContext context, String stringToComment,
                       onPressed: () {
                         if (_mark == ProbabilityMarks.isUnaware) {
                           setState(() {
-                            _errorText = "Choose any variant from list above";
+                            _errorText = AppLocalizations.of(context)!
+                                .chooseAnyVariantFromListAbove;
                           });
 
                           return;
@@ -102,14 +106,14 @@ Future newAssessmentForm(BuildContext context, String stringToComment,
                         Navigator.pop(context);
                       },
                       icon: const Icon(Icons.check),
-                      label: const Text('OK')),
+                      label: Text(AppLocalizations.of(context)!.oK)),
                   ElevatedButton.icon(
                       onPressed: () {
                         _result = false;
                         Navigator.pop(context);
                       },
                       icon: const Icon(Icons.check),
-                      label: const Text('Cancel')),
+                      label: Text(AppLocalizations.of(context)!.cancel)),
                 ],
               ),
             ),

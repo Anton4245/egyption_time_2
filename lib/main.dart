@@ -1,3 +1,5 @@
+import 'dart:js';
+
 import 'package:ejyption_time_2/core/lib_color_schemes_g2.dart';
 import 'package:ejyption_time_2/core/global_model.dart';
 import 'package:ejyption_time_2/models/meeting.dart';
@@ -27,6 +29,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    GlobalModel.instance.commonContext = context;
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<Meetings>(

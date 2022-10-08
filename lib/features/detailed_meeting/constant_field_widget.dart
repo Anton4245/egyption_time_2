@@ -1,9 +1,9 @@
 import 'package:ejyption_time_2/core/common_widgets/new_comment.dart';
 import 'package:ejyption_time_2/core/common_widgets/main_popup_menu.dart';
 import 'package:ejyption_time_2/core/common_widgets/templates.dart';
+import 'package:ejyption_time_2/core/global_model.dart';
 import 'package:ejyption_time_2/core/main_functions.dart';
 import 'package:ejyption_time_2/features/detailed_meeting/constant_field_provider.dart';
-import 'package:ejyption_time_2/features/detailed_meeting/meeting_detailed_widget.dart';
 import 'package:ejyption_time_2/features/modify_meeting/field_edit_form.dart';
 import 'package:ejyption_time_2/features/modify_meeting/modifying_field_provider.dart';
 import 'package:ejyption_time_2/models/meeting.dart';
@@ -11,6 +11,7 @@ import 'package:ejyption_time_2/models/negotiating_field.dart';
 import 'package:ejyption_time_2/models/point_assestment.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CommonFieldWidget extends StatelessWidget {
   const CommonFieldWidget({Key? key}) : super(key: key);
@@ -84,10 +85,12 @@ class ConstantFieldWidget extends StatelessWidget {
                               Expanded(
                                 child: Text(
                                   field.isNegotiated
-                                      ? 'Negotiated'
+                                      ? AppLocalizations.of(context)!.negotiated
                                       : field.isSelected
-                                          ? 'In process'
-                                          : 'Provisionally',
+                                          ? AppLocalizations.of(context)!
+                                              .inProcess
+                                          : AppLocalizations.of(context)!
+                                              .provisionally,
                                   style: field.isNegotiated
                                       ? currentStatuslStyle
                                       : currentLabelStyle,
@@ -274,42 +277,58 @@ class DetailedVariantsWidget extends StatelessWidget {
   }
 }
 
-const Map<Menu, Map<MenuProp, dynamic>> menuProperties = {
+Map<Menu, Map<MenuProp, dynamic>> menuProperties = {
   Menu.provisionalItem: {
     MenuProp.icon: Icons.edit_note,
-    MenuProp.text: 'Set provisional value'
+    MenuProp.text: AppLocalizations.of(GlobalModel.instance.commonContext!)!
+        .setProvisionalValue,
   },
   Menu.clearProvisionalItem: {
     MenuProp.icon: Icons.clear,
-    MenuProp.text: 'Clear provisional value and variants'
+    MenuProp.text: AppLocalizations.of(GlobalModel.instance.commonContext!)!
+        .clearProvisionalValueAndVariants
   },
-  Menu.valueItem: {MenuProp.icon: Icons.edit_note, MenuProp.text: 'Set value'},
+  Menu.valueItem: {
+    MenuProp.icon: Icons.edit_note,
+    MenuProp.text:
+        AppLocalizations.of(GlobalModel.instance.commonContext!)!.setValue
+  },
   Menu.clearValueItem: {
     MenuProp.icon: Icons.clear,
-    MenuProp.text: 'Clear value'
+    MenuProp.text:
+        AppLocalizations.of(GlobalModel.instance.commonContext!)!.clearValue
   },
   Menu.setNegotiatedItem: {
     MenuProp.icon: Icons.check_circle,
-    MenuProp.text: 'Set to be negotiated'
+    MenuProp.text: AppLocalizations.of(GlobalModel.instance.commonContext!)!
+        .setAsNegotiated
   },
   Menu.clearNegotiatedItem: {
     MenuProp.icon: Icons.circle_outlined,
-    MenuProp.text: 'Clear to be negotiated'
+    MenuProp.text: AppLocalizations.of(GlobalModel.instance.commonContext!)!
+        .clearAsNegotiated
   },
-  Menu.setComment: {MenuProp.icon: Icons.comment, MenuProp.text: 'New comment'},
+  Menu.setComment: {
+    MenuProp.icon: Icons.comment,
+    MenuProp.text:
+        AppLocalizations.of(GlobalModel.instance.commonContext!)!.newComment
+  },
   Menu.deleteComment: {
     MenuProp.icon: Icons.clear,
-    MenuProp.text: 'Delete comment'
+    MenuProp.text:
+        AppLocalizations.of(GlobalModel.instance.commonContext!)!.deleteComment
   }
 };
 
-const Map<VariantMenu, Map<MenuProp, dynamic>> variantMenuProperties = {
+Map<VariantMenu, Map<MenuProp, dynamic>> variantMenuProperties = {
   VariantMenu.setComment: {
     MenuProp.icon: Icons.comment,
-    MenuProp.text: 'New comment'
+    MenuProp.text:
+        AppLocalizations.of(GlobalModel.instance.commonContext!)!.newComment,
   },
   VariantMenu.deleteComment: {
     MenuProp.icon: Icons.clear,
-    MenuProp.text: 'Delete comment'
+    MenuProp.text:
+        AppLocalizations.of(GlobalModel.instance.commonContext!)!.deleteComment
   }
 };

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 enum MenuProp { icon, text }
 
@@ -43,7 +44,7 @@ mainPopupMenu<E>(
                   ),
                   Expanded(
                     child: Text(
-                        menuProperties[e]?[MenuProp.text] ?? 'New action',
+                        menuProperties[e]?[MenuProp.text] ?? AppLocalizations.of(context)!.newAction,
                         maxLines: 3,
                         overflow: TextOverflow.ellipsis,
                         style: theme.textTheme.subtitle2?.copyWith(

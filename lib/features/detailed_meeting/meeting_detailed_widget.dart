@@ -10,7 +10,7 @@ import 'package:ejyption_time_2/screens/participants_selection_cover.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ejyption_time_2/models/meeting.dart';
-import 'package:ejyption_time_2/models/negotiating_field.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MeetingDetailed extends StatelessWidget {
   const MeetingDetailed({Key? key}) : super(key: key);
@@ -52,8 +52,9 @@ class MeetingDetailed extends StatelessWidget {
                     flex: 6,
                     child: Text(
                       meeting.finallyNegotiated
-                          ? 'Is finally negotiated'
-                          : 'In process of negotiation',
+                          ? AppLocalizations.of(context)!.isFinallyNegotiated
+                          : AppLocalizations.of(context)!
+                              .inProcessOfNegotiation,
                       style: meeting.finallyNegotiated
                           ? theme.textTheme.subtitle1
                               ?.copyWith(color: theme.colorScheme.primary)
@@ -119,7 +120,7 @@ class MeetingDetailed extends StatelessWidget {
                             ? theme.colorScheme.tertiaryContainer
                             : null,
                         child: Text(
-                          '${meeting.participants.value.length.toString()} participants, ${meeting.calculateProbability().toStringAsFixed(1)} real',
+                          '${meeting.participants.value.length.toString()} ${AppLocalizations.of(context)!.participants}, ${meeting.calculateProbability().toStringAsFixed(1)} ${AppLocalizations.of(context)!.real}',
                           style: theme.textTheme.subtitle1,
                         ),
                       ),
@@ -180,11 +181,11 @@ class MeetingDetailed extends StatelessWidget {
   }
 }
 
-const Map<ParticipantsMenu, Map<MenuProp, dynamic>> participantsMenuProperties =
-    {
+Map<ParticipantsMenu, Map<MenuProp, dynamic>> participantsMenuProperties = {
   ParticipantsMenu.modifyParticipants: {
     MenuProp.icon: Icons.people,
-    MenuProp.text: 'Modify participants list'
+    MenuProp.text: AppLocalizations.of(GlobalModel.instance.commonContext!)!
+        .modifyParticipantsList,
   },
 };
 
@@ -195,16 +196,19 @@ Map<MainMenu, Map<MenuProp, dynamic>> mainMenuProperties(meeting) {
           ? Icons.check_circle
           : Icons.circle_outlined,
       MenuProp.text: !meeting.finallyNegotiated
-          ? 'Set <Finally negotiated>'
+          ? AppLocalizations.of(GlobalModel.instance.commonContext!)!
+              .setFinallyNegotiated
           : 'Clear <Finally negotiated>'
     },
     MainMenu.setProbabilityAssessment: {
       MenuProp.icon: Icons.percent,
-      MenuProp.text: 'Set probability assessment'
+      MenuProp.text: AppLocalizations.of(GlobalModel.instance.commonContext!)!
+          .setProbabilityAssessment
     },
     MainMenu.deleteProbabilityAssessment: {
       MenuProp.icon: Icons.delete_sweep,
-      MenuProp.text: 'Delete probability assessment'
+      MenuProp.text: AppLocalizations.of(GlobalModel.instance.commonContext!)!
+          .deleteProbabilityAssessment
     },
   };
 }

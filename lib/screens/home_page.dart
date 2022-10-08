@@ -17,14 +17,13 @@ class HomePage2 extends StatelessWidget {
     return Consumer<Meetings>(
       builder: (context, meetings, child) => Scaffold(
         appBar: AppBar(
-          title: Text(AppLocalizations.of(context)!
-              .appTitle), //Text('Title') //Text(AppLocalizations.of(context)!.appTitle),
+          title: Text(AppLocalizations.of(context)!.appTitle),
         ),
         body: Column(
           children: [
-            ElevatedButton(
-                onPressed: () => meetings.changeModel(),
-                child: const Text('Change meetings')),
+            // ElevatedButton(
+            //     onPressed: () => meetings.changeModel(),
+            //     child: const Text('Change meetings')),
             Expanded(
               child: ListView.builder(
                   itemCount: GlobalModel.instance.meetingList.length,
