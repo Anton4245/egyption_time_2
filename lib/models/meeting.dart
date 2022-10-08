@@ -1,13 +1,11 @@
 import 'dart:collection';
 import 'dart:convert';
+import 'package:hive/hive.dart';
 
 import 'package:ejyption_time_2/core/global_model.dart';
-import 'package:ejyption_time_2/core/main_functions.dart';
-import 'package:ejyption_time_2/features/contacts/participants_selection_provider.dart';
 import 'package:ejyption_time_2/models/modified_objects.dart';
 import 'package:ejyption_time_2/models/participant.dart';
 import 'package:ejyption_time_2/models/perticipants.dart';
-import 'package:ejyption_time_2/models/point_assestment.dart';
 import 'package:ejyption_time_2/models/probability_assesstment.dart';
 import 'package:ejyption_time_2/models/withddd.dart';
 import 'package:flutter/widgets.dart';
@@ -15,6 +13,9 @@ import 'package:intl/intl.dart';
 
 import 'negotiating_field.dart';
 
+part 'meeting.g.dart';
+
+@HiveType(typeId: 1)
 class Meeting with ChangeNotifier implements ModifiedObjectInterface<Object> {
   //SERVICE FIELDS
 
@@ -38,6 +39,7 @@ class Meeting with ChangeNotifier implements ModifiedObjectInterface<Object> {
   Map<String, NegotiatingField> get negotiatingFieldsMap =>
       _negotiatingFieldsMap;
 
+  @HiveField(10)
   String _id = UniqueKey().toString();
   String get id => _id;
   setId(String id, [bool notify = true]) {
@@ -50,9 +52,12 @@ class Meeting with ChangeNotifier implements ModifiedObjectInterface<Object> {
 
   final Map<String, String> contactsUniqueKey = HashMap(); //for
 
+  @HiveField(11)
   int _version = 0;
+  @HiveField(12)
   int _fieldsVersion = 0;
   int get fieldsVersion => _fieldsVersion;
+  @HiveField(13)
   String? nameOfLastModifyingField;
 
   //FOR INTERFACE ModifiedObjectInterface

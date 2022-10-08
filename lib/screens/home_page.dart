@@ -5,6 +5,7 @@ import 'package:ejyption_time_2/core/test_meeting.dart';
 import 'package:ejyption_time_2/features/list_of_meeting/meeting_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class HomePage2 extends StatelessWidget {
   const HomePage2({Key? key}) : super(key: key);
@@ -16,7 +17,8 @@ class HomePage2 extends StatelessWidget {
     return Consumer<Meetings>(
       builder: (context, meetings, child) => Scaffold(
         appBar: AppBar(
-          title: const Text('Title'),
+          title: Text(AppLocalizations.of(context)!
+              .appTitle), //Text('Title') //Text(AppLocalizations.of(context)!.appTitle),
         ),
         body: Column(
           children: [

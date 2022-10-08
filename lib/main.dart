@@ -1,23 +1,22 @@
 import 'package:ejyption_time_2/core/lib_color_schemes_g2.dart';
 import 'package:ejyption_time_2/core/global_model.dart';
+import 'package:ejyption_time_2/models/meeting.dart';
 import 'package:ejyption_time_2/screens/Meeting_cover_over_detailed.dart';
 import 'package:ejyption_time_2/screens/home_page.dart';
 import 'package:ejyption_time_2/features/list_of_meeting/meeting_list_provider.dart';
 import 'package:ejyption_time_2/screens/participants_selection_cover.dart';
 import 'package:flutter/material.dart';
+//import 'package:intl/intl_browser.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-//import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+//import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  //await findSystemLocale();
-  // ignore: unused_local_variable
   GlobalModel gm = GlobalModel.instance;
-
-  await Hive.initFlutter();
-  Hive.registerAdapter(HiveBookingAdapter());
+  WidgetsFlutterBinding.ensureInitialized();
+  Hive.registerAdapter(MeetingAdapter());
 
   runApp(const MyApp());
 }
@@ -42,7 +41,9 @@ class MyApp extends StatelessWidget {
         // ),
       ],
       child: MaterialApp(
-        title: 'Egyption time 2',
+        // localizationsDelegates: context.localizationDelegates,
+        // supportedLocales: context.supportedLocales,
+        // locale: context.locale,
         theme: prepareLightThemeData(context),
         darkTheme: prepareDarkThemeData(context),
         routes: {
@@ -51,16 +52,15 @@ class MyApp extends StatelessWidget {
           ParticipantsWidgetCover.routeName: (ctx) =>
               const ParticipantsWidgetCover(),
         },
-        localizationsDelegates: const [
-          //AppLocalizations.delegate,
+        locale: Locale('en'),
+        supportedLocales: [Locale('en'), Locale('ru')],
+        localizationsDelegates: [
+          AppLocalizations.delegate,
           GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
           GlobalCupertinoLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
         ],
-        supportedLocales: const [
-          Locale('en', ''), // English, no country code
-          Locale('ru', ''), // Spanish, no country code
-        ],
+
         home: const HomePage2(),
       ),
     );
