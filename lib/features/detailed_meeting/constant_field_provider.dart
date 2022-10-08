@@ -81,7 +81,7 @@ class ConstantFieldProvider with ChangeNotifier {
       field.modified = true;
       field.updateProvisionalVariants(<String>[]);
     } else if (menuItem == Menu.clearValueItem) {
-      field.clearValue(); //TODO handle with field.modified = true;
+      field.clearValue();
       field.modified = true;
     } else if (menuItem == Menu.setNegotiatedItem) {
       field.setIsNegotiated(true);
@@ -108,8 +108,9 @@ class ConstantFieldProvider with ChangeNotifier {
           if (field.value != null) m.add(Menu.clearValueItem);
         } else {
           m.add(Menu.provisionalItem);
-          if (field.provisionalValue.isNotEmpty)
+          if (field.provisionalValue.isNotEmpty) {
             m.add(Menu.clearProvisionalItem);
+          }
 
           m.add(Menu.valueItem);
         }

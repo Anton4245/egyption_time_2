@@ -5,6 +5,7 @@ import 'package:ejyption_time_2/models/participant.dart';
 import '../core/extenstions.dart' as ttt;
 
 class Participants with ChangeNotifier implements ModifiedObjectInterface {
+  // ignore: unused_field, prefer_final_fields
   String _id = UniqueKey().toString();
   int _version = 0;
   void provideModifying([bool notify = true]) {
@@ -14,7 +15,7 @@ class Participants with ChangeNotifier implements ModifiedObjectInterface {
     }
   }
 
-  List<Participant> _value = [];
+  final List<Participant> _value = [];
   List<Participant> get value => _value;
   updatevalue(List<Participant> newList, [bool notify = true]) {
     _value.replaceMy(newList);

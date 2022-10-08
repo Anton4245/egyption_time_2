@@ -2,7 +2,7 @@ import 'package:ejyption_time_2/models/my_contact.dart';
 import 'package:ejyption_time_2/models/participant.dart';
 import 'package:flutter/material.dart';
 
-Widget Avatar(MyContact myContact,
+Widget avatar(MyContact myContact,
     [double radius = 48.0,
     ThemeData? theme,
     IconData defaultIcon = Icons.person]) {
@@ -23,7 +23,7 @@ Widget Avatar(MyContact myContact,
   );
 }
 
-Widget Avatar2(Participant participant,
+Widget avatar2(Participant participant,
     [double radius = 48.0,
     ThemeData? theme,
     IconData defaultIcon = Icons.person,

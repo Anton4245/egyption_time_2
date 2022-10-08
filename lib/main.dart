@@ -1,5 +1,3 @@
-import 'dart:js';
-
 import 'package:ejyption_time_2/core/lib_color_schemes_g2.dart';
 import 'package:ejyption_time_2/core/global_model.dart';
 import 'package:ejyption_time_2/models/meeting.dart';
@@ -16,6 +14,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 void main() async {
+  // ignore: unused_local_variable
   GlobalModel gm = GlobalModel.instance;
   WidgetsFlutterBinding.ensureInitialized();
   Hive.registerAdapter(MeetingAdapter());
@@ -55,9 +54,9 @@ class MyApp extends StatelessWidget {
           ParticipantsWidgetCover.routeName: (ctx) =>
               const ParticipantsWidgetCover(),
         },
-        locale: Locale('en'),
-        supportedLocales: [Locale('en'), Locale('ru')],
-        localizationsDelegates: [
+        locale: const Locale('en'),
+        supportedLocales: const [Locale('en'), Locale('ru')],
+        localizationsDelegates: const [
           AppLocalizations.delegate,
           GlobalMaterialLocalizations.delegate,
           GlobalCupertinoLocalizations.delegate,

@@ -40,5 +40,7 @@
   "chooseAnyVariantFromListAbove": "Choose any variant from the list above",
   "oK": "OK",
   "cancel": "Cancel",
-  "newAction": "New action"
+  "newAction": "New action",
+  "record": "record",
+  "leaveComment":"Leave comment"
 }

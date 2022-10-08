@@ -147,13 +147,13 @@ class Meeting with ChangeNotifier implements ModifiedObjectInterface<Object> {
   double calculateProbability() {
     Set<Participant?> wereIncluded = <Participant?>{};
     double sumProbability = 0;
-    _probabilitytAssesstments.forEach((element) {
+    for (var element in _probabilitytAssesstments) {
       if (!wereIncluded.contains(element.participant)) {
         sumProbability +=
             (element.probability > 0) ? element.probability / 100 : 0;
         wereIncluded.add(element.participant);
       }
-    });
+    }
     return sumProbability;
   }
 

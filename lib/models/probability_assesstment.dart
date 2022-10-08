@@ -1,8 +1,6 @@
-import 'package:ejyption_time_2/core/main_functions.dart';
 import 'package:ejyption_time_2/models/withddd.dart';
 import 'package:flutter/material.dart';
 
-import 'package:ejyption_time_2/models/meeting.dart';
 import 'package:ejyption_time_2/models/participant.dart';
 
 enum ProbabilityMarks {
@@ -15,7 +13,7 @@ enum ProbabilityMarks {
   definitelyYes
 }
 
-const Map<ProbabilityMarks, String> ProbabilityNames = {
+const Map<ProbabilityMarks, String> probabilityNames = {
   ProbabilityMarks.isUnaware: 'Is unaware',
   ProbabilityMarks.mostCertainlyIsNot: 'Most certainly, not',
   ProbabilityMarks.maybe: 'Maybe',
@@ -25,7 +23,7 @@ const Map<ProbabilityMarks, String> ProbabilityNames = {
   ProbabilityMarks.definitelyYes: 'Definitely, yes',
 };
 
-const Map<ProbabilityMarks, int> ProbabilityNumbers = {
+const Map<ProbabilityMarks, int> probabilityNumbers = {
   ProbabilityMarks.isUnaware: -1,
   ProbabilityMarks.mostCertainlyIsNot: 5,
   ProbabilityMarks.maybe: 25,
@@ -55,7 +53,7 @@ class ProbabilityAssessment implements WithIdAndCreationAndParticipant {
     this.assessmentText = '',
   }) {
     if (probability == -1) {
-      probability = ProbabilityNumbers[mark] ?? 0;
+      probability = probabilityNumbers[mark] ?? 0;
     }
   }
 }

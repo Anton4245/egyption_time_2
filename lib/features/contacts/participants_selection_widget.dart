@@ -12,8 +12,9 @@ import 'package:provider/provider.dart';
 
 class ParticipantsSelectionWidget extends StatelessWidget {
   static const routeName = '/participants_selection_cover';
-  Participants participants;
-  ParticipantsSelectionWidget(this.participants, {Key? key}) : super(key: key);
+  final Participants participants;
+  const ParticipantsSelectionWidget(this.participants, {Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -148,7 +149,7 @@ class ParticipantsViewWidjet extends StatelessWidget {
                 MyContact? myContact = participant.myContact;
                 myContact ??= model.findMyContact(participant.phonesEncripted);
                 return ListTile(
-                  leading: Avatar2(
+                  leading: avatar2(
                       participant, 18.0, theme, Icons.person, myContact),
                   title: Text(myContact?.displayName ?? ''),
                   subtitle: Text(myContact?.phonesToString() ?? ''),
@@ -187,7 +188,7 @@ class ParticipantsEditWidjet extends StatelessWidget {
               itemBuilder: (context, i) {
                 final participant = model.editParticipants[i];
                 return ListTile(
-                  leading: Avatar2(participant, 18.0, theme),
+                  leading: avatar2(participant, 18.0, theme),
                   title: Text(participant.myContact?.displayName ?? ''),
                   subtitle: Text(participant.myContact?.phonesToString() ?? ''),
                   onTap: () {
@@ -236,7 +237,7 @@ class ContactsWidget extends StatelessWidget {
               itemBuilder: (context, i) {
                 final contact = mewList[i];
                 return ListTile(
-                  leading: Avatar(contact, 18.0, theme),
+                  leading: avatar(contact, 18.0, theme),
                   title: Text(contact.displayName),
                   onTap: () {
                     model.addContactToParticipants(contact.id);

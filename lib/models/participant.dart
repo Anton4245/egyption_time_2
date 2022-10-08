@@ -1,5 +1,4 @@
 import 'dart:math';
-import 'dart:typed_data';
 
 import 'package:ejyption_time_2/core/global_model.dart';
 import 'package:ejyption_time_2/models/meeting.dart';

@@ -12,7 +12,7 @@ Future newAssessmentForm(BuildContext context, String stringToComment,
   String _text = '';
   int _probability = 0;
   TextEditingController _c = TextEditingController();
-  String? _errorText = null;
+  String? _errorText;
 
   await showDialog(
       context: context,
@@ -44,7 +44,7 @@ Future newAssessmentForm(BuildContext context, String stringToComment,
                                 contentPadding: const EdgeInsets.all(0),
                                 activeColor:
                                     Theme.of(context).colorScheme.primary,
-                                title: Text(ProbabilityNames[e] ?? ''),
+                                title: Text(probabilityNames[e] ?? ''),
                                 value: e,
                                 groupValue: _mark,
                                 autofocus: true,
@@ -52,7 +52,7 @@ Future newAssessmentForm(BuildContext context, String stringToComment,
                                   setState(() {
                                     _mark = value ?? ProbabilityMarks.isUnaware;
                                     _probability =
-                                        ProbabilityNumbers[_mark] ?? 0;
+                                        probabilityNumbers[_mark] ?? 0;
                                     _c.text = _probability.toString();
                                     _errorText = null;
                                   });
