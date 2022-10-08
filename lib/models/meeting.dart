@@ -1,3 +1,4 @@
+import 'dart:collection';
 import 'dart:convert';
 
 import 'package:ejyption_time_2/core/global_model.dart';
@@ -43,6 +44,11 @@ class Meeting with ChangeNotifier implements ModifiedObjectInterface<Object> {
     _id = id;
     provideModifying(notify);
   }
+
+  String myPersonalContactsUniqueKey =
+      UniqueKey().toString(); //loaded from database, user to user map
+
+  final Map<String, String> contactsUniqueKey = HashMap(); //for
 
   int _version = 0;
   int _fieldsVersion = 0;

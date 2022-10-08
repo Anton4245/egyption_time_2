@@ -7,8 +7,8 @@ class MyFlutterContacts implements ContactsProviderInterface {
   @override
   Future<List<MyContact>> getContacts() async {
     try {
-      List<Contact> contactList =
-          await FlutterContacts.getContacts(withThumbnail: true);
+      List<Contact> contactList = await FlutterContacts.getContacts(
+          withProperties: true, withThumbnail: true);
       List<MyContact> myContactList =
           contactList.map((contact) => contactToMyContact(contact)).toList();
       return myContactList;

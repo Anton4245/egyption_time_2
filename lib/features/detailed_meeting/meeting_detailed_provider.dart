@@ -2,6 +2,7 @@ import 'package:ejyption_time_2/core/common_widgets/new_assessment.dart';
 import 'package:ejyption_time_2/core/global_model.dart';
 import 'package:ejyption_time_2/features/contacts/participants_selection_provider.dart';
 import 'package:ejyption_time_2/features/detailed_meeting/constant_field_provider.dart';
+import 'package:ejyption_time_2/models/my_contact.dart';
 import 'package:ejyption_time_2/models/participant.dart';
 import 'package:ejyption_time_2/models/probability_assesstment.dart';
 import '../../models/meeting.dart';
@@ -83,7 +84,11 @@ class MeetingDetailedProvider with ChangeNotifier {
     if (result) {
       ProbabilityAssessment newAssesstment = ProbabilityAssessment(
           participant: GlobalModel.instance.currentParticipant ??
-              Participant(name: 'Incognito', displayName: 'Incognito'),
+              Participant(
+                  myContact: MyContact(
+                      id: 'Incognito',
+                      name: 'Incognito',
+                      displayName: 'Incognito')),
           meetingId: meeting.id,
           mark: values[ProbabilityValues.mark] as ProbabilityMarks,
           assessmentText: values[ProbabilityValues.text] as String,
