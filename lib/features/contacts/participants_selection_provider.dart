@@ -3,14 +3,12 @@ import 'dart:collection';
 import 'package:ejyption_time_2/core/Contacts/contacts_impl_flutter_contacts.dart';
 import 'package:ejyption_time_2/core/Contacts/contacts_provider_interface.dart';
 import 'package:ejyption_time_2/core/global_model.dart';
-import 'package:ejyption_time_2/features/list_of_meeting/meeting_list_provider.dart';
 import 'package:ejyption_time_2/models/meeting.dart';
 import 'package:ejyption_time_2/models/perticipants.dart';
 import 'package:flutter/widgets.dart';
 
 import 'package:ejyption_time_2/models/my_contact.dart';
 import 'package:ejyption_time_2/models/participant.dart';
-import 'package:flutter_contacts/flutter_contacts.dart';
 
 enum ParticipantsSelectionMenu { saveChanges, discardChanges }
 
@@ -22,6 +20,7 @@ class ParticipantsSelectionProvider with ChangeNotifier {
 
   ContactsProviderInterface contactsProviderImpl = MyFlutterContacts();
   bool permissionDenied = false;
+  // ignore: unused_field
   int _version = 0;
   List<String> areExcluded = [];
   Map<String, MyContact> mapOfEncriptedphones = HashMap();
@@ -61,9 +60,9 @@ class ParticipantsSelectionProvider with ChangeNotifier {
       refreshMapOfEncriptedPhones();
       provideModifying();
 
-      FlutterContacts.addListener(_loadContacts);
+      //FlutterContacts.addListener(_loadContacts); // a mistake was not checked  - contacts must renew each time after new phone contact is recorded
 
-      ContactsProviderInterface.addListener(() => _loadContacts);
+      contactsProviderImpl.addListener(() => _loadContacts);
     }
   }
 
@@ -82,14 +81,14 @@ class ParticipantsSelectionProvider with ChangeNotifier {
   void refreshMapOfEncriptedPhones() {
     mapOfEncriptedphones.clear();
     contacts?.forEach((myContact) {
-      myContact.phones.forEach((number) {
+      for (var number in myContact.phones) {
         mapOfEncriptedphones.putIfAbsent(
             GlobalModel.instance.cryptoImpl.convertStringWithPassword(
                 fullNumber(number),
                 (meetingParticipants.parent as Meeting)
                     .myPersonalContactsUniqueKey),
             () => myContact);
-      });
+      }
     });
   }
 

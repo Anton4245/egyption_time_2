@@ -1,6 +1,6 @@
-import 'package:ejyption_time_2/models/negotiating_field.dart';
 import 'package:ejyption_time_2/models/point_assestment.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 enum CommentValues { mark, text }
 
@@ -16,7 +16,9 @@ Future newCommentForm(BuildContext context, String stringToComment,
       size: const Size(double.infinity, 300),
       child: AlertDialog(
         scrollable: true,
-        title: Text('Choose assesstment for "${stringToComment}" record:'),
+        title: Text(
+            // ignore: unnecessary_brace_in_string_interps
+            '${AppLocalizations.of(context)!.chooseAssesstmentFor} "${stringToComment}" ${AppLocalizations.of(context)!.record}:'),
         content: StatefulBuilder(
           builder: (BuildContext context, StateSetter setState) => Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -41,7 +43,8 @@ Future newCommentForm(BuildContext context, String stringToComment,
               ),
               TextField(
                 onChanged: (value) => _text = value,
-                decoration: const InputDecoration(label: Text('Leave comment')),
+                decoration: InputDecoration(
+                    label: Text(AppLocalizations.of(context)!.leaveComment)),
                 minLines: 2,
                 maxLines: 10,
               ),
@@ -55,14 +58,14 @@ Future newCommentForm(BuildContext context, String stringToComment,
                 Navigator.pop(context);
               },
               icon: const Icon(Icons.check),
-              label: const Text('OK')),
+              label: Text(AppLocalizations.of(context)!.oK)),
           ElevatedButton.icon(
               onPressed: () {
                 _result = false;
                 Navigator.pop(context);
               },
               icon: const Icon(Icons.check),
-              label: const Text('Cancel')),
+              label: Text(AppLocalizations.of(context)!.cancel)),
         ],
       ),
     ),
