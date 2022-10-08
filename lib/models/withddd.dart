@@ -13,7 +13,9 @@ void deleteListMembersWithTheSameParticipantAndLowerDate(
     list.removeWhere((element) => list.any((element2) =>
         (element2.participant == element2.participant) &&
         (element.creation.compareTo(element2.creation) < 0)));
-  } catch (e) {//nothing to do}
+  } catch (e) {
+    //nothing to do
+  }
 }
 
 WithIdAndCreationAndParticipant? lastAssessment(
