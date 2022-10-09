@@ -1,4 +1,4 @@
-import 'package:ejyption_time_2/models/meeting.dart';
+import 'package:ejyption_time_2/models/meeting/meeting.dart';
 import 'package:flutter/material.dart';
 
 class TestMeeting {

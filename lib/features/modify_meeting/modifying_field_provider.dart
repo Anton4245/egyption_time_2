@@ -1,7 +1,7 @@
-import 'package:ejyption_time_2/models/meeting.dart';
+import 'package:ejyption_time_2/models/meeting/meeting.dart';
 import 'package:ejyption_time_2/models/modified_objects.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:ejyption_time_2/models/negotiating_field.dart';
+import 'package:ejyption_time_2/models/negotiating_fields/negotiating_field.dart';
 // ignore: implementation_imports
 import 'package:flutter/src/material/time.dart';
 import '../../core/extenstions.dart';

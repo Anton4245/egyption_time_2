@@ -1,7 +1,7 @@
 import 'package:ejyption_time_2/features/modify_meeting/modifying_field_provider.dart';
-import 'package:ejyption_time_2/models/meeting.dart';
+import 'package:ejyption_time_2/models/meeting/meeting.dart';
 import 'package:ejyption_time_2/models/modified_objects.dart';
-import 'package:ejyption_time_2/models/negotiating_field.dart';
+import 'package:ejyption_time_2/models/negotiating_fields/negotiating_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';

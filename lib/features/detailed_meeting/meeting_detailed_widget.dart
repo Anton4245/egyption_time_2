@@ -9,7 +9,7 @@ import 'package:ejyption_time_2/models/probability_assesstment.dart';
 import 'package:ejyption_time_2/screens/participants_selection_cover.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:ejyption_time_2/models/meeting.dart';
+import 'package:ejyption_time_2/models/meeting/meeting.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MeetingDetailed extends StatelessWidget {

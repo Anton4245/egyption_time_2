@@ -1,4 +1,4 @@
-import 'package:ejyption_time_2/models/negotiating_field.dart';
+import 'package:ejyption_time_2/models/negotiating_fields/negotiating_field.dart';
 import 'package:intl/intl.dart';
 
 String keyString(Object? val) {

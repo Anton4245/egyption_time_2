@@ -1,6 +1,6 @@
 import 'package:ejyption_time_2/core/crypto/cripto_interface.dart';
 import 'package:ejyption_time_2/core/crypto/crypto_dart_dev_impl.dart';
-import 'package:ejyption_time_2/models/meeting.dart';
+import 'package:ejyption_time_2/models/meeting/meeting.dart';
 import 'package:ejyption_time_2/models/modified_objects.dart';
 import 'package:ejyption_time_2/core/test_meeting.dart';
 import 'package:ejyption_time_2/models/my_contact.dart';

@@ -1,7 +1,7 @@
 import 'package:ejyption_time_2/core/common_widgets/new_comment.dart';
 import 'package:ejyption_time_2/core/global_model.dart';
 import 'package:ejyption_time_2/features/modify_meeting/modifying_field_provider.dart';
-import 'package:ejyption_time_2/models/meeting.dart';
+import 'package:ejyption_time_2/models/meeting/meeting.dart';
 import 'package:ejyption_time_2/models/modified_objects.dart';
 import 'package:ejyption_time_2/models/my_contact.dart';
 import 'package:ejyption_time_2/models/participant.dart';
@@ -9,7 +9,7 @@ import 'package:ejyption_time_2/models/point_assestment.dart';
 import 'package:ejyption_time_2/models/withddd.dart';
 import 'package:flutter/widgets.dart';
 
-import 'package:ejyption_time_2/models/negotiating_field.dart';
+import 'package:ejyption_time_2/models/negotiating_fields/negotiating_field.dart';
 
 enum Menu {
   setComment,

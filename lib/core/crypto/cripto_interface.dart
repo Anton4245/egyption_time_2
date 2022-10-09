@@ -1,4 +1,4 @@
-import 'package:ejyption_time_2/models/meeting.dart';
+import 'package:ejyption_time_2/models/meeting/meeting.dart';
 import 'package:ejyption_time_2/models/my_contact.dart';
 import 'package:flutter/cupertino.dart';
 

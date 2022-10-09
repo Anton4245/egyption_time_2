@@ -3,14 +3,16 @@ import 'dart:math';
 import 'package:ejyption_time_2/core/global_model.dart';
 import 'package:ejyption_time_2/core/main_functions.dart';
 import 'package:ejyption_time_2/features/modify_meeting/modifying_field_provider.dart';
-import 'package:ejyption_time_2/models/meeting.dart';
+import 'package:ejyption_time_2/models/meeting/meeting.dart';
 import 'package:ejyption_time_2/models/modified_objects.dart';
 import 'package:ejyption_time_2/models/point_assestment.dart';
 import 'package:ejyption_time_2/models/withddd.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 
-import '../core/extenstions.dart' as ttt;
+import '../../core/extenstions.dart' as ttt;
+
+part 'negotiating_field.types.dart';
 
 abstract class NegotiatingField<T extends Object>
     with ChangeNotifier
@@ -208,60 +210,5 @@ abstract class NegotiatingField<T extends Object>
     }
 
     return resultString;
-  }
-}
-
-class NegotiatingString extends NegotiatingField<String> {
-  NegotiatingString(String name, String parentID, Object? parent)
-      : super(name, parentID, parent);
-
-  @override
-  Type get typeOfvalue => String;
-}
-
-class NegotiatingInt extends NegotiatingField<int> {
-  NegotiatingInt(String name, String parentID, Object? parent)
-      : super(name, parentID, parent);
-
-  @override
-  Type get typeOfvalue => int;
-}
-
-class NegotiatingHoursAndMinutes extends NegotiatingField<DateTime> {
-  NegotiatingHoursAndMinutes(String name, String parentID, Object? parent)
-      : super(name, parentID, parent);
-
-  @override
-  Type get typeOfvalue => DateTime;
-  @override
-  String mainFormat(Object? val) {
-    if (val == null) return '';
-    if (val is! DateTime) return val.toString();
-    return DateFormat("Hm").format(val);
-  }
-
-  @override
-  String valueToString() {
-    return mainFormat(_value);
-  }
-}
-
-class NegotiatingDay extends NegotiatingField<DateTime> {
-  NegotiatingDay(String name, String parentID, Object? parent)
-      : super(name, parentID, parent);
-
-  @override
-  Type get typeOfvalue => DateTime;
-
-  @override
-  String mainFormat(Object? val) {
-    if (val == null) return '';
-    if (val is! DateTime) return val.toString();
-    return DateFormat("yMMMMd").format(val);
-  }
-
-  @override
-  String valueToString() {
-    return mainFormat(_value);
   }
 }

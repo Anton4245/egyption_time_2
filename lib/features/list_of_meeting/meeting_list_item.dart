@@ -1,6 +1,6 @@
 import 'package:ejyption_time_2/core/translate.dart';
-import 'package:ejyption_time_2/models/meeting.dart';
-import 'package:ejyption_time_2/models/negotiating_field.dart';
+import 'package:ejyption_time_2/models/meeting/meeting.dart';
+import 'package:ejyption_time_2/models/negotiating_fields/negotiating_field.dart';
 import 'package:ejyption_time_2/screens/Meeting_cover_over_detailed.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

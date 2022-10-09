@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
 import 'package:ejyption_time_2/core/global_model.dart';
-import 'package:ejyption_time_2/models/meeting.dart';
+import 'package:ejyption_time_2/models/meeting/meeting.dart';
 
 class Meetings with ChangeNotifier {
   //async is more dangerous, we will try to use no any asyc without significant sense of it

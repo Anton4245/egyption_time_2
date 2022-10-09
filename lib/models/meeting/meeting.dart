@@ -11,9 +11,10 @@ import 'package:ejyption_time_2/models/withddd.dart';
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 
-import 'negotiating_field.dart';
+import '../negotiating_fields/negotiating_field.dart';
 
 part 'meeting.g.dart';
+part 'meeting.serial.dart';
 
 @HiveType(typeId: 1)
 class Meeting with ChangeNotifier implements ModifiedObjectInterface<Object> {
@@ -218,22 +219,6 @@ class Meeting with ChangeNotifier implements ModifiedObjectInterface<Object> {
     return result;
   }
 
-  Map<String, dynamic> toMap() {
-    final result = <String, dynamic>{};
-
-    result.addAll({
-      '_id': _id,
-      '_creation': _creation,
-      '_name': _name,
-    });
-    result.addAll(negotiatingFieldsMap);
-    result.addAll({
-      '_finallyNegotiated': _finallyNegotiated,
-    });
-
-    return result;
-  }
-
   String negotiatingFieldsToString() {
     String result = '';
     _negotiatingFieldsMap.forEach((key, value) {
@@ -252,11 +237,11 @@ class Meeting with ChangeNotifier implements ModifiedObjectInterface<Object> {
     return result;
   }
 
+  String toJson() => json.encode(toMap());
+
   factory Meeting.fromMap(Map<String, dynamic> map) {
     return Meeting();
   }
-
-  String toJson() => json.encode(toMap());
 
   factory Meeting.fromJson(String source) =>
       Meeting.fromMap(json.decode(source));
