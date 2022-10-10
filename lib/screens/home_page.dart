@@ -1,5 +1,5 @@
 import 'package:ejyption_time_2/core/global_model.dart';
-import 'package:ejyption_time_2/models/meeting.dart';
+import 'package:ejyption_time_2/models/meeting/meeting.dart';
 import 'package:ejyption_time_2/features/list_of_meeting/meeting_list_provider.dart';
 import 'package:ejyption_time_2/core/test_meeting.dart';
 import 'package:ejyption_time_2/features/list_of_meeting/meeting_list_item.dart';

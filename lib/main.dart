@@ -1,6 +1,6 @@
 import 'package:ejyption_time_2/core/lib_color_schemes_g2.dart';
 import 'package:ejyption_time_2/core/global_model.dart';
-import 'package:ejyption_time_2/models/meeting.dart';
+import 'package:ejyption_time_2/models/meeting/meeting.dart';
 import 'package:ejyption_time_2/screens/Meeting_cover_over_detailed.dart';
 import 'package:ejyption_time_2/screens/home_page.dart';
 import 'package:ejyption_time_2/features/list_of_meeting/meeting_list_provider.dart';

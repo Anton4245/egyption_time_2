@@ -2,7 +2,7 @@ import 'package:ejyption_time_2/features/detailed_meeting/meeting_detailed_provi
 
 import '../features/detailed_meeting/meeting_detailed_widget.dart';
 import 'package:flutter/material.dart';
-import '../models/meeting.dart';
+import '../models/meeting/meeting.dart';
 import 'package:provider/provider.dart';
 
 class MeetingCoverOverDetailed extends StatelessWidget {
