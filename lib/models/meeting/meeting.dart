@@ -4,8 +4,8 @@ import 'package:hive/hive.dart';
 
 import 'package:ejyption_time_2/core/global_model.dart';
 import 'package:ejyption_time_2/models/modified_objects.dart';
-import 'package:ejyption_time_2/models/participant.dart';
-import 'package:ejyption_time_2/models/perticipants.dart';
+import 'package:ejyption_time_2/models/participants/participant.dart';
+import 'package:ejyption_time_2/models/participants/participants.dart';
 import 'package:ejyption_time_2/models/probability_assesstment.dart';
 import 'package:ejyption_time_2/models/withddd.dart';
 import 'package:flutter/widgets.dart';

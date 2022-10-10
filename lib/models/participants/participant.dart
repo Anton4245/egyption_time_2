@@ -1,9 +1,11 @@
+import 'dart:convert';
 import 'dart:math';
+
+import 'package:flutter/material.dart';
 
 import 'package:ejyption_time_2/core/global_model.dart';
 import 'package:ejyption_time_2/models/meeting/meeting.dart';
 import 'package:ejyption_time_2/models/my_contact.dart';
-import 'package:flutter/material.dart';
 
 class Participant {
   String id = GlobalKey().toString();
@@ -51,6 +53,29 @@ class Participant {
         .sort(((a, b) => -a.length.compareTo(b.length)));
     return newParticipant;
   }
+
+  Map<String, dynamic> toMap() {
+    final result = <String, dynamic>{};
+
+    result.addAll({'phonesEncripted': phonesEncripted});
+    result.addAll({'initials': initials});
+    result.addAll({'_isInitiator': _isInitiator});
+
+    return result;
+  }
+
+  factory Participant.fromMap(Map<String, dynamic> map) {
+    return Participant(
+      initials: map['initials'] ?? '',
+    )
+      ..phonesEncripted = List<String>.from(map['phonesEncripted'])
+      ..setIsInitiator(map['_isInitiator'] ?? false);
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory Participant.fromJson(String source) =>
+      Participant.fromMap(json.decode(source));
 }
 
 String fullNumber(String number) {

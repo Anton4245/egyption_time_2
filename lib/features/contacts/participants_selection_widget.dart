@@ -6,7 +6,7 @@ import 'package:ejyption_time_2/core/common_widgets/templates.dart';
 import 'package:ejyption_time_2/features/contacts/participants_selection_provider.dart';
 import 'package:ejyption_time_2/models/meeting/meeting.dart';
 import 'package:ejyption_time_2/models/my_contact.dart';
-import 'package:ejyption_time_2/models/perticipants.dart';
+import 'package:ejyption_time_2/models/participants/participants.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

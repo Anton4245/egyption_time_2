@@ -1,5 +1,5 @@
 import 'package:ejyption_time_2/models/my_contact.dart';
-import 'package:ejyption_time_2/models/participant.dart';
+import 'package:ejyption_time_2/models/participants/participant.dart';
 import 'package:flutter/material.dart';
 
 Widget avatar(MyContact myContact,

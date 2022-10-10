@@ -1,7 +1,7 @@
 import 'package:ejyption_time_2/models/withddd.dart';
 import 'package:flutter/material.dart';
 
-import 'package:ejyption_time_2/models/participant.dart';
+import 'package:ejyption_time_2/models/participants/participant.dart';
 
 enum PointMarks { isUnaware, unFit, soSo, fit }
 const Map<PointMarks, String> pointMarksNames = {

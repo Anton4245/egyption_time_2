@@ -1,5 +1,5 @@
 import 'package:ejyption_time_2/features/contacts/participants_selection_widget.dart';
-import 'package:ejyption_time_2/models/perticipants.dart';
+import 'package:ejyption_time_2/models/participants/participants.dart';
 import 'package:flutter/material.dart';
 
 class ParticipantsWidgetCover extends StatelessWidget {

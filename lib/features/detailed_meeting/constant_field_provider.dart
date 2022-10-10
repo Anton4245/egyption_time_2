@@ -4,7 +4,7 @@ import 'package:ejyption_time_2/features/modify_meeting/modifying_field_provider
 import 'package:ejyption_time_2/models/meeting/meeting.dart';
 import 'package:ejyption_time_2/models/modified_objects.dart';
 import 'package:ejyption_time_2/models/my_contact.dart';
-import 'package:ejyption_time_2/models/participant.dart';
+import 'package:ejyption_time_2/models/participants/participant.dart';
 import 'package:ejyption_time_2/models/point_assestment.dart';
 import 'package:ejyption_time_2/models/withddd.dart';
 import 'package:flutter/widgets.dart';
