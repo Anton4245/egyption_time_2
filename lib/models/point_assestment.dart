@@ -1,7 +1,9 @@
-import 'package:ejyption_time_2/models/withddd.dart';
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 
 import 'package:ejyption_time_2/models/participants/participant.dart';
+import 'package:ejyption_time_2/models/withddd.dart';
 
 enum PointMarks { isUnaware, unFit, soSo, fit }
 const Map<PointMarks, String> pointMarksNames = {
@@ -38,4 +40,33 @@ class PointAssessment implements WithIdAndCreationAndParticipant {
       required this.keyStringValue,
       this.mark = PointMarks.isUnaware,
       this.commentText = ''});
+
+  Map<String, dynamic> toMap() {
+    final result = <String, dynamic>{};
+
+    result.addAll({'participant': participant.toMap()});
+    result.addAll({'meetingId': meetingId});
+    result.addAll({'field': field});
+    result.addAll({'keyStringValue': keyStringValue});
+    result.addAll({'mark': mark.name});
+    result.addAll({'commentText': commentText});
+
+    return result;
+  }
+
+  factory PointAssessment.fromMap(Map<String, dynamic> map) {
+    return PointAssessment(
+      participant: Participant.fromMap(map['participant']),
+      meetingId: map['meetingId'] ?? '',
+      field: map['field'] ?? '',
+      keyStringValue: map['keyStringValue'] ?? '',
+      mark: PointMarks.values.byName(map['mark']),
+      commentText: map['commentText'] ?? '',
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory PointAssessment.fromJson(String source) =>
+      PointAssessment.fromMap(json.decode(source));
 }

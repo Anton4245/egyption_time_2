@@ -1,7 +1,9 @@
-import 'package:ejyption_time_2/models/withddd.dart';
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 
 import 'package:ejyption_time_2/models/participants/participant.dart';
+import 'package:ejyption_time_2/models/withddd.dart';
 
 enum ProbabilityMarks {
   isUnaware,
@@ -56,4 +58,31 @@ class ProbabilityAssessment implements WithIdAndCreationAndParticipant {
       probability = probabilityNumbers[mark] ?? 0;
     }
   }
+
+  Map<String, dynamic> toMap() {
+    final result = <String, dynamic>{};
+
+    result.addAll({'participant': participant.toMap()});
+    result.addAll({'meetingId': meetingId});
+    result.addAll({'mark': mark.name});
+    result.addAll({'probability': probability.toString()});
+    result.addAll({'assessmentText': assessmentText});
+
+    return result;
+  }
+
+  factory ProbabilityAssessment.fromMap(Map<String, dynamic> map) {
+    return ProbabilityAssessment(
+      participant: Participant.fromMap(map['participant']),
+      meetingId: map['meetingId'] ?? '',
+      mark: ProbabilityMarks.values.byName(map['mark']),
+      probability: int.tryParse(map['probability']) ?? 0,
+      assessmentText: map['assessmentText'] ?? '',
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory ProbabilityAssessment.fromJson(String source) =>
+      ProbabilityAssessment.fromMap(json.decode(source));
 }
