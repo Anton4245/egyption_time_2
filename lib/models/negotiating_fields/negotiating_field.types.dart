@@ -4,24 +4,24 @@ class NegotiatingString extends NegotiatingField<String> {
   NegotiatingString(String name, String parentID, Object? parent)
       : super(name, parentID, parent);
 
-  @override
-  Type get typeOfvalue => String;
+  // @override
+  // Type get typeOfvalue => String;
 }
 
 class NegotiatingInt extends NegotiatingField<int> {
   NegotiatingInt(String name, String parentID, Object? parent)
       : super(name, parentID, parent);
 
-  @override
-  Type get typeOfvalue => int;
+  // @override
+  // Type get typeOfvalue => int;
 }
 
 class NegotiatingHoursAndMinutes extends NegotiatingField<DateTime> {
   NegotiatingHoursAndMinutes(String name, String parentID, Object? parent)
       : super(name, parentID, parent);
 
-  @override
-  Type get typeOfvalue => DateTime;
+  // @override
+  // Type get typeOfvalue => DateTime;
   @override
   String mainFormat(Object? val) {
     if (val == null) return '';
@@ -39,8 +39,8 @@ class NegotiatingDay extends NegotiatingField<DateTime> {
   NegotiatingDay(String name, String parentID, Object? parent)
       : super(name, parentID, parent);
 
-  @override
-  Type get typeOfvalue => DateTime;
+  // @override
+  // Type get typeOfvalue => DateTime;
 
   @override
   String mainFormat(Object? val) {

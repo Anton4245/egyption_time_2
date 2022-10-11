@@ -64,33 +64,41 @@ class Participants with ChangeNotifier implements ModifiedObjectInterface {
   );
 
   Participants.json(
+    this._id,
     this._version,
     this._parentID,
     this._parent,
-    this.isModifying,
     this.modified,
-    this.modifyingFormProvider,
   );
 
   Map<String, dynamic> toMap() {
     final result = <String, dynamic>{};
 
+    result.addAll({'_id': _id});
     result.addAll({'_version': _version});
     result.addAll({'_parentID': _parentID});
     result.addAll({'modified': modified});
+    result.addAll({'_value': _value});
 
     return result;
   }
 
   factory Participants.fromMap(Map<String, dynamic> map, Object? parent) {
+    // List<Map> ls = map['_value'] as List<Map>;
+    // List<Participant> l = [
+    //   ...ls.map((m) => Participant.fromMap(m as Map<String, dynamic>)).toList()
+    // ];
     return Participants.json(
+      map['_id']?.toInt() ?? 0,
       map['_version']?.toInt() ?? 0,
       map['_parentID'] ?? '',
       map['_parent'] = parent,
-      false,
       map['modified'] ?? false,
-      null,
-    );
+    ).._value.addAll([
+        ...(map['_value'] as List<Map>)
+            .map((m) => Participant.fromMap(m as Map<String, dynamic>))
+            .toList()
+      ]);
   }
 
   String toJson() => json.encode(toMap());

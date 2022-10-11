@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:math';
 
 import 'package:ejyption_time_2/core/global_model.dart';
@@ -7,6 +8,7 @@ import 'package:ejyption_time_2/models/meeting/meeting.dart';
 import 'package:ejyption_time_2/models/modified_objects.dart';
 import 'package:ejyption_time_2/models/point_assestment.dart';
 import 'package:ejyption_time_2/models/withddd.dart';
+import 'package:ejyption_time_2/screens/participants_selection_cover.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 
@@ -41,7 +43,7 @@ abstract class NegotiatingField<T extends Object>
   final String _parentID;
   final Object? _parent;
   Object? get parent => _parent;
-  Type get typeOfvalue => String;
+  Type get typeOfvalue => T;
 
   //FOR INTERFACE ModifiedObjectInterface
   @override
@@ -183,17 +185,17 @@ abstract class NegotiatingField<T extends Object>
 
   NegotiatingField(this._name, this._parentID, this._parent);
 
-  static T myConstructor<T extends NegotiatingField>(
+  static Y myConstructor<Y extends NegotiatingField>(
       String name, String parentID, Object? parent) {
-    switch (T) {
+    switch (Y) {
       case NegotiatingString:
-        return NegotiatingString(name, parentID, parent) as T;
+        return NegotiatingString(name, parentID, parent) as Y;
       case NegotiatingInt:
-        return NegotiatingInt(name, parentID, parent) as T;
+        return NegotiatingInt(name, parentID, parent) as Y;
       case NegotiatingDay:
-        return NegotiatingDay(name, parentID, parent) as T;
+        return NegotiatingDay(name, parentID, parent) as Y;
       case NegotiatingHoursAndMinutes:
-        return NegotiatingHoursAndMinutes(name, parentID, parent) as T;
+        return NegotiatingHoursAndMinutes(name, parentID, parent) as Y;
       default:
         throw UnimplementedError();
     }
@@ -228,30 +230,29 @@ abstract class NegotiatingField<T extends Object>
     return resultString;
   }
 
-// Map<String, dynamic> toMap() {
-//     final result = <String, dynamic>{};
+  Map<String, dynamic> toMap() {
+    final result = <String, dynamic>{};
 
-//     result.addAll({'phonesEncripted': phonesEncripted});
-//     result.addAll({'initials': initials});
-//     result.addAll({'_isInitiator': _isInitiator});
+    result.addAll({'_version': _name});
+    result.addAll({'_name': _name});
+    result.addAll({'_name': _name});
+    result.addAll({'_parentID': _parentID});
+    result.addAll({'modified': modified});
+    result.addAll(mapOfValuableFields());
 
-//     return result;
-//   }
+    return result;
+  }
 
-//   factory Nego.fromMap(Map<String, dynamic> map) {
-//     return Participant(
-//       initials: map['initials'] ?? '',
-//     )
-//       ..phonesEncripted = List<String>.from(map['phonesEncripted'])
-//       ..setIsInitiator(map['_isInitiator'] ?? false);
-//   }
+  static G fromMap<G extends NegotiatingField>(
+      Map<String, dynamic> map, String name, Object? parent) {
+    G nF = myConstructor<G>(name, map['_parentID'], parent)
+      ..setIsExcluded(map['_isExcluded'], null)
+      ..setIsNegotiated(map['_isNegotiated']);
+    map['_hasStringProvisionalValue']
+        ? nF.setProvisionalValue(map['_provisionalValue'])
+        : {};
+    map['_isSelected'] ? nF.setValue(map['_value']) : {};
 
-//   String toJson() => json.encode(toMap());
-
-//   factory Participant.fromJson(String source) =>
-//       Participant.fromMap(json.decode(source));
-
+    return nF;
+  }
 }
-
-/// Add factory functions for every Type and every constructor you want to make available to `make`
-
