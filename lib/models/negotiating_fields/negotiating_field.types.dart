@@ -4,6 +4,15 @@ class NegotiatingString extends NegotiatingField<String> {
   NegotiatingString(String name, String parentID, Object? parent)
       : super(name, parentID, parent);
 
+  @override
+  NegotiatingString make2<NegotiatingString extends NegotiatingField<String>>(
+      String name,
+      String parentID,
+      Object? parent,
+      NegotiatingString Function(String, String, Object?) constructor) {
+    return constructor(name, parentID, parent);
+  }
+
   // @override
   // Type get typeOfvalue => String;
 }

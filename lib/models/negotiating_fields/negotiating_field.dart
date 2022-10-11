@@ -185,22 +185,6 @@ abstract class NegotiatingField<T extends Object>
 
   NegotiatingField(this._name, this._parentID, this._parent);
 
-  static Y myConstructor<Y extends NegotiatingField>(
-      String name, String parentID, Object? parent) {
-    switch (Y) {
-      case NegotiatingString:
-        return NegotiatingString(name, parentID, parent) as Y;
-      case NegotiatingInt:
-        return NegotiatingInt(name, parentID, parent) as Y;
-      case NegotiatingDay:
-        return NegotiatingDay(name, parentID, parent) as Y;
-      case NegotiatingHoursAndMinutes:
-        return NegotiatingHoursAndMinutes(name, parentID, parent) as Y;
-      default:
-        throw UnimplementedError();
-    }
-  }
-
   String valueToString() {
     return mainFormat(_value);
   }
@@ -243,10 +227,31 @@ abstract class NegotiatingField<T extends Object>
     return result;
   }
 
+  // H make2<H extends NegotiatingField<T>>(String name, String parentID,
+  //     Object? parent, H Function(String, String, Object?) constructor) {
+  //   return constructor(name, parentID, parent);
+  // }
+
+  static Y myConstructor<Y extends NegotiatingField>(
+      String name, String parentID, Object? parent) {
+    switch (Y) {
+      case NegotiatingString:
+        return NegotiatingString(name, parentID, parent) as Y;
+      case NegotiatingInt:
+        return NegotiatingInt(name, parentID, parent) as Y;
+      case NegotiatingDay:
+        return NegotiatingDay(name, parentID, parent) as Y;
+      case NegotiatingHoursAndMinutes:
+        return NegotiatingHoursAndMinutes(name, parentID, parent) as Y;
+      default:
+        throw UnimplementedError();
+    }
+  }
+
   static G fromMap<G extends NegotiatingField>(
       Map<String, dynamic> map, String name, Object? parent) {
     G nF = myConstructor<G>(name, map['_parentID'], parent)
-      ..setIsExcluded(map['_isExcluded'], null)
+      ..setIsExcluded(map['_isExcluded'], parent)
       ..setIsNegotiated(map['_isNegotiated']);
     map['_hasStringProvisionalValue']
         ? nF.setProvisionalValue(map['_provisionalValue'])
@@ -256,3 +261,8 @@ abstract class NegotiatingField<T extends Object>
     return nF;
   }
 }
+
+// someFunc(String name, String parentID, Object? parent) {
+//   Map<String, dynamic> map = {};
+//   var l = NegotiatingField.fromMap<NegotiatingString>(map, name, parent);
+// }
