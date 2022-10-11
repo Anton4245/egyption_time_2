@@ -183,6 +183,22 @@ abstract class NegotiatingField<T extends Object>
 
   NegotiatingField(this._name, this._parentID, this._parent);
 
+  static T myConstructor<T extends NegotiatingField>(
+      String name, String parentID, Object? parent) {
+    switch (T) {
+      case NegotiatingString:
+        return NegotiatingString(name, parentID, parent) as T;
+      case NegotiatingInt:
+        return NegotiatingInt(name, parentID, parent) as T;
+      case NegotiatingDay:
+        return NegotiatingDay(name, parentID, parent) as T;
+      case NegotiatingHoursAndMinutes:
+        return NegotiatingHoursAndMinutes(name, parentID, parent) as T;
+      default:
+        throw UnimplementedError();
+    }
+  }
+
   String valueToString() {
     return mainFormat(_value);
   }
@@ -211,4 +227,31 @@ abstract class NegotiatingField<T extends Object>
 
     return resultString;
   }
+
+// Map<String, dynamic> toMap() {
+//     final result = <String, dynamic>{};
+
+//     result.addAll({'phonesEncripted': phonesEncripted});
+//     result.addAll({'initials': initials});
+//     result.addAll({'_isInitiator': _isInitiator});
+
+//     return result;
+//   }
+
+//   factory Nego.fromMap(Map<String, dynamic> map) {
+//     return Participant(
+//       initials: map['initials'] ?? '',
+//     )
+//       ..phonesEncripted = List<String>.from(map['phonesEncripted'])
+//       ..setIsInitiator(map['_isInitiator'] ?? false);
+//   }
+
+//   String toJson() => json.encode(toMap());
+
+//   factory Participant.fromJson(String source) =>
+//       Participant.fromMap(json.decode(source));
+
 }
+
+/// Add factory functions for every Type and every constructor you want to make available to `make`
+
