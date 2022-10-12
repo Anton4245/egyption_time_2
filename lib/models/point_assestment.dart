@@ -20,9 +20,10 @@ const Map<PointMarks, IconData> pointMarksIcon = {
 };
 
 class PointAssessment implements WithIdAndCreationAndParticipant {
+  late final String _id;
   @override
-  final String id = GlobalKey().toString();
-  final DateTime _creation = DateTime.now();
+  String get id => _id;
+  late final DateTime _creation;
   @override
   DateTime get creation => _creation;
   @override
@@ -34,16 +35,22 @@ class PointAssessment implements WithIdAndCreationAndParticipant {
   String commentText;
 
   PointAssessment(
-      {required this.participant,
+      {String? id,
+      DateTime? creation,
+      required this.participant,
       required this.meetingId,
       required this.field,
       required this.keyStringValue,
       this.mark = PointMarks.isUnaware,
-      this.commentText = ''});
+      this.commentText = ''})
+      : _id = id ?? UniqueKey().toString(),
+        _creation = creation ?? DateTime.now();
 
   Map<String, dynamic> toMap() {
     final result = <String, dynamic>{};
 
+    result.addAll({'_id': _id});
+    result.addAll({'_creation': _creation});
     result.addAll({'participant': participant.toMap()});
     result.addAll({'meetingId': meetingId});
     result.addAll({'field': field});
@@ -56,6 +63,8 @@ class PointAssessment implements WithIdAndCreationAndParticipant {
 
   factory PointAssessment.fromMap(Map<String, dynamic> map) {
     return PointAssessment(
+      id: map['_id'],
+      creation: map['_creation'],
       participant: Participant.fromMap(map['participant']),
       meetingId: map['meetingId'] ?? '',
       field: map['field'] ?? '',

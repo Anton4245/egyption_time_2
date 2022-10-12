@@ -36,10 +36,12 @@ const Map<ProbabilityMarks, int> probabilityNumbers = {
 };
 
 class ProbabilityAssessment implements WithIdAndCreationAndParticipant {
+  late final String _id;
   @override
-  final String id = GlobalKey().toString();
+  String get id => _id;
+  late final DateTime _creation;
   @override
-  final DateTime creation = DateTime.now();
+  DateTime get creation => _creation;
   @override
   final Participant participant;
   final String meetingId;
@@ -48,12 +50,16 @@ class ProbabilityAssessment implements WithIdAndCreationAndParticipant {
   String assessmentText;
 
   ProbabilityAssessment({
+    String? id,
+    DateTime? creation,
     required this.participant,
     required this.meetingId,
     this.mark = ProbabilityMarks.isUnaware,
     this.probability = -1,
     this.assessmentText = '',
   }) {
+    _id = id ?? UniqueKey().toString();
+    _creation = creation ?? DateTime.now();
     if (probability == -1) {
       probability = probabilityNumbers[mark] ?? 0;
     }
@@ -62,6 +68,8 @@ class ProbabilityAssessment implements WithIdAndCreationAndParticipant {
   Map<String, dynamic> toMap() {
     final result = <String, dynamic>{};
 
+    result.addAll({'_id': _id});
+    result.addAll({'_creation': _creation});
     result.addAll({'participant': participant.toMap()});
     result.addAll({'meetingId': meetingId});
     result.addAll({'mark': mark.name});
@@ -73,6 +81,8 @@ class ProbabilityAssessment implements WithIdAndCreationAndParticipant {
 
   factory ProbabilityAssessment.fromMap(Map<String, dynamic> map) {
     return ProbabilityAssessment(
+      id: map['_id'],
+      creation: map['_creation'],
       participant: Participant.fromMap(map['participant']),
       meetingId: map['meetingId'] ?? '',
       mark: ProbabilityMarks.values.byName(map['mark']),

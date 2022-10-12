@@ -70,6 +70,8 @@ abstract class NegotiatingField<T extends Object>
       '_isSelected': _isSelected,
       '_value': _value,
       '_isNegotiated': _isNegotiated,
+      '_variants': _variants,
+      '_provisionalVariants': _provisionalVariants
     });
     return m;
   }
@@ -148,6 +150,11 @@ abstract class NegotiatingField<T extends Object>
   final Map<String, List<PointAssessment>> _pointAssesstments = {'': []};
   Map<String, List<PointAssessment>> get pointAssesstments =>
       Map.fromEntries(_pointAssesstments.entries);
+  void updatePointAssessments(Map<String, List<PointAssessment>> map) {
+    _pointAssesstments.clear();
+    _pointAssesstments.addAll(map);
+  }
+
   void addPointAssesstment(PointAssessment newPointAssessment,
       [bool notify = true]) {
     List<PointAssessment> list = _pointAssesstments.putIfAbsent(
@@ -222,7 +229,19 @@ abstract class NegotiatingField<T extends Object>
     result.addAll({'_name': _name});
     result.addAll({'_parentID': _parentID});
     result.addAll({'modified': modified});
-    result.addAll(mapOfValuableFields());
+    result.addAll({
+      '_hasStringProvisionalValue': _hasStringProvisionalValue,
+      '_provisionalValue': _provisionalValue,
+      '_isSelected': _isSelected,
+      '_value': _value,
+      '_isNegotiated': _isNegotiated
+    });
+    result.addAll({'_provisionalVariants': _provisionalVariants});
+    result.addAll({'_variants': _variants});
+    result.addAll({
+      '_pointAssesstments': _pointAssesstments.map((key, list) =>
+          MapEntry(key, list.map((assessment) => assessment.toMap()).toList()))
+    });
 
     return result;
   }
@@ -248,7 +267,7 @@ abstract class NegotiatingField<T extends Object>
     }
   }
 
-  static G fromMap<G extends NegotiatingField>(
+  static G fromMap<G extends NegotiatingField, T>(
       Map<String, dynamic> map, String name, Object? parent) {
     G nF = myConstructor<G>(name, map['_parentID'], parent)
       ..setIsExcluded(map['_isExcluded'], parent)
@@ -257,6 +276,13 @@ abstract class NegotiatingField<T extends Object>
         ? nF.setProvisionalValue(map['_provisionalValue'])
         : {};
     map['_isSelected'] ? nF.setValue(map['_value']) : {};
+    nF.updatelVariants(map['_variants'] as List<T>);
+    nF.updateProvisionalVariants(
+        map['_updateProvisionalVariants'] as List<String>);
+    nF.updatePointAssessments((map['_pointAssesstments']
+            as Map<String, List<Map<String, dynamic>>>)
+        .map((key, list) => MapEntry(
+            key, list.map((map) => PointAssessment.fromMap(map)).toList())));
 
     return nF;
   }
