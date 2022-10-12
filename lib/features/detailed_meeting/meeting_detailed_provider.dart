@@ -11,7 +11,8 @@ import 'package:flutter/widgets.dart';
 enum MainMenu {
   changeFinallyNegotiated,
   setProbabilityAssessment,
-  deleteProbabilityAssessment
+  deleteProbabilityAssessment,
+  testSave
 }
 
 enum ParticipantsMenu { modifyParticipants, viewParticipants }
@@ -49,6 +50,7 @@ class MeetingDetailedProvider with ChangeNotifier {
     if (probabilityAssessment != null) {
       m.add(MainMenu.deleteProbabilityAssessment);
     }
+    m.add(MainMenu.testSave);
 
     return m;
   }
@@ -56,6 +58,12 @@ class MeetingDetailedProvider with ChangeNotifier {
   void mainMenuOnSelected(MainMenu menuItem) {
     if (menuItem == MainMenu.changeFinallyNegotiated) {
       meeting.setFinallyNegotiated(!meeting.finallyNegotiated);
+    } else if (menuItem == MainMenu.testSave) {
+      String res = meeting.toJson();
+      print(res);
+      Meeting newMeeting = Meeting.fromJson(res);
+      String res2 = newMeeting.toJson();
+      print(res2);
     }
   }
 

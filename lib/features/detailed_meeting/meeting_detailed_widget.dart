@@ -210,5 +210,6 @@ Map<MainMenu, Map<MenuProp, dynamic>> mainMenuProperties(meeting) {
       MenuProp.text: AppLocalizations.of(GlobalModel.instance.commonContext!)!
           .deleteProbabilityAssessment
     },
+    MainMenu.testSave: {MenuProp.icon: Icons.save, MenuProp.text: 'Save'},
   };
 }
