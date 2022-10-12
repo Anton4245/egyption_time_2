@@ -40,7 +40,6 @@ class Meeting with ChangeNotifier implements ModifiedObjectInterface<Object> {
   Map<String, NegotiatingField> get negotiatingFieldsMap =>
       _negotiatingFieldsMap;
 
-  @HiveField(10)
   String _id = UniqueKey().toString();
   String get id => _id;
   setId(String id, [bool notify = true]) {
@@ -48,17 +47,13 @@ class Meeting with ChangeNotifier implements ModifiedObjectInterface<Object> {
     provideModifying(notify);
   }
 
-  String myPersonalContactsUniqueKey =
-      UniqueKey().toString(); //loaded from database, user to user map
+  String myPersonalContactsUniqueKey = UniqueKey().toString(); //from database
 
   final Map<String, String> contactsUniqueKey = HashMap(); //for
 
-  @HiveField(11)
   int _version = 0;
-  @HiveField(12)
   int _fieldsVersion = 0;
   int get fieldsVersion => _fieldsVersion;
-  @HiveField(13)
   String? nameOfLastModifyingField;
 
   //FOR INTERFACE ModifiedObjectInterface
@@ -92,7 +87,7 @@ class Meeting with ChangeNotifier implements ModifiedObjectInterface<Object> {
 
   //DATA FIELDS
 
-  final DateTime _creation = DateTime.now();
+  late final DateTime _creation;
   DateTime get creationDateTime => _creation;
   String get creationToString => DateFormat('dd.MM.yy hh:mm').format(_creation);
 
@@ -176,6 +171,7 @@ class Meeting with ChangeNotifier implements ModifiedObjectInterface<Object> {
   }
 
   void init(negotiatingFields) {
+    _creation = DateTime.now();
     _participants = Participants(_id, this);
     _probabilitytAssesstments = <ProbabilityAssessment>[];
     _description = NegotiatingString('_description', _id, this);
@@ -236,13 +232,4 @@ class Meeting with ChangeNotifier implements ModifiedObjectInterface<Object> {
     result += negotiatingFieldsToString();
     return result;
   }
-
-  String toJson() => json.encode(toMap());
-
-  factory Meeting.fromMap(Map<String, dynamic> map) {
-    return Meeting();
-  }
-
-  factory Meeting.fromJson(String source) =>
-      Meeting.fromMap(json.decode(source));
 }
