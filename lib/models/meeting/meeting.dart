@@ -1,6 +1,9 @@
 import 'dart:collection';
 import 'dart:convert';
+
+import 'package:flutter/widgets.dart';
 import 'package:hive/hive.dart';
+import 'package:intl/intl.dart';
 
 import 'package:ejyption_time_2/core/global_model.dart';
 import 'package:ejyption_time_2/models/modified_objects.dart';
@@ -8,15 +11,12 @@ import 'package:ejyption_time_2/models/participants/participant.dart';
 import 'package:ejyption_time_2/models/participants/participants.dart';
 import 'package:ejyption_time_2/models/probability_assesstment.dart';
 import 'package:ejyption_time_2/models/withddd.dart';
-import 'package:flutter/widgets.dart';
-import 'package:intl/intl.dart';
 
 import '../negotiating_fields/negotiating_field.dart';
 
 part 'meeting.g.dart';
 part 'meeting.serial.dart';
 
-@HiveType(typeId: 1)
 class Meeting with ChangeNotifier implements ModifiedObjectInterface<Object> {
   //SERVICE FIELDS
 
@@ -158,6 +158,7 @@ class Meeting with ChangeNotifier implements ModifiedObjectInterface<Object> {
   }
 
   bool _finallyNegotiated = false;
+
   bool get finallyNegotiated => _finallyNegotiated;
   setFinallyNegotiated(bool finallyNegotiated, [bool notify = true]) {
     _finallyNegotiated = finallyNegotiated;
@@ -232,4 +233,100 @@ class Meeting with ChangeNotifier implements ModifiedObjectInterface<Object> {
     result += negotiatingFieldsToString();
     return result;
   }
+
+  Meeting.forJSON(
+    List<String> negotiatingFields,
+    myPersonalContactsUniqueKey,
+    _version,
+    _fieldsVersion,
+    modified,
+    fieldsModified,
+    _creation,
+    _name,
+    participantsMap,
+    descriptionMap,
+    lenthInDaysMap,
+    lenthInMinutesAndHoursMap,
+    sheduleMap,
+    dayOfMeetingMap,
+    timeOfMeetingMap,
+    _probabilitytAssesstments,
+    _finallyNegotiated,
+  ) {
+    Participants.fromMap(participantsMap, this);
+    NegotiatingField.fromMap<NegotiatingString, String>(
+        descriptionMap, '_description', this);
+    NegotiatingField.fromMap<NegotiatingInt, int>(
+        lenthInDaysMap, '_lenthInDays', this);
+    NegotiatingField.fromMap<NegotiatingHoursAndMinutes, DateTime>(
+        lenthInMinutesAndHoursMap, '_lenthInMinutesAndHours', this);
+    NegotiatingField.fromMap<NegotiatingString, String>(
+        sheduleMap, '_shedule', this);
+    NegotiatingField.fromMap<NegotiatingDay, DateTime>(
+        dayOfMeetingMap, '_dayOfMeeting', this);
+    NegotiatingField.fromMap<NegotiatingHoursAndMinutes, DateTime>(
+        timeOfMeetingMap, '_timeOfMeeting', this);
+
+    _initNegotiatingFieldsMap(negotiatingFields);
+  }
+
+  Map<String, dynamic> toMap() {
+    final result = <String, dynamic>{};
+
+    result.addAll({
+      '_negotiatingFields':
+          _negotiatingFieldsMap.entries.map((e) => e.key).toList()
+    });
+    result.addAll({'myPersonalContactsUniqueKey': myPersonalContactsUniqueKey});
+    result.addAll({'_version': _version});
+    result.addAll({'_fieldsVersion': _fieldsVersion});
+    result.addAll({'modified': modified});
+    result.addAll({'fieldsModified': fieldsModified});
+    result.addAll({'_creation': _creation});
+    result.addAll({'_name': _name});
+    result.addAll({'_participants': _participants.toMap()});
+    result.addAll({'_description': _description.toMap()});
+    result.addAll({'_lenthInDays': _lenthInDays.toMap()});
+    result.addAll({'_lenthInMinutesAndHours': _lenthInMinutesAndHours.toMap()});
+    result.addAll({'_shedule': _shedule.toMap()});
+    result.addAll({'_dayOfMeeting': _dayOfMeeting.toMap()});
+    result.addAll({'_timeOfMeeting': _timeOfMeeting.toMap()});
+    result.addAll({
+      '_probabilitytAssesstments': _probabilitytAssesstments
+          .map((assestment) => assestment.toMap())
+          .toList()
+    });
+    result.addAll({'_finallyNegotiated': _finallyNegotiated});
+
+    return result;
+  }
+
+  factory Meeting.fromMap(Map<String, dynamic> map) {
+    return Meeting.forJSON(
+      map['_negotiatingFields'],
+      map['myPersonalContactsUniqueKey'] ?? '',
+      map['_version']?.toInt() ?? 0,
+      map['_fieldsVersion']?.toInt() ?? 0,
+      map['modified'] ?? false,
+      map['fieldsModified'] ?? false,
+      map['_creation'],
+      map['_name'] ?? '',
+      map['_participants'],
+      map['_description'],
+      map['_lenthInDays'],
+      map['_lenthInMinutesAndHours'],
+      map['_shedule'],
+      map['_dayOfMeeting'],
+      map['_timeOfMeeting'],
+      (map['_probabilitytAssesstments'] as List<Map<String, dynamic>>)
+          .map((map) => ProbabilityAssessment.fromMap(map))
+          .toList(),
+      map['_finallyNegotiated'] ?? false,
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory Meeting.fromJson(String source) =>
+      Meeting.fromMap(json.decode(source));
 }
