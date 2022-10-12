@@ -147,7 +147,7 @@ abstract class NegotiatingField<T extends Object>
   }
 
   //list of Comments
-  final Map<String, List<PointAssessment>> _pointAssesstments = {'': []};
+  final Map<String, List<PointAssessment>> _pointAssesstments = {};
   Map<String, List<PointAssessment>> get pointAssesstments =>
       Map.fromEntries(_pointAssesstments.entries);
   void updatePointAssessments(Map<String, List<PointAssessment>> map) {
@@ -224,6 +224,7 @@ abstract class NegotiatingField<T extends Object>
   Map<String, dynamic> toMap() {
     final result = <String, dynamic>{};
 
+    result.addAll({'_isExcluded': _isExcluded});
     result.addAll({'_version': _name});
     result.addAll({'_name': _name});
     result.addAll({'_name': _name});
@@ -270,19 +271,33 @@ abstract class NegotiatingField<T extends Object>
   static G fromMap<G extends NegotiatingField, T>(
       Map<String, dynamic> map, String name, Object? parent) {
     G nF = myConstructor<G>(name, map['_parentID'], parent)
-      ..setIsExcluded(map['_isExcluded'], parent)
+      ..setIsExcluded(map['_isExcluded'] ?? false, parent)
       ..setIsNegotiated(map['_isNegotiated']);
     map['_hasStringProvisionalValue']
         ? nF.setProvisionalValue(map['_provisionalValue'])
         : {};
-    map['_isSelected'] ? nF.setValue(map['_value']) : {};
-    nF.updatelVariants(map['_variants'] as List<T>);
-    nF.updateProvisionalVariants(
-        map['_updateProvisionalVariants'] as List<String>);
-    nF.updatePointAssessments((map['_pointAssesstments']
-            as Map<String, List<Map<String, dynamic>>>)
-        .map((key, list) => MapEntry(
-            key, list.map((map) => PointAssessment.fromMap(map)).toList())));
+    map['_isSelected'] ?? false
+        ? nF.setValue((T.toString() == 'DateTime')
+            ? DateTime.tryParse(map['_value']) ?? DateTime.now()
+            : map['_value'])
+        : {};
+    nF.updatelVariants((map['_variants'] as List).isEmpty
+        ? <T>[]
+        : map['_variants'] as List<T>);
+    nF.updateProvisionalVariants((map['_provisionalVariants'] as List).isEmpty
+        ? <String>[]
+        : (map['_provisionalVariants'] as List<dynamic>)
+            .map((dyn) => dyn.toString()));
+    nF.updatePointAssessments((map['_pointAssesstments'] as Map).isEmpty ||
+            (map['_pointAssesstments'][""] as List).isEmpty
+        ? <String, List<PointAssessment>>{}
+        : (map['_pointAssesstments'] as Map<String, dynamic>).map((key, list) {
+            List<PointAssessment> resList = <PointAssessment>[];
+            for (var dyn in (list as List<dynamic>)) {
+              resList.add(PointAssessment.fromMap(dyn));
+            }
+            return MapEntry(key, resList);
+          }));
 
     return nF;
   }

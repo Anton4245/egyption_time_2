@@ -28,7 +28,6 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    GlobalModel.instance.commonContext = context;
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<Meetings>(
@@ -54,9 +53,9 @@ class MyApp extends StatelessWidget {
           ParticipantsWidgetCover.routeName: (ctx) =>
               const ParticipantsWidgetCover(),
         },
-        locale: const Locale('en'),
-        supportedLocales: const [Locale('en'), Locale('ru')],
-        localizationsDelegates: const [
+        locale: Locale('en'),
+        supportedLocales: [Locale('en'), Locale('ru')],
+        localizationsDelegates: [
           AppLocalizations.delegate,
           GlobalMaterialLocalizations.delegate,
           GlobalCupertinoLocalizations.delegate,

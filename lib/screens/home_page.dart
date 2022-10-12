@@ -12,6 +12,7 @@ class HomePage2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    GlobalModel.instance.commonContext = context;
     List<Map<String, dynamic>> colorProperties =
         TestMeeting.getColorProperties(Theme.of(context));
     return Consumer<Meetings>(

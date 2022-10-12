@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:ejyption_time_2/core/main_functions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -89,19 +90,21 @@ class Participants with ChangeNotifier implements ModifiedObjectInterface {
     //   ...ls.map((m) => Participant.fromMap(m as Map<String, dynamic>)).toList()
     // ];
     return Participants.json(
-      map['_id']?.toInt() ?? 0,
+      map['_id'],
       map['_version']?.toInt() ?? 0,
       map['_parentID'] ?? '',
-      map['_parent'] = parent,
+      parent,
       map['modified'] ?? false,
-    ).._value.addAll([
-        ...(map['_value'] as List<Map>)
-            .map((m) => Participant.fromMap(m as Map<String, dynamic>))
-            .toList()
-      ]);
+    ).._value.addAll((map['_value'] as List).isEmpty
+        ? <Participant>[]
+        : [
+            ...(map['_value'] as List<Map>)
+                .map((m) => Participant.fromMap(m as Map<String, dynamic>))
+                .toList()
+          ]);
   }
 
-  String toJson() => json.encode(toMap());
+  String toJson() => json.encode(toMap(), toEncodable: myDateSerializer);
 
   factory Participants.fromJson(String source, Object? parent) =>
       Participants.fromMap(json.decode(source), parent);

@@ -16,3 +16,10 @@ String keyString(Object? val) {
     }
   }
 }
+
+dynamic myDateSerializer(dynamic object) {
+  if (object is DateTime) {
+    return object.toIso8601String();
+  }
+  return object;
+}

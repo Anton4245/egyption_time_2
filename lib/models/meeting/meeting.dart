@@ -1,6 +1,7 @@
 import 'dart:collection';
 import 'dart:convert';
 
+import 'package:ejyption_time_2/core/main_functions.dart';
 import 'package:flutter/widgets.dart';
 import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
@@ -172,6 +173,7 @@ class Meeting with ChangeNotifier implements ModifiedObjectInterface<Object> {
   }
 
   void init(negotiatingFields) {
+    myPersonalContactsUniqueKey = UniqueKey().toString();
     _creation = DateTime.now();
     _participants = Participants(_id, this);
     _probabilitytAssesstments = <ProbabilityAssessment>[];
@@ -236,13 +238,13 @@ class Meeting with ChangeNotifier implements ModifiedObjectInterface<Object> {
 
   Meeting.forJSON(
     List<String> negotiatingFields,
-    myPersonalContactsUniqueKey,
-    _version,
-    _fieldsVersion,
-    modified,
-    fieldsModified,
-    _creation,
-    _name,
+    this.myPersonalContactsUniqueKey,
+    this._version,
+    this._fieldsVersion,
+    this.modified,
+    this.fieldsModified,
+    this._creation,
+    this._name,
     participantsMap,
     descriptionMap,
     lenthInDaysMap,
@@ -250,24 +252,26 @@ class Meeting with ChangeNotifier implements ModifiedObjectInterface<Object> {
     sheduleMap,
     dayOfMeetingMap,
     timeOfMeetingMap,
-    _probabilitytAssesstments,
-    _finallyNegotiated,
+    this._probabilitytAssesstments,
+    this._finallyNegotiated,
   ) {
-    Participants.fromMap(participantsMap, this);
-    NegotiatingField.fromMap<NegotiatingString, String>(
+    _participants = Participants.fromMap(participantsMap, this);
+    _description = NegotiatingField.fromMap<NegotiatingString, String>(
         descriptionMap, '_description', this);
-    NegotiatingField.fromMap<NegotiatingInt, int>(
+    _lenthInDays = NegotiatingField.fromMap<NegotiatingInt, int>(
         lenthInDaysMap, '_lenthInDays', this);
-    NegotiatingField.fromMap<NegotiatingHoursAndMinutes, DateTime>(
-        lenthInMinutesAndHoursMap, '_lenthInMinutesAndHours', this);
-    NegotiatingField.fromMap<NegotiatingString, String>(
+    _lenthInMinutesAndHours =
+        NegotiatingField.fromMap<NegotiatingHoursAndMinutes, DateTime>(
+            lenthInMinutesAndHoursMap, '_lenthInMinutesAndHours', this);
+    _shedule = NegotiatingField.fromMap<NegotiatingString, String>(
         sheduleMap, '_shedule', this);
-    NegotiatingField.fromMap<NegotiatingDay, DateTime>(
+    _dayOfMeeting = NegotiatingField.fromMap<NegotiatingDay, DateTime>(
         dayOfMeetingMap, '_dayOfMeeting', this);
-    NegotiatingField.fromMap<NegotiatingHoursAndMinutes, DateTime>(
-        timeOfMeetingMap, '_timeOfMeeting', this);
-
-    _initNegotiatingFieldsMap(negotiatingFields);
+    _timeOfMeeting =
+        NegotiatingField.fromMap<NegotiatingHoursAndMinutes, DateTime>(
+            timeOfMeetingMap, '_timeOfMeeting', this);
+    _negotiatingFieldsMap =
+        Map.unmodifiable(_initNegotiatingFieldsMap(negotiatingFields));
   }
 
   Map<String, dynamic> toMap() {
@@ -275,7 +279,7 @@ class Meeting with ChangeNotifier implements ModifiedObjectInterface<Object> {
 
     result.addAll({
       '_negotiatingFields':
-          _negotiatingFieldsMap.entries.map((e) => e.key).toList()
+          _negotiatingFieldsMap.entries.map((e) => e.key.toString()).toList()
     });
     result.addAll({'myPersonalContactsUniqueKey': myPersonalContactsUniqueKey});
     result.addAll({'_version': _version});
@@ -303,13 +307,15 @@ class Meeting with ChangeNotifier implements ModifiedObjectInterface<Object> {
 
   factory Meeting.fromMap(Map<String, dynamic> map) {
     return Meeting.forJSON(
-      map['_negotiatingFields'],
+      (map['_negotiatingFields'] as List<dynamic>)
+          .map((dyn) => dyn.toString())
+          .toList(),
       map['myPersonalContactsUniqueKey'] ?? '',
       map['_version']?.toInt() ?? 0,
       map['_fieldsVersion']?.toInt() ?? 0,
       map['modified'] ?? false,
       map['fieldsModified'] ?? false,
-      map['_creation'],
+      DateTime.tryParse(map['_creation']) ?? DateTime.now(),
       map['_name'] ?? '',
       map['_participants'],
       map['_description'],
@@ -318,14 +324,16 @@ class Meeting with ChangeNotifier implements ModifiedObjectInterface<Object> {
       map['_shedule'],
       map['_dayOfMeeting'],
       map['_timeOfMeeting'],
-      (map['_probabilitytAssesstments'] as List<Map<String, dynamic>>)
-          .map((map) => ProbabilityAssessment.fromMap(map))
-          .toList(),
+      (map['_probabilitytAssesstments'] as List<dynamic>).isEmpty
+          ? <ProbabilityAssessment>[]
+          : (map['_probabilitytAssesstments'] as List<dynamic>)
+              .map((m) => ProbabilityAssessment.fromMap(m))
+              .toList(),
       map['_finallyNegotiated'] ?? false,
     );
   }
 
-  String toJson() => json.encode(toMap());
+  String toJson() => json.encode(toMap(), toEncodable: myDateSerializer);
 
   factory Meeting.fromJson(String source) =>
       Meeting.fromMap(json.decode(source));

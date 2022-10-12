@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:ejyption_time_2/core/main_functions.dart';
 import 'package:flutter/material.dart';
 
 import 'package:ejyption_time_2/models/participants/participant.dart';
@@ -82,7 +83,7 @@ class ProbabilityAssessment implements WithIdAndCreationAndParticipant {
   factory ProbabilityAssessment.fromMap(Map<String, dynamic> map) {
     return ProbabilityAssessment(
       id: map['_id'],
-      creation: map['_creation'],
+      creation: DateTime.tryParse(map['_creation']) ?? DateTime.now(),
       participant: Participant.fromMap(map['participant']),
       meetingId: map['meetingId'] ?? '',
       mark: ProbabilityMarks.values.byName(map['mark']),
@@ -91,7 +92,7 @@ class ProbabilityAssessment implements WithIdAndCreationAndParticipant {
     );
   }
 
-  String toJson() => json.encode(toMap());
+  String toJson() => json.encode(toMap(), toEncodable: myDateSerializer);
 
   factory ProbabilityAssessment.fromJson(String source) =>
       ProbabilityAssessment.fromMap(json.decode(source));
