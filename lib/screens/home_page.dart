@@ -19,6 +19,11 @@ class HomePage2 extends StatelessWidget {
       builder: (context, meetings, child) => Scaffold(
         appBar: AppBar(
           title: Text(AppLocalizations.of(context)!.appTitle),
+          actions: [
+            IconButton(
+                onPressed: GlobalModel.instance.meetings.addNewMeeting,
+                icon: const Icon(Icons.add))
+          ],
         ),
         body: Column(
           children: [

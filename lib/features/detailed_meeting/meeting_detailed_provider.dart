@@ -59,14 +59,15 @@ class MeetingDetailedProvider with ChangeNotifier {
     if (menuItem == MainMenu.changeFinallyNegotiated) {
       meeting.setFinallyNegotiated(!meeting.finallyNegotiated);
     } else if (menuItem == MainMenu.testSave) {
-      String res = meeting.toJson();
-      //print(res);
-      print(res.hashCode.toString());
-      Meeting newMeeting = Meeting.fromJson(res);
-      String res2 = newMeeting.toJson();
-      //print(res2);
-      print(res2.hashCode.toString());
-      print(res2.hashCode == res.hashCode);
+      // String res = meeting.toJson();
+      // //print(res);
+      // print(res.hashCode.toString());
+      // Meeting newMeeting = Meeting.fromJson(res);
+      // String res2 = newMeeting.toJson();
+      // //print(res2);
+      // print(res2.hashCode.toString());
+      // print(res2.hashCode == res.hashCode);
+      GlobalModel.instance.meetings.saveAll();
     }
   }
 

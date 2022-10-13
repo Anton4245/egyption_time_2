@@ -15,9 +15,11 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 void main() async {
   // ignore: unused_local_variable
-  GlobalModel gm = GlobalModel.instance;
   WidgetsFlutterBinding.ensureInitialized();
-  Hive.registerAdapter(MeetingAdapter());
+  //FlutterCryptography.enable();
+  GlobalModel gm = GlobalModel.instance;
+
+  //Hive.registerAdapter(MeetingAdapter());
 
   runApp(const MyApp());
 }
@@ -30,8 +32,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider<Meetings>(
-            create: (_) => Meetings(GlobalModel.instance.meetingList)),
+        ChangeNotifierProvider<Meetings>.value(
+            value: GlobalModel.instance.meetings),
         // FutureProvider<List<User>>(
         //   initialData: [],
         //   create: (_) async => UserProvider().loadUserData(),
@@ -53,9 +55,9 @@ class MyApp extends StatelessWidget {
           ParticipantsWidgetCover.routeName: (ctx) =>
               const ParticipantsWidgetCover(),
         },
-        locale: Locale('en'),
-        supportedLocales: [Locale('en'), Locale('ru')],
-        localizationsDelegates: [
+        locale: const Locale('en'),
+        supportedLocales: const [Locale('en'), Locale('ru')],
+        localizationsDelegates: const [
           AppLocalizations.delegate,
           GlobalMaterialLocalizations.delegate,
           GlobalCupertinoLocalizations.delegate,

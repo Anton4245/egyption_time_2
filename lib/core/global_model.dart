@@ -1,5 +1,7 @@
 import 'package:ejyption_time_2/core/crypto/cripto_interface.dart';
 import 'package:ejyption_time_2/core/crypto/crypto_dart_dev_impl.dart';
+import 'package:ejyption_time_2/core/hive.dart/hive_impl.dart';
+import 'package:ejyption_time_2/features/list_of_meeting/meeting_list_provider.dart';
 import 'package:ejyption_time_2/models/meeting/meeting.dart';
 import 'package:ejyption_time_2/models/modified_objects.dart';
 import 'package:ejyption_time_2/core/test_meeting.dart';
@@ -13,7 +15,10 @@ class GlobalModel {
   static final GlobalModel instance = GlobalModel._privateConstructor();
 
   Meeting meeting = TestMeeting.giveAnyTestMeeting();
-  List<Meeting> meetingList = TestMeeting.giveAnyListOfMeetings();
+  Meetings meetings = Meetings();
+  List<Meeting> get meetingList => meetings.meetingList;
+  HiveImpl hiveImpl = HiveImpl();
+
   final modifiedObjects = ModifiedObjects();
   final Participant? currentParticipant = Participant(
           myContact: MyContact(
