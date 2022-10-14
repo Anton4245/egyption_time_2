@@ -2,7 +2,7 @@ import 'package:ejyption_time_2/core/shared/const.dart';
 import 'package:ejyption_time_2/core/shared/translate.dart';
 import 'package:ejyption_time_2/models/meeting/meeting.dart';
 import 'package:ejyption_time_2/models/negotiating_fields/negotiating_field.dart';
-import 'package:ejyption_time_2/ui/screens/Meeting_cover_over_detailed.dart';
+import 'package:ejyption_time_2/ui/features/detailed_meeting/Meeting_cover_over_detailed.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -27,7 +27,7 @@ class MeetingListItem extends StatelessWidget {
           },
           child: Card(
             //FIRST - TEMPORABLY
-            color: (isMyTest
+            color: (isMyColorTest
                     ? colorProperty['color']
                     : null) ?? //test - to work with colors
                 (meeting.modified || meeting.fieldsModified
@@ -52,7 +52,7 @@ class MeetingListItem extends StatelessWidget {
                         ),
                       ],
                     )
-                  ].where((element) => isMyTest),
+                  ].where((element) => isMyColorTest),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.center,

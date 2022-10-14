@@ -11,13 +11,11 @@ class Meetings with ChangeNotifier {
   bool listIsUpdating = true;
   Function? actionToDo;
 
-  updateMeetingList(List<Meeting> newList, [bool modify = true]) {
+  updateMeetingList(List<Meeting> newList) {
     _meetingList = newList;
     sort();
     listIsUpdating = false;
-    if (modify) {
-      provideModifying();
-    }
+    provideModifying();
   }
 
   int _version = 0;

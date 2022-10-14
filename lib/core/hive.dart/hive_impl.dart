@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:ejyption_time_2/core/contacts/contacts_impl_flutter_contacts.dart';
+import 'package:ejyption_time_2/core/shared/const.dart';
 import 'package:ejyption_time_2/models/global/global_model.dart';
 import 'package:ejyption_time_2/models/meeting/meeting.dart';
 import 'package:hive/hive.dart';
@@ -16,7 +17,7 @@ class HiveImpl {
   MyFlutterContacts contactsProviderImpl = MyFlutterContacts();
 
   HiveImpl() {
-    init();
+    init(); //thss is emmemanent fueature of application, otherwise all the application will not work properly
   }
 
   init() async {
@@ -50,7 +51,7 @@ class HiveImpl {
       return;
     }
     List<Meeting> retrievedMettings = await retrieveAllMeetings();
-    GlobalModel.instance.meetings.updateMeetingList(retrievedMettings, false);
+    GlobalModel.instance.meetings.updateMeetingList(retrievedMettings);
   }
 
   retrieveAllMeetings() async {

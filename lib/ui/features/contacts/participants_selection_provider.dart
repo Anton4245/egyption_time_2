@@ -59,10 +59,7 @@ class ParticipantsSelectionProvider with ChangeNotifier {
       contacts = await contactsProviderImpl.getContacts();
       refreshMapOfEncriptedPhones();
       provideModifying();
-
-      //FlutterContacts.addListener(_loadContacts); // a mistake was not checked  - contacts must renew each time after new phone contact is recorded
-
-      contactsProviderImpl.addListener(() => _loadContacts);
+      contactsProviderImpl.addListener(_loadContacts);
     }
   }
 

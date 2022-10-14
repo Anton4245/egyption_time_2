@@ -1,1 +1,2 @@
-const bool isMyTest = false;
+const bool isMyColorTest = false;
+//const bool permanentDirectoryBase = true;
