@@ -7,7 +7,7 @@ import 'package:ejyption_time_2/ui/features/detailed_meeting/constant_field_prov
 import 'package:ejyption_time_2/ui/features/detailed_meeting/constant_field_widget.dart';
 import 'package:ejyption_time_2/ui/features/detailed_meeting/meeting_detailed_provider.dart';
 import 'package:ejyption_time_2/models/assesstments/probability_assesstment.dart';
-import 'package:ejyption_time_2/ui/screens/participants_selection_cover.dart';
+import 'package:ejyption_time_2/ui/features/contacts/participants_selection_cover.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ejyption_time_2/models/meeting/meeting.dart';

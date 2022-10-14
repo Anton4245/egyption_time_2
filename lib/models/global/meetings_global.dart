@@ -11,8 +11,8 @@ class Meetings with ChangeNotifier {
   bool listIsUpdating = true;
   Function? actionToDo;
 
-  updateMeetingList(newvalue, [bool modify = true]) {
-    _meetingList = newvalue;
+  updateMeetingList(List<Meeting> newList, [bool modify = true]) {
+    _meetingList = newList;
     sort();
     listIsUpdating = false;
     if (modify) {

@@ -1,9 +1,9 @@
 import 'package:ejyption_time_2/core/shared/lib_color_schemes_g2.dart';
 import 'package:ejyption_time_2/models/global/global_model.dart';
 import 'package:ejyption_time_2/ui/screens/Meeting_cover_over_detailed.dart';
-import 'package:ejyption_time_2/ui/screens/home_page.dart';
+import 'package:ejyption_time_2/ui/features/list_of_meeting/home_page.dart';
 import 'package:ejyption_time_2/models/global/meetings_global.dart';
-import 'package:ejyption_time_2/ui/screens/participants_selection_cover.dart';
+import 'package:ejyption_time_2/ui/features/contacts/participants_selection_cover.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';

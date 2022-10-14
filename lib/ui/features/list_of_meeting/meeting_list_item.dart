@@ -1,3 +1,4 @@
+import 'package:ejyption_time_2/core/shared/const.dart';
 import 'package:ejyption_time_2/core/shared/translate.dart';
 import 'package:ejyption_time_2/models/meeting/meeting.dart';
 import 'package:ejyption_time_2/models/negotiating_fields/negotiating_field.dart';
@@ -26,7 +27,9 @@ class MeetingListItem extends StatelessWidget {
           },
           child: Card(
             //FIRST - TEMPORABLY
-            color: colorProperty['color'] ??
+            color: (isMyTest
+                    ? colorProperty['color']
+                    : null) ?? //test - to work with colors
                 (meeting.modified || meeting.fieldsModified
                     ? theme.colorScheme.tertiaryContainer
                     : theme.colorScheme.secondaryContainer),
@@ -38,16 +41,18 @@ class MeetingListItem extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    //TEMPORABLY
-                    children: [
-                      Text(colorProperty['name']),
-                      Text(
-                        ' ' + colorProperty['name'],
-                        style: const TextStyle(color: Colors.white),
-                      ),
-                    ],
-                  ),
+                  ...[
+                    Row(
+                      //TEMPORABLY
+                      children: [
+                        Text(colorProperty['name']),
+                        Text(
+                          ' ' + colorProperty['name'],
+                          style: const TextStyle(color: Colors.white),
+                        ),
+                      ],
+                    )
+                  ].where((element) => isMyTest),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.center,

@@ -8,7 +8,7 @@ import 'package:ejyption_time_2/models/meeting/meeting.dart';
 import 'package:ejyption_time_2/models/shared/modified_objects.dart';
 import 'package:ejyption_time_2/models/assesstments/point_assestment.dart';
 import 'package:ejyption_time_2/models/assesstments/3_fields_interface.dart';
-import 'package:ejyption_time_2/ui/screens/participants_selection_cover.dart';
+import 'package:ejyption_time_2/ui/features/contacts/participants_selection_cover.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 
