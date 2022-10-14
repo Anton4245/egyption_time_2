@@ -16,39 +16,49 @@ class HomePage2 extends StatelessWidget {
     List<Map<String, dynamic>> colorProperties =
         TestMeeting.getColorProperties(Theme.of(context));
     return Consumer<Meetings>(
-      builder: (context, meetings, child) => Scaffold(
-        appBar: AppBar(
-          title: Text(AppLocalizations.of(context)!.appTitle),
-          actions: [
-            IconButton(
-                onPressed: GlobalModel.instance.meetings.addNewMeeting,
-                icon: const Icon(Icons.add))
-          ],
-        ),
-        body: Column(
-          children: [
-            // ElevatedButton(
-            //     onPressed: () => meetings.changeModel(),
-            //     child: const Text('Change meetings')),
-            Expanded(
-              child: ListView.builder(
-                  itemCount: GlobalModel.instance.meetingList.length,
-                  itemBuilder: (context, index) {
-                    return ChangeNotifierProvider<Meeting>.value(
-                        value: meetings.meetingList[index],
-                        child: MeetingListItem(colorProperties.length >
-                                    index - 3 &&
-                                index >= 3
-                            ? colorProperties[index - 3]
-                            : {
-                                'color': null,
-                                'name': 'default'
-                              })); // ?? {'color':Colors.green, 'name': 'green'}
-                  }),
-            ),
-          ],
-        ),
-      ),
+      builder: (context, meetings, child) {
+        if (meetings.listIsUpdating && meetings.actionToDo != null) {
+          meetings.activateUpdateAction();
+        }
+
+        return Scaffold(
+          appBar: AppBar(
+            title: Text(AppLocalizations.of(context)!.appTitle),
+            actions: [
+              IconButton(
+                  onPressed: GlobalModel.instance.meetings.addNewMeeting,
+                  icon: const Icon(Icons.add))
+            ],
+          ),
+          body: meetings.listIsUpdating
+              ? const Center(
+                  child: CircularProgressIndicator(),
+                )
+              : Column(
+                  children: [
+                    // ElevatedButton(
+                    //     onPressed: () => meetings.changeModel(),
+                    //     child: const Text('Change meetings')),
+                    Expanded(
+                      child: ListView.builder(
+                          itemCount: GlobalModel.instance.meetingList.length,
+                          itemBuilder: (context, index) {
+                            return ChangeNotifierProvider<Meeting>.value(
+                                value: meetings.meetingList[index],
+                                child: MeetingListItem(colorProperties.length >
+                                            index - 3 &&
+                                        index >= 3
+                                    ? colorProperties[index - 3]
+                                    : {
+                                        'color': null,
+                                        'name': 'default'
+                                      })); // ?? {'color':Colors.green, 'name': 'green'}
+                          }),
+                    ),
+                  ],
+                ),
+        );
+      },
     );
   }
 }

@@ -1,26 +1,18 @@
 import 'package:ejyption_time_2/core/lib_color_schemes_g2.dart';
 import 'package:ejyption_time_2/core/global_model.dart';
-import 'package:ejyption_time_2/models/meeting/meeting.dart';
 import 'package:ejyption_time_2/screens/Meeting_cover_over_detailed.dart';
 import 'package:ejyption_time_2/screens/home_page.dart';
 import 'package:ejyption_time_2/features/list_of_meeting/meeting_list_provider.dart';
 import 'package:ejyption_time_2/screens/participants_selection_cover.dart';
 import 'package:flutter/material.dart';
-//import 'package:intl/intl_browser.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-//import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 void main() async {
-  // ignore: unused_local_variable
   WidgetsFlutterBinding.ensureInitialized();
-  //FlutterCryptography.enable();
+  // ignore: unused_local_variable
   GlobalModel gm = GlobalModel.instance;
-
-  //Hive.registerAdapter(MeetingAdapter());
-
   runApp(const MyApp());
 }
 
@@ -44,9 +36,7 @@ class MyApp extends StatelessWidget {
         // ),
       ],
       child: MaterialApp(
-        // localizationsDelegates: context.localizationDelegates,
-        // supportedLocales: context.supportedLocales,
-        // locale: context.locale,
+        debugShowCheckedModeBanner: false,
         theme: prepareLightThemeData(context),
         darkTheme: prepareDarkThemeData(context),
         routes: {
@@ -63,7 +53,6 @@ class MyApp extends StatelessWidget {
           GlobalCupertinoLocalizations.delegate,
           GlobalWidgetsLocalizations.delegate,
         ],
-
         home: const HomePage2(),
       ),
     );
@@ -94,13 +83,11 @@ class MyApp extends StatelessWidget {
       headline6: TextStyle(
         fontSize: 18,
         fontStyle: FontStyle.italic,
-        //fontWeight: FontWeight.bold,
         color: lightColorScheme.primary,
       ),
       headline5: TextStyle(
           fontSize: 18,
           fontStyle: FontStyle.italic,
-          //fontWeight: FontWeight.bold,
           color: lightColorScheme.onBackground),
       subtitle1: const TextStyle(
         fontWeight: FontWeight.normal,

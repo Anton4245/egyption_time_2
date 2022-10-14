@@ -11,8 +11,8 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:path_provider/path_provider.dart';
 
 class HiveImpl {
-  late final BoxCollection collection;
-  late final CollectionBox<String> MeetingBox;
+  BoxCollection? collection;
+  CollectionBox<String>? meetingBox;
   bool permissionDenied = false;
   MyFlutterContacts contactsProviderImpl = MyFlutterContacts();
 
@@ -39,26 +39,52 @@ class HiveImpl {
         'PointAssestments',
         'ProbabilityAssestments'
       }, // Names of your boxes
-      path:
-          '${directory.path.toString()}', // Path where to store your boxes (Only used in Flutter / Dart IO)
+      path: directory.path
+          .toString(), // Path where to store your boxes (Only used in Flutter / Dart IO)
       // key:
       //     HiveCipherImpl(), // Key to encrypt your boxes (Only used in Flutter / Dart IO)
     );
-    MeetingBox = (await collection.openBox<String>('Meetings'));
+    meetingBox = (await collection.openBox<String>('Meetings'));
   }
 
+  // Future<Map<bool, List<Meeting>?>> updateMeetingList() async {
+  //   if (permissionDenied || meetingBox == null) {
+  //     return {false: null};
+  //   } else {
+  //     return meetingBox!.getAllValues().then((value) =>
+  //         {true: value.entries.map((e) => Meeting.fromJson(e.value)).toList()});
+  //   }
+
+  //   //  {GlobalModel.instance.meetings.updateMeetingList(
+  //   //     MeetingBox.getAllValues().then((value) => .entries
+  //   //         .map((e) => Meeting.fromJson(e.value))
+  //   //         .toList(),)
+
+  //   //     false);}
+  // }
+
   Future<void> updateMeetingList() async {
+    if (meetingBox == null) {
+      return;
+    }
     GlobalModel.instance.meetings.updateMeetingList(
-        (await MeetingBox.getAllValues())
+        (await meetingBox!.getAllValues())
             .entries
             .map((e) => Meeting.fromJson(e.value))
-            .toList());
+            .toList(),
+        false);
+    GlobalModel.instance.meetings.listIsUpdating = false;
+    GlobalModel.instance.meetings.changeModel();
   }
 
   saveMeetingList() async {
     for (var meeting in GlobalModel.instance.meetingList) {
-      MeetingBox.put(meeting.id, meeting.toJson());
+      meetingBox?.put(meeting.id, meeting.toJson());
     }
+  }
+
+  Future<void> remove(id) async {
+    meetingBox?.delete(id);
   }
   // Open your boxes. Optional: Give it a type.
 

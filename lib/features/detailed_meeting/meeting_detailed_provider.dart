@@ -12,7 +12,9 @@ enum MainMenu {
   changeFinallyNegotiated,
   setProbabilityAssessment,
   deleteProbabilityAssessment,
-  testSave
+  editName,
+  testSave,
+  deleteMeeting
 }
 
 enum ParticipantsMenu { modifyParticipants, viewParticipants }
@@ -50,14 +52,21 @@ class MeetingDetailedProvider with ChangeNotifier {
     if (probabilityAssessment != null) {
       m.add(MainMenu.deleteProbabilityAssessment);
     }
+    if (!meeting.finallyNegotiated) {
+      m.add(MainMenu.editName);
+    }
     m.add(MainMenu.testSave);
-
+    if (GlobalModel.instance.currentParticipant?.isInitiator ?? false) {
+      m.add(MainMenu.deleteMeeting);
+    }
     return m;
   }
 
-  void mainMenuOnSelected(MainMenu menuItem) {
+  void mainMenuOnSelected(MainMenu menuItem, [String? textParam]) {
     if (menuItem == MainMenu.changeFinallyNegotiated) {
       meeting.setFinallyNegotiated(!meeting.finallyNegotiated);
+    } else if (menuItem == MainMenu.deleteProbabilityAssessment) {
+      meeting.removePointAssesstment();
     } else if (menuItem == MainMenu.testSave) {
       // String res = meeting.toJson();
       // //print(res);
@@ -68,6 +77,10 @@ class MeetingDetailedProvider with ChangeNotifier {
       // print(res2.hashCode.toString());
       // print(res2.hashCode == res.hashCode);
       GlobalModel.instance.meetings.saveAll();
+    } else if (menuItem == MainMenu.editName) {
+      textParam == null ? {} : meeting.setName(textParam);
+    } else if (menuItem == MainMenu.deleteMeeting) {
+      GlobalModel.instance.meetings.deleteWithPause(meeting.id);
     }
   }
 
@@ -108,9 +121,5 @@ class MeetingDetailedProvider with ChangeNotifier {
 
       meeting.addPointAssesstment(newAssesstment);
     }
-  }
-
-  deleteAssessment() {
-    meeting.removePointAssesstment();
   }
 }

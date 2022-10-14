@@ -237,14 +237,15 @@ class Meeting with ChangeNotifier implements ModifiedObjectInterface<Object> {
   }
 
   Meeting.forJSON(
-    List<String> negotiatingFields,
-    this.myPersonalContactsUniqueKey,
+    this._id,
     this._version,
     this._fieldsVersion,
     this.modified,
     this.fieldsModified,
     this._creation,
     this._name,
+    this.myPersonalContactsUniqueKey,
+    List<String> negotiatingFields,
     participantsMap,
     descriptionMap,
     lenthInDaysMap,
@@ -277,17 +278,18 @@ class Meeting with ChangeNotifier implements ModifiedObjectInterface<Object> {
   Map<String, dynamic> toMap() {
     final result = <String, dynamic>{};
 
-    result.addAll({
-      '_negotiatingFields':
-          _negotiatingFieldsMap.entries.map((e) => e.key.toString()).toList()
-    });
-    result.addAll({'myPersonalContactsUniqueKey': myPersonalContactsUniqueKey});
+    result.addAll({'_id': _id});
     result.addAll({'_version': _version});
     result.addAll({'_fieldsVersion': _fieldsVersion});
     result.addAll({'modified': modified});
     result.addAll({'fieldsModified': fieldsModified});
     result.addAll({'_creation': _creation});
     result.addAll({'_name': _name});
+    result.addAll({'myPersonalContactsUniqueKey': myPersonalContactsUniqueKey});
+    result.addAll({
+      '_negotiatingFields':
+          _negotiatingFieldsMap.entries.map((e) => e.key.toString()).toList()
+    });
     result.addAll({'_participants': _participants.toMap()});
     result.addAll({'_description': _description.toMap()});
     result.addAll({'_lenthInDays': _lenthInDays.toMap()});
@@ -307,16 +309,17 @@ class Meeting with ChangeNotifier implements ModifiedObjectInterface<Object> {
 
   factory Meeting.fromMap(Map<String, dynamic> map) {
     return Meeting.forJSON(
-      (map['_negotiatingFields'] as List<dynamic>)
-          .map((dyn) => dyn.toString())
-          .toList(),
-      map['myPersonalContactsUniqueKey'] ?? '',
+      map['_id'] ?? '',
       map['_version']?.toInt() ?? 0,
       map['_fieldsVersion']?.toInt() ?? 0,
       map['modified'] ?? false,
       map['fieldsModified'] ?? false,
       DateTime.tryParse(map['_creation']) ?? DateTime.now(),
       map['_name'] ?? '',
+      map['myPersonalContactsUniqueKey'] ?? '',
+      (map['_negotiatingFields'] as List<dynamic>)
+          .map((dyn) => dyn.toString())
+          .toList(),
       map['_participants'],
       map['_description'],
       map['_lenthInDays'],

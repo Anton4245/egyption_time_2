@@ -1,5 +1,6 @@
 import 'package:ejyption_time_2/core/common_widgets/main_popup_menu.dart';
 import 'package:ejyption_time_2/core/common_widgets/new_assessment.dart';
+import 'package:ejyption_time_2/core/common_widgets/question.dart';
 import 'package:ejyption_time_2/core/common_widgets/templates.dart';
 import 'package:ejyption_time_2/core/global_model.dart';
 import 'package:ejyption_time_2/features/detailed_meeting/constant_field_provider.dart';
@@ -11,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ejyption_time_2/models/meeting/meeting.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:ejyption_time_2/core/common_widgets/input_string.dart';
 
 class MeetingDetailed extends StatelessWidget {
   const MeetingDetailed({Key? key}) : super(key: key);
@@ -82,15 +84,33 @@ class MeetingDetailed extends StatelessWidget {
                       theme,
                       model.createMainMenuList(lastProbabilityAssessment),
                       mainMenuProperties(meeting), (menuItem) {
-                    (menuItem == MainMenu.setProbabilityAssessment)
-                        ? newAssessmentForm(
-                            context,
-                            meeting.name,
-                            ((result, values) => model
-                                .processResultOfNewAssesment(result, values)))
-                        : (menuItem == MainMenu.deleteProbabilityAssessment)
-                            ? model.deleteAssessment()
-                            : model.mainMenuOnSelected(menuItem);
+                    if (menuItem == MainMenu.setProbabilityAssessment) {
+                      newAssessmentForm(
+                          context,
+                          meeting.name,
+                          ((result, values) => model
+                              .processResultOfNewAssesment(result, values)));
+                    } else if (menuItem == MainMenu.editName) {
+                      TextEditingController _textFieldController =
+                          TextEditingController();
+                      _textFieldController.text = meeting.name;
+                      displayTextInputDialog(
+                              context, _textFieldController, 'Input new name')
+                          .then((result) => (result as bool)
+                              ? model.mainMenuOnSelected(
+                                  menuItem, _textFieldController.text)
+                              : {});
+                    } else if (menuItem == MainMenu.deleteMeeting) {
+                      QuestionDialog(context, 'Are you sure?').then((result) {
+                        if ((result as bool) == true) {
+                          model.mainMenuOnSelected(menuItem);
+                          return Navigator.of(context).pop();
+                        }
+                      });
+                    } else {
+                      model.mainMenuOnSelected(menuItem);
+                    }
+                    ;
                   })
                 ],
               ),
@@ -198,7 +218,8 @@ Map<MainMenu, Map<MenuProp, dynamic>> mainMenuProperties(meeting) {
       MenuProp.text: !meeting.finallyNegotiated
           ? AppLocalizations.of(GlobalModel.instance.commonContext!)!
               .setFinallyNegotiated
-          : 'Clear <Finally negotiated>'
+          : AppLocalizations.of(GlobalModel.instance.commonContext!)!
+              .clearFinallyNegotiated
     },
     MainMenu.setProbabilityAssessment: {
       MenuProp.icon: Icons.percent,
@@ -210,6 +231,11 @@ Map<MainMenu, Map<MenuProp, dynamic>> mainMenuProperties(meeting) {
       MenuProp.text: AppLocalizations.of(GlobalModel.instance.commonContext!)!
           .deleteProbabilityAssessment
     },
+    MainMenu.editName: {MenuProp.icon: Icons.edit, MenuProp.text: 'Edit name'},
     MainMenu.testSave: {MenuProp.icon: Icons.save, MenuProp.text: 'Save'},
+    MainMenu.deleteMeeting: {
+      MenuProp.icon: Icons.delete_forever,
+      MenuProp.text: 'Delete meeting'
+    },
   };
 }
