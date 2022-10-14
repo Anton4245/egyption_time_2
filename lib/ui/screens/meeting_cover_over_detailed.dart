@@ -1,6 +1,6 @@
-import 'package:ejyption_time_2/features/detailed_meeting/meeting_detailed_provider.dart';
+import 'package:ejyption_time_2/ui/features/detailed_meeting/meeting_detailed_provider.dart';
 
-import '../features/detailed_meeting/meeting_detailed_widget.dart';
+import '../ui/features/detailed_meeting/meeting_detailed_widget.dart';
 import 'package:flutter/material.dart';
 import '../models/meeting/meeting.dart';
 import 'package:provider/provider.dart';

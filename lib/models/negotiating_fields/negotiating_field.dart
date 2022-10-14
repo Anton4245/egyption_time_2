@@ -1,14 +1,14 @@
 import 'dart:convert';
 import 'dart:math';
 
-import 'package:ejyption_time_2/core/global_model.dart';
+import 'package:ejyption_time_2/models/global_model.dart';
 import 'package:ejyption_time_2/core/main_functions.dart';
-import 'package:ejyption_time_2/features/modify_meeting/modifying_field_provider.dart';
+import 'package:ejyption_time_2/ui/features/modify_meeting/modifying_field_provider.dart';
 import 'package:ejyption_time_2/models/meeting/meeting.dart';
 import 'package:ejyption_time_2/models/modified_objects.dart';
 import 'package:ejyption_time_2/models/point_assestment.dart';
 import 'package:ejyption_time_2/models/withddd.dart';
-import 'package:ejyption_time_2/screens/participants_selection_cover.dart';
+import 'package:ejyption_time_2/ui/screens/participants_selection_cover.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 

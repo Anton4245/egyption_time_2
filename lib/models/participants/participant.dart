@@ -3,7 +3,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
-import 'package:ejyption_time_2/core/global_model.dart';
+import 'package:ejyption_time_2/models/global_model.dart';
 import 'package:ejyption_time_2/models/meeting/meeting.dart';
 import 'package:ejyption_time_2/models/my_contact.dart';
 

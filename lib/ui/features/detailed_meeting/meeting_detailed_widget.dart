@@ -1,18 +1,18 @@
-import 'package:ejyption_time_2/core/common_widgets/main_popup_menu.dart';
-import 'package:ejyption_time_2/core/common_widgets/new_assessment.dart';
-import 'package:ejyption_time_2/core/common_widgets/question.dart';
-import 'package:ejyption_time_2/core/common_widgets/templates.dart';
-import 'package:ejyption_time_2/core/global_model.dart';
-import 'package:ejyption_time_2/features/detailed_meeting/constant_field_provider.dart';
-import 'package:ejyption_time_2/features/detailed_meeting/constant_field_widget.dart';
-import 'package:ejyption_time_2/features/detailed_meeting/meeting_detailed_provider.dart';
+import 'package:ejyption_time_2/ui/common_widgets/main_popup_menu.dart';
+import 'package:ejyption_time_2/ui/common_widgets/new_assessment.dart';
+import 'package:ejyption_time_2/ui/common_widgets/question.dart';
+import 'package:ejyption_time_2/ui/common_widgets/templates.dart';
+import 'package:ejyption_time_2/models/global_model.dart';
+import 'package:ejyption_time_2/ui/features/detailed_meeting/constant_field_provider.dart';
+import 'package:ejyption_time_2/ui/features/detailed_meeting/constant_field_widget.dart';
+import 'package:ejyption_time_2/ui/features/detailed_meeting/meeting_detailed_provider.dart';
 import 'package:ejyption_time_2/models/probability_assesstment.dart';
-import 'package:ejyption_time_2/screens/participants_selection_cover.dart';
+import 'package:ejyption_time_2/ui/screens/participants_selection_cover.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ejyption_time_2/models/meeting/meeting.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:ejyption_time_2/core/common_widgets/input_string.dart';
+import 'package:ejyption_time_2/ui/common_widgets/input_string.dart';
 
 class MeetingDetailed extends StatelessWidget {
   const MeetingDetailed({Key? key}) : super(key: key);

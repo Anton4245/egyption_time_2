@@ -1,11 +1,11 @@
-import 'package:ejyption_time_2/core/common_widgets/new_assessment.dart';
-import 'package:ejyption_time_2/core/global_model.dart';
-import 'package:ejyption_time_2/features/contacts/participants_selection_provider.dart';
-import 'package:ejyption_time_2/features/detailed_meeting/constant_field_provider.dart';
+import 'package:ejyption_time_2/models/meeting/meeting.dart';
+import 'package:ejyption_time_2/ui/common_widgets/new_assessment.dart';
+import 'package:ejyption_time_2/models/global_model.dart';
+import 'package:ejyption_time_2/ui/features/contacts/participants_selection_provider.dart';
+import 'package:ejyption_time_2/ui/features/detailed_meeting/constant_field_provider.dart';
 import 'package:ejyption_time_2/models/my_contact.dart';
 import 'package:ejyption_time_2/models/participants/participant.dart';
 import 'package:ejyption_time_2/models/probability_assesstment.dart';
-import '../../models/meeting/meeting.dart';
 import 'package:flutter/widgets.dart';
 
 enum MainMenu {

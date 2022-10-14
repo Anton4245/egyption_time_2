@@ -6,7 +6,7 @@ import 'package:flutter/widgets.dart';
 import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
 
-import 'package:ejyption_time_2/core/global_model.dart';
+import 'package:ejyption_time_2/models/global_model.dart';
 import 'package:ejyption_time_2/models/modified_objects.dart';
 import 'package:ejyption_time_2/models/participants/participant.dart';
 import 'package:ejyption_time_2/models/participants/participants.dart';

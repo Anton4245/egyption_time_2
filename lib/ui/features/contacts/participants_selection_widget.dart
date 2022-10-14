@@ -1,9 +1,9 @@
 // ignore_for_file: unused_import
 
-import 'package:ejyption_time_2/core/common_widgets/avatar.dart';
-import 'package:ejyption_time_2/core/common_widgets/main_popup_menu.dart';
-import 'package:ejyption_time_2/core/common_widgets/templates.dart';
-import 'package:ejyption_time_2/features/contacts/participants_selection_provider.dart';
+import 'package:ejyption_time_2/ui/common_widgets/avatar.dart';
+import 'package:ejyption_time_2/ui/common_widgets/main_popup_menu.dart';
+import 'package:ejyption_time_2/ui/common_widgets/templates.dart';
+import 'package:ejyption_time_2/ui/features/contacts/participants_selection_provider.dart';
 import 'package:ejyption_time_2/models/meeting/meeting.dart';
 import 'package:ejyption_time_2/models/my_contact.dart';
 import 'package:ejyption_time_2/models/participants/participants.dart';

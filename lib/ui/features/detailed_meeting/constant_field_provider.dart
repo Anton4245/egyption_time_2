@@ -1,6 +1,6 @@
-import 'package:ejyption_time_2/core/common_widgets/new_comment.dart';
-import 'package:ejyption_time_2/core/global_model.dart';
-import 'package:ejyption_time_2/features/modify_meeting/modifying_field_provider.dart';
+import 'package:ejyption_time_2/ui/common_widgets/new_comment.dart';
+import 'package:ejyption_time_2/models/global_model.dart';
+import 'package:ejyption_time_2/ui/features/modify_meeting/modifying_field_provider.dart';
 import 'package:ejyption_time_2/models/meeting/meeting.dart';
 import 'package:ejyption_time_2/models/modified_objects.dart';
 import 'package:ejyption_time_2/models/my_contact.dart';
