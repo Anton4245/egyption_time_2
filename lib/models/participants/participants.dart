@@ -64,7 +64,7 @@ class Participants with ChangeNotifier implements ModifiedObjectInterface {
     this._parent,
   );
 
-  Participants.json(
+  Participants.forJSON(
     this._id,
     this._version,
     this._parentID,
@@ -85,11 +85,7 @@ class Participants with ChangeNotifier implements ModifiedObjectInterface {
   }
 
   factory Participants.fromMap(Map<String, dynamic> map, Object? parent) {
-    // List<Map> ls = map['_value'] as List<Map>;
-    // List<Participant> l = [
-    //   ...ls.map((m) => Participant.fromMap(m as Map<String, dynamic>)).toList()
-    // ];
-    return Participants.json(
+    return Participants.forJSON(
       map['_id'],
       map['_version']?.toInt() ?? 0,
       map['_parentID'] ?? '',
