@@ -1,4 +1,4 @@
-import 'package:ejyption_time_2/core/translate.dart';
+import 'package:ejyption_time_2/core/shared/translate.dart';
 import 'package:ejyption_time_2/models/meeting/meeting.dart';
 import 'package:ejyption_time_2/models/negotiating_fields/negotiating_field.dart';
 import 'package:ejyption_time_2/ui/screens/Meeting_cover_over_detailed.dart';

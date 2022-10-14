@@ -1,10 +1,10 @@
 import 'dart:convert';
 
-import 'package:ejyption_time_2/core/main_functions.dart';
+import 'package:ejyption_time_2/core/shared/main_functions.dart';
 import 'package:flutter/material.dart';
 
 import 'package:ejyption_time_2/models/participants/participant.dart';
-import 'package:ejyption_time_2/models/withddd.dart';
+import 'package:ejyption_time_2/models/assesstments/3_fields_interface.dart';
 
 enum ProbabilityMarks {
   isUnaware,

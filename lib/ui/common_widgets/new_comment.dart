@@ -1,4 +1,4 @@
-import 'package:ejyption_time_2/models/point_assestment.dart';
+import 'package:ejyption_time_2/models/assesstments/point_assestment.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 

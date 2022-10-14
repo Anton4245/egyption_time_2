@@ -1,17 +1,17 @@
 import 'dart:collection';
 import 'dart:convert';
 
-import 'package:ejyption_time_2/core/main_functions.dart';
+import 'package:ejyption_time_2/core/shared/main_functions.dart';
 import 'package:flutter/widgets.dart';
 import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
 
-import 'package:ejyption_time_2/models/global_model.dart';
-import 'package:ejyption_time_2/models/modified_objects.dart';
+import 'package:ejyption_time_2/models/global/global_model.dart';
+import 'package:ejyption_time_2/models/shared/modified_objects.dart';
 import 'package:ejyption_time_2/models/participants/participant.dart';
 import 'package:ejyption_time_2/models/participants/participants.dart';
-import 'package:ejyption_time_2/models/probability_assesstment.dart';
-import 'package:ejyption_time_2/models/withddd.dart';
+import 'package:ejyption_time_2/models/assesstments/probability_assesstment.dart';
+import 'package:ejyption_time_2/models/assesstments/3_fields_interface.dart';
 
 import '../negotiating_fields/negotiating_field.dart';
 

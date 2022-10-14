@@ -1,5 +1,5 @@
 import 'package:ejyption_time_2/models/meeting/meeting.dart';
-import 'package:ejyption_time_2/models/my_contact.dart';
+import 'package:ejyption_time_2/models/others/my_contact.dart';
 import 'package:flutter/cupertino.dart';
 
 abstract class CryptoInterface {

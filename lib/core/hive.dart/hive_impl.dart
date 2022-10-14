@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:ejyption_time_2/core/contacts/contacts_impl_flutter_contacts.dart';
 import 'package:ejyption_time_2/core/contacts/contacts_provider_interface.dart';
-import 'package:ejyption_time_2/models/global_model.dart';
+import 'package:ejyption_time_2/models/global/global_model.dart';
 import 'package:ejyption_time_2/models/meeting/meeting.dart';
 import 'package:hive/hive.dart';
 

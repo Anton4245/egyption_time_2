@@ -1,14 +1,14 @@
 import 'package:ejyption_time_2/ui/common_widgets/new_comment.dart';
 import 'package:ejyption_time_2/ui/common_widgets/main_popup_menu.dart';
 import 'package:ejyption_time_2/ui/common_widgets/templates.dart';
-import 'package:ejyption_time_2/models/global_model.dart';
-import 'package:ejyption_time_2/core/main_functions.dart';
+import 'package:ejyption_time_2/models/global/global_model.dart';
+import 'package:ejyption_time_2/core/shared/main_functions.dart';
 import 'package:ejyption_time_2/ui/features/detailed_meeting/constant_field_provider.dart';
 import 'package:ejyption_time_2/ui/features/modify_meeting/field_edit_form.dart';
 import 'package:ejyption_time_2/ui/features/modify_meeting/modifying_field_provider.dart';
 import 'package:ejyption_time_2/models/meeting/meeting.dart';
 import 'package:ejyption_time_2/models/negotiating_fields/negotiating_field.dart';
-import 'package:ejyption_time_2/models/point_assestment.dart';
+import 'package:ejyption_time_2/models/assesstments/point_assestment.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';

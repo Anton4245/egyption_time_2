@@ -1,7 +1,7 @@
-import 'package:ejyption_time_2/models/global_model.dart';
+import 'package:ejyption_time_2/models/global/global_model.dart';
 import 'package:ejyption_time_2/models/meeting/meeting.dart';
 import 'package:ejyption_time_2/ui/features/list_of_meeting/meeting_list_provider.dart';
-import 'package:ejyption_time_2/models/test_meeting.dart';
+import 'package:ejyption_time_2/models/global/test_meeting.dart';
 import 'package:ejyption_time_2/ui/features/list_of_meeting/meeting_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

@@ -1,5 +1,5 @@
 import 'package:ejyption_time_2/core/contacts/contacts_provider_interface.dart';
-import 'package:ejyption_time_2/models/my_contact.dart';
+import 'package:ejyption_time_2/models/others/my_contact.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
 
 class MyFlutterContacts implements ContactsProviderInterface {

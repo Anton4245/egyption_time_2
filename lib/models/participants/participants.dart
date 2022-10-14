@@ -1,13 +1,13 @@
 import 'dart:convert';
 
-import 'package:ejyption_time_2/core/main_functions.dart';
+import 'package:ejyption_time_2/core/shared/main_functions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-import 'package:ejyption_time_2/models/modified_objects.dart';
+import 'package:ejyption_time_2/models/shared/modified_objects.dart';
 import 'package:ejyption_time_2/models/participants/participant.dart';
 
-import '../../core/extenstions.dart' as ttt;
+import '../../core/shared/extenstions.dart' as ttt;
 
 class Participants with ChangeNotifier implements ModifiedObjectInterface {
   // ignore: unused_field, prefer_final_fields

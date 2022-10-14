@@ -3,9 +3,9 @@ import 'package:ejyption_time_2/core/crypto/crypto_dart_dev_impl.dart';
 import 'package:ejyption_time_2/core/hive.dart/hive_impl.dart';
 import 'package:ejyption_time_2/ui/features/list_of_meeting/meeting_list_provider.dart';
 import 'package:ejyption_time_2/models/meeting/meeting.dart';
-import 'package:ejyption_time_2/models/modified_objects.dart';
-import 'package:ejyption_time_2/models/test_meeting.dart';
-import 'package:ejyption_time_2/models/my_contact.dart';
+import 'package:ejyption_time_2/models/shared/modified_objects.dart';
+import 'package:ejyption_time_2/models/global/test_meeting.dart';
+import 'package:ejyption_time_2/models/others/my_contact.dart';
 import 'package:ejyption_time_2/models/participants/participant.dart';
 import 'package:flutter/material.dart';
 

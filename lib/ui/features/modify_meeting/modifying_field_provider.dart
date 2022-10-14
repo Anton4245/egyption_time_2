@@ -1,10 +1,10 @@
 import 'package:ejyption_time_2/models/meeting/meeting.dart';
-import 'package:ejyption_time_2/models/modified_objects.dart';
+import 'package:ejyption_time_2/models/shared/modified_objects.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:ejyption_time_2/models/negotiating_fields/negotiating_field.dart';
 // ignore: implementation_imports
 import 'package:flutter/src/material/time.dart';
-import 'package:ejyption_time_2/core/extenstions.dart';
+import 'package:ejyption_time_2/core/shared/extenstions.dart';
 
 class ModifyingFieldProvider<E> with ChangeNotifier {
   NegotiatingField field;

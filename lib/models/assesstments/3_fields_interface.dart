@@ -1,4 +1,4 @@
-import 'package:ejyption_time_2/models/global_model.dart';
+import 'package:ejyption_time_2/models/global/global_model.dart';
 import 'package:ejyption_time_2/models/participants/participant.dart';
 
 abstract class WithIdAndCreationAndParticipant {

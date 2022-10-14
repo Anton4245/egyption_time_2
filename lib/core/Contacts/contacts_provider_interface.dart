@@ -1,4 +1,4 @@
-import 'package:ejyption_time_2/models/my_contact.dart';
+import 'package:ejyption_time_2/models/others/my_contact.dart';
 
 abstract class ContactsProviderInterface {
   Future<List<MyContact>> getContacts();
