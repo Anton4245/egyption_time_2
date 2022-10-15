@@ -3,7 +3,7 @@
   "@appTitle": {
     "description": "The title of the application"
   },
-  "description": "desvription",
+  "description": "description",
   "lenthInDays": "lenth, days",
   "lenthInMinutesAndHours": "length, hours and minutes",
   "shedule": "shedule",
