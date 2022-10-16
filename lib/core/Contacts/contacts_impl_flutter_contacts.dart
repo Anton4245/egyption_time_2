@@ -1,6 +1,5 @@
-import 'package:ejyption_time_2/core/Contacts/contacts_provider_interface.dart';
-import 'package:ejyption_time_2/models/my_contact.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:ejyption_time_2/core/contacts/contacts_provider_interface.dart';
+import 'package:ejyption_time_2/models/others/my_contact.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
 
 class MyFlutterContacts implements ContactsProviderInterface {
@@ -23,7 +22,7 @@ class MyFlutterContacts implements ContactsProviderInterface {
   }
 
   @override
-  static void addListener(void Function() listener) {
+  void addListener(void Function() listener) {
     FlutterContacts.addListener(listener);
   }
 
