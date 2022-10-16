@@ -33,8 +33,12 @@ class Meetings with ChangeNotifier {
     actionToDo?.call();
   }
 
-  void addNewMeeting() {
-    _meetingList.add(Meeting());
+  void addNewMeeting([String text = '']) {
+    Meeting m = Meeting();
+    m.modified = true;
+    m.setName(text);
+    _meetingList.add(m);
+
     sort();
     provideModifying();
   }
@@ -83,7 +87,7 @@ class Meetings with ChangeNotifier {
                 for (var meeting in _meetingList) {meeting.setShared()}
               }
             : {})
-        .then((value) => provideModifying());
-    saveAll();
+        .then((value) => provideModifying())
+        .then((value) => saveAll());
   }
 }

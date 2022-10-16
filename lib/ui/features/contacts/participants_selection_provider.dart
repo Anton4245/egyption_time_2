@@ -82,8 +82,7 @@ class ParticipantsSelectionProvider with ChangeNotifier {
         mapOfEncriptedphones.putIfAbsent(
             GlobalModel.instance.cryptoImpl.convertStringWithPassword(
                 fullNumber(number),
-                (meetingParticipants.parent as Meeting)
-                    .myPersonalContactsUniqueKey),
+                meetingParticipants.parent.myPersonalContactsUniqueKey),
             () => myContact);
       }
     });
@@ -94,8 +93,8 @@ class ParticipantsSelectionProvider with ChangeNotifier {
       //StateError may be throwing, if no any element found
       MyContact myContact = contacts!.firstWhere((element) => element.id == id);
       areExcluded.add(myContact.id);
-      editParticipants.add(Participant.fromMyContact(
-          (meetingParticipants.parent as Meeting), myContact));
+      editParticipants.add(
+          Participant.fromMyContact(meetingParticipants.parent, myContact));
       provideModifying();
     } catch (e) {
       return;
@@ -116,7 +115,6 @@ class ParticipantsSelectionProvider with ChangeNotifier {
         meetingParticipants.isModifying = false;
         meetingParticipants.modifyingFormProvider = null;
         meetingParticipants.modified = true;
-        (meetingParticipants.parent as Meeting).fieldsModified = true;
         meetingParticipants.updatevalue(editParticipants);
         break;
       case ParticipantsSelectionMenu.discardChanges:

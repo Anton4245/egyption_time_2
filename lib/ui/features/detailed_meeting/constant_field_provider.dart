@@ -68,13 +68,13 @@ class ConstantFieldProvider with ChangeNotifier {
       field.isModifying = true;
       field.partOfField = PartsOfField.value;
       (field.parent as Meeting).nameOfLastModifyingField = field.name;
-      (field.parent as Meeting).notifyListeners();
+      field.notifyListeners();
       notifyListeners();
     } else if (menuItem == Menu.provisionalItem) {
       field.isModifying = true;
       field.partOfField = PartsOfField.provisionalValue;
       (field.parent as Meeting).nameOfLastModifyingField = field.name;
-      (field.parent as Meeting).notifyListeners();
+      field.notifyListeners();
       notifyListeners();
     } else if (menuItem == Menu.clearProvisionalItem) {
       field.clearProvisionalValue();

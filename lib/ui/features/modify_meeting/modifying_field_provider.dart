@@ -137,7 +137,6 @@ class ModifyingFieldProvider<E> with ChangeNotifier {
     }
 
     field.modified = true;
-    (field.parent as Meeting).fieldsModified = true;
     formKey.currentState?.save();
   }
 

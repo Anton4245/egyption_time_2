@@ -30,13 +30,6 @@ class Meeting with ChangeNotifier implements ModifiedObjectInterface<Object> {
     '_timeOfMeeting',
   };
 
-  void provideModifying([bool notify = true]) {
-    _version++;
-    if (notify) {
-      notifyListeners();
-    }
-  }
-
   late final Map<String, NegotiatingField> _negotiatingFieldsMap;
   Map<String, NegotiatingField> get negotiatingFieldsMap =>
       _negotiatingFieldsMap;
@@ -85,6 +78,21 @@ class Meeting with ChangeNotifier implements ModifiedObjectInterface<Object> {
   }
 
   bool fieldsModified = false;
+  void notifyMeeting() {
+    notifyListeners();
+  }
+
+  void setMeetingFielsModified() {
+    fieldsModified = true;
+    _fieldsVersion++;
+  }
+
+  void provideModifying([bool notify = true]) {
+    _version++;
+    if (notify) {
+      notifyListeners();
+    }
+  }
 
   //DATA FIELDS
 
@@ -96,6 +104,7 @@ class Meeting with ChangeNotifier implements ModifiedObjectInterface<Object> {
   String get name => _name;
   setName(String n, [bool notify = true]) {
     _name = n;
+    modified = true;
     provideModifying(notify);
   }
 
@@ -186,28 +195,6 @@ class Meeting with ChangeNotifier implements ModifiedObjectInterface<Object> {
     _timeOfMeeting = NegotiatingHoursAndMinutes('_timeOfMeeting', _id, this);
     _negotiatingFieldsMap =
         Map.unmodifiable(_initNegotiatingFieldsMap(negotiatingFields));
-
-    addListeners();
-  }
-
-  void listener() => provideModifying();
-
-  void addListeners() {
-    _participants.addListener(listener);
-    _negotiatingFieldsMap.forEach((key, value) {
-      value.addListener(listener);
-    });
-  }
-
-  @override
-  void dispose() {
-    _participants.removeListener(listener);
-    _participants.dispose();
-    _negotiatingFieldsMap.forEach((key, value) {
-      value.removeListener(listener);
-      value.dispose();
-    });
-    super.dispose();
   }
 
   Map<String, NegotiatingField> _initNegotiatingFieldsMap(negotiatingFields) {
@@ -251,7 +238,7 @@ class Meeting with ChangeNotifier implements ModifiedObjectInterface<Object> {
     modified = false;
     fieldsModified = false;
     for (var field in _negotiatingFieldsMap.entries) {
-      field.value.modified = false;
+      field.value.setModifiedOnly(false);
     }
   }
 
@@ -294,8 +281,6 @@ class Meeting with ChangeNotifier implements ModifiedObjectInterface<Object> {
             timeOfMeetingMap, '_timeOfMeeting', this);
     _negotiatingFieldsMap =
         Map.unmodifiable(_initNegotiatingFieldsMap(negotiatingFields));
-
-    addListeners();
   }
 
   Map<String, dynamic> toMap() {

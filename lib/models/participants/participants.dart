@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:ejyption_time_2/core/shared/main_functions.dart';
+import 'package:ejyption_time_2/models/meeting/meeting.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -18,6 +19,7 @@ class Participants with ChangeNotifier implements ModifiedObjectInterface {
     _version++;
     if (notify) {
       notifyListeners();
+      _parent.notifyMeeting();
     }
   }
 
@@ -30,8 +32,8 @@ class Participants with ChangeNotifier implements ModifiedObjectInterface {
 
   final String _name = 'Participants';
   final String _parentID;
-  final Object? _parent;
-  Object? get parent => _parent;
+  final Meeting _parent;
+  Meeting get parent => _parent;
 
   //FOR INTERFACE ModifiedObjectInterface
   @override
@@ -44,7 +46,13 @@ class Participants with ChangeNotifier implements ModifiedObjectInterface {
   @JsonKey(ignore: true)
   bool isModifying = false;
   @override
-  bool modified = false;
+  bool _modified = false;
+  bool get modified => _modified;
+  set modified(bool modified) {
+    _modified = modified;
+    _parent.setMeetingFielsModified();
+  }
+
   @override
   PartsOfField partOfField = PartsOfField.value;
   @override
@@ -64,12 +72,18 @@ class Participants with ChangeNotifier implements ModifiedObjectInterface {
     this._parent,
   );
 
+  @override
+  notifyListeners() {
+    super.notifyListeners();
+    _parent.notifyMeeting();
+  }
+
   Participants.forJSON(
     this._id,
     this._version,
     this._parentID,
     this._parent,
-    this.modified,
+    this._modified,
   );
 
   Map<String, dynamic> toMap() {
@@ -84,7 +98,7 @@ class Participants with ChangeNotifier implements ModifiedObjectInterface {
     return result;
   }
 
-  factory Participants.fromMap(Map<String, dynamic> map, Object? parent) {
+  factory Participants.fromMap(Map<String, dynamic> map, Meeting parent) {
     return Participants.forJSON(
       map['_id'],
       map['_version']?.toInt() ?? 0,
@@ -102,6 +116,6 @@ class Participants with ChangeNotifier implements ModifiedObjectInterface {
 
   String toJson() => json.encode(toMap(), toEncodable: myDateSerializer);
 
-  factory Participants.fromJson(String source, Object? parent) =>
+  factory Participants.fromJson(String source, Meeting parent) =>
       Participants.fromMap(json.decode(source), parent);
 }

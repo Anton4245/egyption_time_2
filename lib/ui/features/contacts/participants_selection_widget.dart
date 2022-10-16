@@ -38,8 +38,7 @@ class ParticipantsSelectionWidget extends StatelessWidget {
                             children: [
                               Expanded(
                                 child: Text(
-                                  (model.meetingParticipants.parent as Meeting)
-                                      .name,
+                                  (model.meetingParticipants.parent).name,
                                   style: theme.textTheme.headline5,
                                 ),
                               ),

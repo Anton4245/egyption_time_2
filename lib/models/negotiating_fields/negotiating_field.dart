@@ -41,7 +41,7 @@ abstract class NegotiatingField<T extends Object>
   final String _name;
   String get name => _name;
   final String _parentID;
-  final Object? _parent;
+  final Meeting _parent;
   Object? get parent => _parent;
   Type get typeOfvalue => T;
 
@@ -59,7 +59,12 @@ abstract class NegotiatingField<T extends Object>
   bool get modified => _modified;
   set modified(bool modified) {
     _modified = modified;
+    _parent.setMeetingFielsModified();
     provideModifying();
+  }
+
+  setModifiedOnly(bool modified) {
+    _modified = modified;
   }
 
   @override
@@ -84,9 +89,17 @@ abstract class NegotiatingField<T extends Object>
 
   void provideModifying([bool notify = true]) {
     _version++;
+
     if (notify) {
       notifyListeners();
+      _parent.notifyMeeting();
     }
+  }
+
+  @override
+  notifyListeners() {
+    super.notifyListeners();
+    _parent.notifyMeeting();
   }
 
   //DATA FIELDS
@@ -261,7 +274,7 @@ abstract class NegotiatingField<T extends Object>
   // }
 
   static Y myConstructor<Y extends NegotiatingField>(
-      String name, String parentID, Object? parent) {
+      String name, String parentID, Meeting parent) {
     switch (Y) {
       case NegotiatingString:
         return NegotiatingString(name, parentID, parent) as Y;
@@ -277,10 +290,11 @@ abstract class NegotiatingField<T extends Object>
   }
 
   static G fromMap<G extends NegotiatingField, T>(
-      Map<String, dynamic> map, String name, Object? parent) {
+      Map<String, dynamic> map, String name, Meeting parent) {
     G nF = myConstructor<G>(name, map['_parentID'], parent)
       ..setIsExcluded(map['_isExcluded'] ?? false, parent)
-      ..setIsNegotiated(map['_isNegotiated']);
+      ..setIsNegotiated(map['_isNegotiated'])
+      ..setModifiedOnly(map['modified'] ?? false);
     map['_hasStringProvisionalValue']
         ? nF.setProvisionalValue(map['_provisionalValue'])
         : {};
@@ -310,8 +324,3 @@ abstract class NegotiatingField<T extends Object>
     return nF;
   }
 }
-
-// someFunc(String name, String parentID, Object? parent) {
-//   Map<String, dynamic> map = {};
-//   var l = NegotiatingField.fromMap<NegotiatingString>(map, name, parent);
-// }
