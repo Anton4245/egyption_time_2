@@ -1,3 +1,4 @@
+import 'package:ejyption_time_2/core/firebase_filestore/firebase_filesore.dart';
 import 'package:ejyption_time_2/models/global/global_model.dart';
 import 'package:ejyption_time_2/models/global/test_meeting.dart';
 
@@ -44,12 +45,17 @@ class Meetings with ChangeNotifier {
   }
 
   void delete(id) {
-    meetingList.removeWhere((element) => element.id == id);
-    Future.delayed(const Duration(seconds: 1), () {
-      GlobalModel.instance.hiveImpl
-          .remove(id)
-          .then((value) => GlobalModel.instance.meetings.listIsUpdating = false)
-          .then((value) => provideModifying());
+    Future.delayed(const Duration(milliseconds: 500), () {
+      GlobalModel.instance.hiveImpl.remove(id).then((value) {
+        Meeting meeting = meetingList.firstWhere(
+          (element) => element.id == id,
+          orElse: () => Meeting(),
+        );
+        meetingList.removeWhere((element) => element.id == id);
+        meeting.dispose();
+        GlobalModel.instance.meetings.listIsUpdating = false;
+        provideModifying();
+      });
     });
   }
 
@@ -67,5 +73,17 @@ class Meetings with ChangeNotifier {
 
   saveAll() {
     GlobalModel.instance.hiveImpl.saveMeetingList();
+  }
+
+  void shareUpdaits() {
+    FirebaseFilestore.instance
+        .shareUpdaits()
+        .then((result) => result
+            ? {
+                for (var meeting in _meetingList) {meeting.setShared()}
+              }
+            : {})
+        .then((value) => provideModifying());
+    saveAll();
   }
 }

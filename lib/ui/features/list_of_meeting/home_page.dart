@@ -2,6 +2,7 @@ import 'package:ejyption_time_2/models/global/global_model.dart';
 import 'package:ejyption_time_2/models/meeting/meeting.dart';
 import 'package:ejyption_time_2/models/global/meetings_global.dart';
 import 'package:ejyption_time_2/models/global/test_meeting.dart';
+import 'package:ejyption_time_2/ui/common_widgets/question.dart';
 import 'package:ejyption_time_2/ui/features/list_of_meeting/meeting_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -25,8 +26,14 @@ class HomePage2 extends StatelessWidget {
         title: Text(AppLocalizations.of(context)!.appTitle),
         actions: [
           IconButton(
-              onPressed: GlobalModel.instance.meetings.addNewMeeting,
-              icon: const Icon(Icons.add))
+              onPressed: meetings.addNewMeeting, icon: const Icon(Icons.add)),
+          IconButton(
+            onPressed: () => QuestionDialog(context,
+                    'Are you sure that you want to share new meeting and modified ones with other?')
+                .then((result) =>
+                    (result as bool) ? meetings.shareUpdaits() : {}),
+            icon: const Icon(Icons.share),
+          )
         ],
       ),
       body: meetings.listIsUpdating

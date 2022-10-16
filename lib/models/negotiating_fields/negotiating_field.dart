@@ -55,7 +55,13 @@ abstract class NegotiatingField<T extends Object>
   @override
   bool isModifying = false;
   @override
-  bool modified = false;
+  bool _modified = false;
+  bool get modified => _modified;
+  set modified(bool modified) {
+    _modified = modified;
+    provideModifying();
+  }
+
   @override
   PartsOfField partOfField = PartsOfField.value;
   @override
@@ -220,6 +226,8 @@ abstract class NegotiatingField<T extends Object>
 
     return resultString;
   }
+
+  //SERIALIZATION CONSTUCTORS, FABRICS AND FUNCTION
 
   Map<String, dynamic> toMap() {
     final result = <String, dynamic>{};

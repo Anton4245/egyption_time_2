@@ -184,19 +184,30 @@ class Meeting with ChangeNotifier implements ModifiedObjectInterface<Object> {
     _shedule = NegotiatingString('_shedule', _id, this);
     _dayOfMeeting = NegotiatingDay('_dayOfMeeting', _id, this);
     _timeOfMeeting = NegotiatingHoursAndMinutes('_timeOfMeeting', _id, this);
-
-    _participants.addListener(() {
-      _fieldsVersion++;
-      notifyListeners();
-    });
     _negotiatingFieldsMap =
         Map.unmodifiable(_initNegotiatingFieldsMap(negotiatingFields));
+
+    addListeners();
+  }
+
+  void listener() => provideModifying();
+
+  void addListeners() {
+    _participants.addListener(listener);
     _negotiatingFieldsMap.forEach((key, value) {
-      value.addListener(() {
-        _fieldsVersion++;
-        notifyListeners();
-      });
+      value.addListener(listener);
     });
+  }
+
+  @override
+  void dispose() {
+    _participants.removeListener(listener);
+    _participants.dispose();
+    _negotiatingFieldsMap.forEach((key, value) {
+      value.removeListener(listener);
+      value.dispose();
+    });
+    super.dispose();
   }
 
   Map<String, NegotiatingField> _initNegotiatingFieldsMap(negotiatingFields) {
@@ -236,6 +247,16 @@ class Meeting with ChangeNotifier implements ModifiedObjectInterface<Object> {
     return result;
   }
 
+  setShared() {
+    modified = false;
+    fieldsModified = false;
+    for (var field in _negotiatingFieldsMap.entries) {
+      field.value.modified = false;
+    }
+  }
+
+  //SERIALIZATION CONSTUCTORS, FABRICS AND FUNCTION
+
   Meeting.forJSON(
     this._id,
     this._version,
@@ -273,6 +294,8 @@ class Meeting with ChangeNotifier implements ModifiedObjectInterface<Object> {
             timeOfMeetingMap, '_timeOfMeeting', this);
     _negotiatingFieldsMap =
         Map.unmodifiable(_initNegotiatingFieldsMap(negotiatingFields));
+
+    addListeners();
   }
 
   Map<String, dynamic> toMap() {

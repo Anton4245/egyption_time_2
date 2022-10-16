@@ -83,35 +83,9 @@ class MeetingDetailed extends StatelessWidget {
                   mainPopupMenu<MainMenu>(
                       theme,
                       model.createMainMenuList(lastProbabilityAssessment),
-                      mainMenuProperties(meeting), (menuItem) {
-                    if (menuItem == MainMenu.setProbabilityAssessment) {
-                      newAssessmentForm(
-                          context,
-                          meeting.name,
-                          ((result, values) => model
-                              .processResultOfNewAssesment(result, values)));
-                    } else if (menuItem == MainMenu.editName) {
-                      TextEditingController _textFieldController =
-                          TextEditingController();
-                      _textFieldController.text = meeting.name;
-                      displayTextInputDialog(
-                              context, _textFieldController, 'Input new name')
-                          .then((result) => (result as bool)
-                              ? model.mainMenuOnSelected(
-                                  menuItem, _textFieldController.text)
-                              : {});
-                    } else if (menuItem == MainMenu.deleteMeeting) {
-                      QuestionDialog(context, 'Are you sure?').then((result) {
-                        if ((result as bool) == true) {
-                          model.mainMenuOnSelected(menuItem);
-                          return Navigator.of(context).pop();
-                        }
-                      });
-                    } else {
-                      model.mainMenuOnSelected(menuItem);
-                    }
-                    ;
-                  })
+                      mainMenuProperties(meeting),
+                      (menuItem) =>
+                          mainMenuUIAction(context, meeting, model, menuItem))
                 ],
               ),
             ),
@@ -174,6 +148,36 @@ class MeetingDetailed extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void mainMenuUIAction(context, meeting, model, menuItem) {
+    if (menuItem == MainMenu.setProbabilityAssessment) {
+      newAssessmentForm(
+          context,
+          meeting.name,
+          ((result, values) =>
+              model.processResultOfNewAssesment(result, values)));
+    } else if (menuItem == MainMenu.editName) {
+      TextEditingController _textFieldController = TextEditingController();
+      _textFieldController.text = meeting.name;
+      displayTextInputDialog(context, _textFieldController, 'Input new name')
+          .then((result) => (result as bool)
+              ? model.mainMenuOnSelected(menuItem, _textFieldController.text)
+              : {});
+    } else if (menuItem == MainMenu.deleteMeeting) {
+      QuestionDialog(
+              context, 'Are you sure that you want to DELETE this meeting?')
+          .then((result) {
+        if ((result as bool) == true) {
+          Navigator.of(context).pop();
+          return true;
+        } else {
+          return false;
+        }
+      }).then((value) => value ? model.mainMenuOnSelected(menuItem) : {});
+    } else {
+      model.mainMenuOnSelected(menuItem);
+    }
   }
 
   List<Widget> negotiatingFieldsDetailed(
