@@ -240,6 +240,7 @@ class Meeting with ChangeNotifier implements ModifiedObjectInterface<Object> {
     for (var field in _negotiatingFieldsMap.entries) {
       field.value.setModifiedOnly(false);
     }
+    participants.setModifiedOnly(false);
   }
 
   //SERIALIZATION CONSTUCTORS, FABRICS AND FUNCTION

@@ -1,3 +1,4 @@
+import 'package:ejyption_time_2/core/shared/translate.dart';
 import 'package:ejyption_time_2/ui/features/modify_meeting/modifying_field_provider.dart';
 import 'package:ejyption_time_2/models/meeting/meeting.dart';
 import 'package:ejyption_time_2/models/shared/modified_objects.dart';
@@ -69,7 +70,7 @@ class FieldEditForm extends StatelessWidget {
                         // initialValue:
                         //     model.field.mainFormat(model.modifyinglValue),
                         decoration: InputDecoration(
-                          labelText: model.field.name,
+                          labelText: (tR(model.field.name, context)),
                         ),
                         textInputAction: TextInputAction.send,
                         onChanged: (value) =>

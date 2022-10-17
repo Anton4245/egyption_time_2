@@ -30,6 +30,10 @@ class Participants with ChangeNotifier implements ModifiedObjectInterface {
     provideModifying(notify);
   }
 
+  setModifiedOnly(bool modified) {
+    _modified = modified;
+  }
+
   final String _name = 'Participants';
   final String _parentID;
   final Meeting _parent;
@@ -93,7 +97,8 @@ class Participants with ChangeNotifier implements ModifiedObjectInterface {
     result.addAll({'_version': _version});
     result.addAll({'_parentID': _parentID});
     result.addAll({'modified': modified});
-    result.addAll({'_value': _value});
+    result.addAll(
+        {'_value': _value.map((participant) => participant.toMap()).toList()});
 
     return result;
   }
@@ -108,7 +113,7 @@ class Participants with ChangeNotifier implements ModifiedObjectInterface {
     ).._value.addAll((map['_value'] as List).isEmpty
         ? <Participant>[]
         : [
-            ...(map['_value'] as List<Map>)
+            ...(map['_value'] as List<dynamic>)
                 .map((m) => Participant.fromMap(m as Map<String, dynamic>))
                 .toList()
           ]);
