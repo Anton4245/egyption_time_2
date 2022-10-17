@@ -55,8 +55,9 @@ class HiveImpl {
   }
 
   retrieveAllMeetings() async {
-    return meetingBox!.getAllValues().then((rawMap) =>
-        rawMap.entries.map((e) => Meeting.fromJson(e.value)).toList());
+    return meetingBox!.getAllValues().then((rawMap) {
+      return rawMap.entries.map((e) => Meeting.fromJson(e.value)).toList();
+    });
   }
 
   saveMeetingList() async {

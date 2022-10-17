@@ -310,8 +310,7 @@ abstract class NegotiatingField<T extends Object>
         ? <String>[]
         : (map['_provisionalVariants'] as List<dynamic>)
             .map((dyn) => dyn.toString()));
-    nF.updatePointAssessments((map['_pointAssesstments'] as Map).isEmpty ||
-            (map['_pointAssesstments'][""] as List).isEmpty
+    nF.updatePointAssessments((map['_pointAssesstments'] as Map).isEmpty
         ? <String, List<PointAssessment>>{}
         : (map['_pointAssesstments'] as Map<String, dynamic>).map((key, list) {
             List<PointAssessment> resList = <PointAssessment>[];

@@ -186,10 +186,14 @@ class ParticipantsEditWidjet extends StatelessWidget {
               itemCount: model.editParticipants.length,
               itemBuilder: (context, i) {
                 final participant = model.editParticipants[i];
+
+                MyContact? myContact = participant.myContact;
+                myContact ??= model.findMyContact(participant.phonesEncripted);
+
                 return ListTile(
                   leading: avatar2(participant, 18.0, theme),
-                  title: Text(participant.myContact?.displayName ?? ''),
-                  subtitle: Text(participant.myContact?.phonesToString() ?? ''),
+                  title: Text(myContact?.displayName ?? ''),
+                  subtitle: Text(myContact?.phonesToString() ?? ''),
                   onTap: () {
                     model.returnContactFromParticipants(participant);
                   },

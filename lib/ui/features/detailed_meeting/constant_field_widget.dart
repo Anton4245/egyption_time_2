@@ -1,3 +1,4 @@
+import 'package:ejyption_time_2/core/shared/translate.dart';
 import 'package:ejyption_time_2/ui/common_widgets/new_comment.dart';
 import 'package:ejyption_time_2/ui/common_widgets/main_popup_menu.dart';
 import 'package:ejyption_time_2/ui/common_widgets/templates.dart';
@@ -72,7 +73,7 @@ class ConstantFieldWidget extends StatelessWidget {
                         Expanded(
                           flex: 2,
                           child: Text(
-                            field.name,
+                            tR(field.name, context),
                             style: currentLabelStyle,
                           ),
                         ),
