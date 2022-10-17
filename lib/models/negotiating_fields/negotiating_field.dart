@@ -299,13 +299,11 @@ abstract class NegotiatingField<T extends Object>
         ? nF.setProvisionalValue(map['_provisionalValue'])
         : {};
     map['_isSelected'] ?? false
-        ? nF.setValue((T.toString() == 'DateTime')
-            ? DateTime.tryParse(map['_value']) ?? DateTime.now()
-            : map['_value'])
+        ? nF.setValue(parseValue<T>(map['_value']))
         : {};
     nF.updatelVariants((map['_variants'] as List).isEmpty
         ? <T>[]
-        : map['_variants'] as List<T>);
+        : (map['_variants'] as List).map((e) => parseValue<T>(e)).toList());
     nF.updateProvisionalVariants((map['_provisionalVariants'] as List).isEmpty
         ? <String>[]
         : (map['_provisionalVariants'] as List<dynamic>)
