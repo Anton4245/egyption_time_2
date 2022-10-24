@@ -23,3 +23,11 @@ dynamic myDateSerializer(dynamic object) {
   }
   return object;
 }
+
+Y parseValue<Y>(intenalValue) {
+  if (Y == DateTime) {
+    return (DateTime.tryParse(intenalValue) ?? DateTime.utc(1)) as Y;
+  } else {
+    return intenalValue as Y;
+  }
+}
